@@ -1,0 +1,5 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <Description>Extension methods to read and write bytes as primitive types.</Description>
+    </PropertyGroup>
+</Project>

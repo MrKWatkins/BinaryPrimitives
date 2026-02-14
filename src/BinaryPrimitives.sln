@@ -1,0 +1,50 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{20641A9F-787A-4D0C-8F84-787605DCD05A}"
+	ProjectSection(SolutionItems) = preProject
+		Directory.Build.props = Directory.Build.props
+		.editorconfig = .editorconfig
+		Directory.Packages.props = Directory.Packages.props
+		global.json = global.json
+		BinaryPrimitives.runsettings = BinaryPrimitives.runsettings
+		..\Icon.png = ..\Icon.png
+		..\License.md = ..\License.md
+		..\ReadMe.md = ..\ReadMe.md
+		..\.gitignore = ..\.gitignore
+		..\.deepsource.toml = ..\.deepsource.toml
+		..\AGENTS.md = ..\AGENTS.md
+		..\CLAUDE.md = ..\CLAUDE.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{564ACA8F-3ECE-4266-8529-889BFF36D630}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{136CFECB-FAEF-4D27-8063-3D8092463CAB}"
+	ProjectSection(SolutionItems) = preProject
+		..\.github\workflows\build.yml = ..\.github\workflows\build.yml
+		..\.github\workflows\release.yml = ..\.github\workflows\release.yml
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MrKWatkins.BinaryPrimitives", "MrKWatkins.BinaryPrimitives\MrKWatkins.BinaryPrimitives.csproj", "{9D9E4A93-DAA6-4A67-B65F-E353460B59F6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MrKWatkins.BinaryPrimitives.Tests", "MrKWatkins.BinaryPrimitives.Tests\MrKWatkins.BinaryPrimitives.Tests.csproj", "{D5D59E27-B69E-49F2-A5E5-DA5E3A641496}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9D9E4A93-DAA6-4A67-B65F-E353460B59F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D9E4A93-DAA6-4A67-B65F-E353460B59F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D9E4A93-DAA6-4A67-B65F-E353460B59F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D9E4A93-DAA6-4A67-B65F-E353460B59F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5D59E27-B69E-49F2-A5E5-DA5E3A641496}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5D59E27-B69E-49F2-A5E5-DA5E3A641496}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5D59E27-B69E-49F2-A5E5-DA5E3A641496}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5D59E27-B69E-49F2-A5E5-DA5E3A641496}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{564ACA8F-3ECE-4266-8529-889BFF36D630} = {20641A9F-787A-4D0C-8F84-787605DCD05A}
+		{136CFECB-FAEF-4D27-8063-3D8092463CAB} = {564ACA8F-3ECE-4266-8529-889BFF36D630}
+	EndGlobalSection
+EndGlobal

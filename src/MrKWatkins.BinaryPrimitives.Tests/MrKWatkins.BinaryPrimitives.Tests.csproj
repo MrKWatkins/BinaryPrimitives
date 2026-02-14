@@ -1,0 +1,5 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <ItemGroup>
+        <ProjectReference Include="..\MrKWatkins.BinaryPrimitives\MrKWatkins.BinaryPrimitives.csproj" />
+    </ItemGroup>
+</Project>
