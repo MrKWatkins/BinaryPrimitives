@@ -50,10 +50,10 @@ public sealed class WordExtensionsTests
         List<byte> bytes = [0x01];
 
         bytes.AddWord(0x1234);
-        bytes.Should().SequenceEqual(new byte[] { 0x01, 0x34, 0x12 });
+        bytes.Should().SequenceEqual(0x01, 0x34, 0x12);
 
         bytes.AddWord(0x5678, Endian.Big);
-        bytes.Should().SequenceEqual(new byte[] { 0x01, 0x34, 0x12, 0x56, 0x78 });
+        bytes.Should().SequenceEqual(0x01, 0x34, 0x12, 0x56, 0x78);
     }
 
     [Test]
@@ -164,10 +164,10 @@ public sealed class WordExtensionsTests
         byte[] bytes = [0x01, 0x02, 0x03, 0x04];
 
         bytes.SetWord(1, 0x1234);
-        bytes.Should().SequenceEqual([0x01, 0x34, 0x12, 0x04]);
+        bytes.Should().SequenceEqual(0x01, 0x34, 0x12, 0x04);
 
         bytes.SetWord(2, 0x5678);
-        bytes.Should().SequenceEqual([0x01, 0x34, 0x78, 0x56]);
+        bytes.Should().SequenceEqual(0x01, 0x34, 0x78, 0x56);
     }
 
     [Test]
@@ -176,13 +176,13 @@ public sealed class WordExtensionsTests
         byte[] bytes = [0x01, 0x02, 0x03, 0x04];
 
         bytes.SetWord(1, 0x1234, Endian.Little);
-        bytes.Should().SequenceEqual([0x01, 0x34, 0x12, 0x04]);
+        bytes.Should().SequenceEqual(0x01, 0x34, 0x12, 0x04);
 
         bytes.SetWord(2, 0x5678, Endian.Little);
-        bytes.Should().SequenceEqual([0x01, 0x34, 0x78, 0x56]);
+        bytes.Should().SequenceEqual(0x01, 0x34, 0x78, 0x56);
 
         bytes.SetWord(2, 0x5678, Endian.Big);
-        bytes.Should().SequenceEqual([0x01, 0x34, 0x56, 0x78]);
+        bytes.Should().SequenceEqual(0x01, 0x34, 0x56, 0x78);
     }
 
     [Test]
@@ -191,7 +191,7 @@ public sealed class WordExtensionsTests
         Span<byte> bytes = [0xFF, 0xFE];
 
         bytes.SetWord(0x1234);
-        bytes.ToArray().Should().SequenceEqual([0x34, 0x12]);
+        bytes.ToArray().Should().SequenceEqual(0x34, 0x12);
     }
 
     [Test]
@@ -200,10 +200,10 @@ public sealed class WordExtensionsTests
         Span<byte> bytes = [0xFF, 0xFE];
 
         bytes.SetWord(0x1234, Endian.Little);
-        bytes.ToArray().Should().SequenceEqual([0x34, 0x12]);
+        bytes.ToArray().Should().SequenceEqual(0x34, 0x12);
 
         bytes.SetWord(0x1234, Endian.Big);
-        bytes.ToArray().Should().SequenceEqual([0x12, 0x34]);
+        bytes.ToArray().Should().SequenceEqual(0x12, 0x34);
     }
 
     [Test]
@@ -212,7 +212,7 @@ public sealed class WordExtensionsTests
         IList<byte> bytes = [0x01, 0x02, 0x03, 0x04];
 
         bytes.SetWord(1, 0x1234);
-        bytes.Should().SequenceEqual([0x01, 0x34, 0x12, 0x04]);
+        bytes.Should().SequenceEqual(0x01, 0x34, 0x12, 0x04);
     }
 
     [Test]
@@ -221,10 +221,10 @@ public sealed class WordExtensionsTests
         IList<byte> bytes = [0x01, 0x02, 0x03, 0x04];
 
         bytes.SetWord(1, 0x1234, Endian.Little);
-        bytes.Should().SequenceEqual([0x01, 0x34, 0x12, 0x04]);
+        bytes.Should().SequenceEqual(0x01, 0x34, 0x12, 0x04);
 
         bytes.SetWord(2, 0x5678, Endian.Big);
-        bytes.Should().SequenceEqual([0x01, 0x34, 0x56, 0x78]);
+        bytes.Should().SequenceEqual(0x01, 0x34, 0x56, 0x78);
     }
 
     [TestCase(0, 0, false)]

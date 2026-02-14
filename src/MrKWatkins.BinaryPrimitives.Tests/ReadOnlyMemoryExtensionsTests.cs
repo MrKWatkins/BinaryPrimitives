@@ -2,7 +2,7 @@ using System.Buffers;
 
 namespace MrKWatkins.BinaryPrimitives.Tests;
 
-public class ReadOnlyMemoryExtensionsTests
+public class ReadOnlySequenceExtensionsTests
 {
     [Test]
     public void CreateWrappedSequence_Array()

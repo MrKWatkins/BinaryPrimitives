@@ -9,7 +9,7 @@ public sealed class ReadOnlyListExtensionsTests
         IReadOnlyList<byte> source = [1, 2, 3, 4, 5];
         var destination = new byte[10];
         source.CopyTo(destination);
-        destination.Should().SequenceEqual([1, 2, 3, 4, 5, 0, 0, 0, 0, 0]);
+        destination.Should().SequenceEqual(1, 2, 3, 4, 5, 0, 0, 0, 0, 0);
     }
 
     [Test]
@@ -26,7 +26,7 @@ public sealed class ReadOnlyListExtensionsTests
         IReadOnlyList<byte> source = [1, 2, 3, 4, 5];
         var destination = new byte[10];
         source.CopyTo(destination, 3);
-        destination.Should().SequenceEqual([0, 0, 0, 1, 2, 3, 4, 5, 0, 0]);
+        destination.Should().SequenceEqual(0, 0, 0, 1, 2, 3, 4, 5, 0, 0);
     }
 
     [Test]

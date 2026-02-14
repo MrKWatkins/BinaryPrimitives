@@ -8,7 +8,7 @@ C# library providing extension methods for reading and writing bytes as primitiv
 
 ## Build & Test Commands
 
-All commands run from the `src/` directory:
+All commands run from the root directory:
 
 ```bash
 dotnet build src/BinaryPrimitives.sln # Build all projects.
@@ -53,3 +53,7 @@ Multi-byte read/write methods follow the pattern: read from container with optio
 - If a method is overloaded then test names should distinguish overloads by their parameter types, separated by an underscore, e.g. `GetInt32_Span`, `GetInt32_ReadOnlySpan`.
 - Extra conditions can be appended to the end of test names to distinguish them, e.g. `GetBits_InvalidRange`. The happy path should never have extra conditions.
 - InternalsVisibleTo is automatically configured for test projects.
+
+## Formatting Conventions
+
+- Ensure formatting is correct by running `dotnet format src/BinaryPrimitives.sln` after completing changes.

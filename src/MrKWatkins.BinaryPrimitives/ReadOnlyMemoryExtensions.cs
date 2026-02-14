@@ -3,9 +3,9 @@ using System.Buffers;
 namespace MrKWatkins.BinaryPrimitives;
 
 /// <summary>
-/// Extension methods for <see cref="ReadOnlyMemory{T}" /> and arrays.
+/// Extension methods that return <see cref="ReadOnlySequence{T}" /> instances.
 /// </summary>
-public static class ReadOnlyMemoryExtensions
+public static class ReadOnlySequenceExtensions
 {
     /// <summary>
     /// Creates a <see cref="ReadOnlySequence{T}" /> that wraps an array, starting at the specified index. The sequence contains

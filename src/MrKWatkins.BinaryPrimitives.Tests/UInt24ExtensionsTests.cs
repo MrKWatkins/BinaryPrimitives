@@ -34,10 +34,10 @@ public sealed class UInt24ExtensionsTests
         byte[] bytes = [0x00, 0x00, 0x00, 0x00];
 
         bytes.SetUInt24(1, 0x123456);
-        bytes.Should().SequenceEqual([0x00, 0x56, 0x34, 0x12]);
+        bytes.Should().SequenceEqual(0x00, 0x56, 0x34, 0x12);
 
         bytes.SetUInt24(0, 0x78654321);
-        bytes.Should().SequenceEqual([0x21, 0x43, 0x65, 0x12]);
+        bytes.Should().SequenceEqual(0x21, 0x43, 0x65, 0x12);
     }
 
     [Test]
@@ -46,15 +46,15 @@ public sealed class UInt24ExtensionsTests
         byte[] bytes = [0x00, 0x00, 0x00, 0x00];
 
         bytes.SetUInt24(1, 0x123456, Endian.Little);
-        bytes.Should().SequenceEqual([0x00, 0x56, 0x34, 0x12]);
+        bytes.Should().SequenceEqual(0x00, 0x56, 0x34, 0x12);
 
         bytes.SetUInt24(0, 0x78654321, Endian.Little);
-        bytes.Should().SequenceEqual([0x21, 0x43, 0x65, 0x12]);
+        bytes.Should().SequenceEqual(0x21, 0x43, 0x65, 0x12);
 
         bytes.SetUInt24(1, 0x123456, Endian.Big);
-        bytes.Should().SequenceEqual([0x21, 0x12, 0x34, 0x56]);
+        bytes.Should().SequenceEqual(0x21, 0x12, 0x34, 0x56);
 
         bytes.SetUInt24(0, 0x78654321, Endian.Big);
-        bytes.Should().SequenceEqual([0x65, 0x43, 0x21, 0x56]);
+        bytes.Should().SequenceEqual(0x65, 0x43, 0x21, 0x56);
     }
 }

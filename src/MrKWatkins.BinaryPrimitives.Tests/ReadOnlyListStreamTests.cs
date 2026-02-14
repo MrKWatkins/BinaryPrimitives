@@ -10,15 +10,15 @@ public sealed class ReadOnlyListStreamTests
 
         var buffer = new byte[] { 0xFF, 0xFE, 0xFD, 0xFC };
         stream.Read(buffer, 1, 1).Should().Equal(1);
-        buffer.Should().SequenceEqual([0xFF, 1, 0xFD, 0xFC]);
+        buffer.Should().SequenceEqual(0xFF, 1, 0xFD, 0xFC);
         stream.Position.Should().Equal(1);
 
         stream.Read(buffer, 1, 2).Should().Equal(2);
-        buffer.Should().SequenceEqual([0xFF, 2, 3, 0xFC]);
+        buffer.Should().SequenceEqual(0xFF, 2, 3, 0xFC);
         stream.Position.Should().Equal(3);
 
         stream.Read(buffer, 0, 3).Should().Equal(2);
-        buffer.Should().SequenceEqual([4, 5, 3, 0xFC]);
+        buffer.Should().SequenceEqual(4, 5, 3, 0xFC);
         stream.Position.Should().Equal(5);
 
         stream.Read(buffer, 1, 1).Should().Equal(0);
