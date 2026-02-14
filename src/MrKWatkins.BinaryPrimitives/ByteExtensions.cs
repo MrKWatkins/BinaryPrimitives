@@ -5,16 +5,39 @@ using System.Runtime.Intrinsics;
 
 namespace MrKWatkins.BinaryPrimitives;
 
+/// <summary>
+/// Extension methods for <see cref="byte" /> and <see cref="int" />.
+/// </summary>
 public static class ByteExtensions
 {
+    /// <summary>
+    /// Gets the value of the bit at the specified index.
+    /// </summary>
+    /// <param name="value">The byte value.</param>
+    /// <param name="index">The zero-based bit index.</param>
+    /// <returns><see langword="true" /> if the bit is set; <see langword="false" /> otherwise.</returns>
     [Pure]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool GetBit(this byte value, int index) => (value & (1 << index)) != 0;
 
+    /// <summary>
+    /// Gets the value of the bit at the specified index.
+    /// </summary>
+    /// <param name="value">The int value.</param>
+    /// <param name="index">The zero-based bit index.</param>
+    /// <returns><see langword="true" /> if the bit is set; <see langword="false" /> otherwise.</returns>
     [Pure]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool GetBit(this int value, int index) => (value & (1 << index)) != 0;
 
+    /// <summary>
+    /// Gets a range of bits from a byte, shifted down to the least significant position.
+    /// </summary>
+    /// <param name="value">The byte value.</param>
+    /// <param name="startInclusive">The zero-based start bit index, inclusive.</param>
+    /// <param name="endInclusive">The zero-based end bit index, inclusive.</param>
+    /// <returns>The extracted bits, shifted right so the start bit is at position 0.</returns>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="startInclusive" /> or <paramref name="endInclusive" /> is not in the range 0 to 7, or <paramref name="endInclusive" /> is less than <paramref name="startInclusive" />.</exception>
     [Pure]
     public static byte GetBits(this byte value, int startInclusive, int endInclusive)
     {
@@ -48,26 +71,62 @@ public static class ByteExtensions
         return mask;
     }
 
+    /// <summary>
+    /// Gets the sign bit (bit 7) of a byte.
+    /// </summary>
+    /// <param name="value">The byte value.</param>
+    /// <returns><see langword="true" /> if the sign bit is set; <see langword="false" /> otherwise.</returns>
     [Pure]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool SignBit(this byte value) => value.GetBit(7);
 
+    /// <summary>
+    /// Gets the left-most bit (bit 7) of a byte.
+    /// </summary>
+    /// <param name="value">The byte value.</param>
+    /// <returns><see langword="true" /> if the left-most bit is set; <see langword="false" /> otherwise.</returns>
     [Pure]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool LeftMostBit(this byte value) => value.GetBit(7);
 
+    /// <summary>
+    /// Gets the right-most bit (bit 0) of a byte.
+    /// </summary>
+    /// <param name="value">The byte value.</param>
+    /// <returns><see langword="true" /> if the right-most bit is set; <see langword="false" /> otherwise.</returns>
     [Pure]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool RightMostBit(this byte value) => value.GetBit(0);
 
+    /// <summary>
+    /// Returns a new byte with the bit at the specified index cleared.
+    /// </summary>
+    /// <param name="value">The byte value.</param>
+    /// <param name="index">The zero-based bit index to reset.</param>
+    /// <returns>A new byte with the specified bit cleared.</returns>
     [Pure]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static byte ResetBit(this byte value, int index) => (byte)(value & ~(1 << index));
 
+    /// <summary>
+    /// Returns a new byte with the bit at the specified index set.
+    /// </summary>
+    /// <param name="value">The byte value.</param>
+    /// <param name="index">The zero-based bit index to set.</param>
+    /// <returns>A new byte with the specified bit set.</returns>
     [Pure]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static byte SetBit(this byte value, int index) => (byte)(value | (1 << index));
 
+    /// <summary>
+    /// Sets a range of bits in a byte to the specified value.
+    /// </summary>
+    /// <param name="original">The original byte value.</param>
+    /// <param name="value">The value to set in the bit range.</param>
+    /// <param name="startInclusive">The zero-based start bit index, inclusive.</param>
+    /// <param name="endInclusive">The zero-based end bit index, inclusive.</param>
+    /// <returns>A new byte with the specified bit range replaced by <paramref name="value" />.</returns>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="startInclusive" /> or <paramref name="endInclusive" /> is not in the range 0 to 7, or <paramref name="endInclusive" /> is less than <paramref name="startInclusive" />.</exception>
     [Pure]
     public static byte SetBits(this byte original, byte value, int startInclusive, int endInclusive)
     {
@@ -78,26 +137,58 @@ public static class ByteExtensions
         return (byte)(bitsToPreserve | bitsToSetInPosition);
     }
 
+    /// <summary>
+    /// Gets the low nibble (bits 0-3) of a byte.
+    /// </summary>
+    /// <param name="value">The byte value.</param>
+    /// <returns>The low nibble.</returns>
     [Pure]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static byte LowNibble(this byte value) => (byte)(value & 0b00001111);
 
+    /// <summary>
+    /// Gets the high nibble (bits 4-7) of a byte, shifted down to the least significant position.
+    /// </summary>
+    /// <param name="value">The byte value.</param>
+    /// <returns>The high nibble.</returns>
     [Pure]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static byte HighNibble(this byte value) => (byte)((value & 0b11110000) >> 4);
 
+    /// <summary>
+    /// Returns a new byte with the low nibble (bits 0-3) set to the specified value.
+    /// </summary>
+    /// <param name="value">The byte value.</param>
+    /// <param name="nibble">The nibble value to set. Only the lower 4 bits are used.</param>
+    /// <returns>A new byte with the low nibble replaced.</returns>
     [Pure]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static byte SetLowNibble(this byte value, byte nibble) => (byte)((value & 0b11110000) | (nibble & 0b00001111));
 
+    /// <summary>
+    /// Returns a new byte with the high nibble (bits 4-7) set to the specified value.
+    /// </summary>
+    /// <param name="value">The byte value.</param>
+    /// <param name="nibble">The nibble value to set. Only the lower 4 bits are used.</param>
+    /// <returns>A new byte with the high nibble replaced.</returns>
     [Pure]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static byte SetHighNibble(this byte value, byte nibble) => (byte)((value & 0b00001111) | (nibble << 4));
 
+    /// <summary>
+    /// Gets the parity of a byte, i.e. whether the number of set bits is even.
+    /// </summary>
+    /// <param name="value">The byte value.</param>
+    /// <returns><see langword="true" /> if the number of set bits is even; <see langword="false" /> otherwise.</returns>
     [Pure]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool Parity(this byte value) => (BitOperations.PopCount(value) & 1) == 0;
 
+    /// <summary>
+    /// Converts a byte to its binary string representation, e.g. <c>"0b01011010"</c>.
+    /// </summary>
+    /// <param name="value">The byte value.</param>
+    /// <returns>A 10-character string prefixed with <c>"0b"</c> followed by 8 binary digits.</returns>
     [Pure]
     public static string ToBinaryString(this byte value) =>
         string.Create(10, value, (chars, @byte) =>
@@ -129,6 +220,13 @@ public static class ByteExtensions
             result.CopyTo(castedChars);
         });
 
+    /// <summary>
+    /// Copies bits from one byte to another using a mask.
+    /// </summary>
+    /// <param name="input">The byte to copy bits into.</param>
+    /// <param name="toCopyFrom">The byte to copy bits from.</param>
+    /// <param name="mask">A mask specifying which bits to copy. Set bits in the mask indicate positions to copy from <paramref name="toCopyFrom" />.</param>
+    /// <returns>A new byte with masked bits from <paramref name="toCopyFrom" /> and unmasked bits from <paramref name="input" />.</returns>
     [Pure]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static byte CopyBitsFrom(this byte input, byte toCopyFrom, byte mask)
@@ -140,6 +238,13 @@ public static class ByteExtensions
         return (byte)(inputWithoutBits | bits);
     }
 
+    /// <summary>
+    /// Determines whether a signed addition overflowed by examining the sum and its operands.
+    /// </summary>
+    /// <param name="sum">The result of the addition.</param>
+    /// <param name="left">The left operand.</param>
+    /// <param name="right">The right operand.</param>
+    /// <returns><see langword="true" /> if the addition overflowed; <see langword="false" /> otherwise.</returns>
     [Pure]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool DidAdditionOverflow(this byte sum, byte left, byte right)
@@ -158,6 +263,13 @@ public static class ByteExtensions
         return ((sum ^ left) & (sum ^ right) & 0b10000000) != 0;
     }
 
+    /// <summary>
+    /// Determines whether a signed subtraction overflowed by examining the difference and its operands.
+    /// </summary>
+    /// <param name="difference">The result of the subtraction.</param>
+    /// <param name="left">The left operand.</param>
+    /// <param name="right">The right operand.</param>
+    /// <returns><see langword="true" /> if the subtraction overflowed; <see langword="false" /> otherwise.</returns>
     [Pure]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool DidSubtractionOverflow(this byte difference, byte left, byte right)
@@ -169,6 +281,13 @@ public static class ByteExtensions
         return ((left ^ right) & (difference ^ left) & 0b10000000) != 0;
     }
 
+    /// <summary>
+    /// Determines whether an addition produced a half carry, i.e. a carry from bit 3 to bit 4.
+    /// </summary>
+    /// <param name="sum">The result of the addition.</param>
+    /// <param name="left">The left operand.</param>
+    /// <param name="right">The right operand.</param>
+    /// <returns><see langword="true" /> if the addition produced a half carry; <see langword="false" /> otherwise.</returns>
     [Pure]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool DidAdditionHalfCarry(this byte sum, byte left, byte right)
@@ -188,6 +307,13 @@ public static class ByteExtensions
         return ((left ^ right ^ sum) & 0b00010000) != 0;
     }
 
+    /// <summary>
+    /// Determines whether a subtraction produced a half borrow, i.e. a borrow from bit 4 to bit 3.
+    /// </summary>
+    /// <param name="difference">The result of the subtraction.</param>
+    /// <param name="left">The left operand.</param>
+    /// <param name="right">The right operand.</param>
+    /// <returns><see langword="true" /> if the subtraction produced a half borrow; <see langword="false" /> otherwise.</returns>
     [Pure]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool DidSubtractionHalfBorrow(this byte difference, byte left, byte right)

@@ -2,9 +2,17 @@ using System.Runtime.CompilerServices;
 
 namespace MrKWatkins.BinaryPrimitives;
 
+/// <summary>
+/// Extension methods for <see cref="bool" />.
+/// </summary>
 public static class BoolExtensions
 {
     // TODO: Review performance of this with .NET 10.
+    /// <summary>
+    /// Converts a <see cref="bool" /> to a bit character, i.e. <c>'1'</c> for <see langword="true" /> and <c>'0'</c> for <see langword="false" />.
+    /// </summary>
+    /// <param name="value">The value to convert.</param>
+    /// <returns>The bit character.</returns>
     [Pure]
     public static char ToBitChar(this bool value)
     {

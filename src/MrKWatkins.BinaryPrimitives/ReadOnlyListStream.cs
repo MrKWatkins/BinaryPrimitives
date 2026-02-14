@@ -3,11 +3,16 @@ using System.Runtime.InteropServices;
 
 namespace MrKWatkins.BinaryPrimitives;
 
+/// <summary>
+/// A read-only, seekable <see cref="Stream" /> that wraps an <see cref="IReadOnlyList{T}" /> of <see cref="byte" />.
+/// </summary>
+/// <param name="list">The read-only list of bytes to wrap.</param>
 public sealed class ReadOnlyListStream(IReadOnlyList<byte> list) : Stream
 {
     private int position;
     private bool disposed;
 
+    /// <inheritdoc />
     public override int Read(byte[] buffer, int offset, int count)
     {
         VerifyNotDisposed();
@@ -34,6 +39,7 @@ public sealed class ReadOnlyListStream(IReadOnlyList<byte> list) : Stream
         return position - startPosition;
     }
 
+    /// <inheritdoc />
     public override long Seek(long offset, SeekOrigin origin)
     {
         VerifyNotDisposed();
@@ -49,6 +55,7 @@ public sealed class ReadOnlyListStream(IReadOnlyList<byte> list) : Stream
         return Position;
     }
 
+    /// <inheritdoc />
     public override bool CanRead
     {
         get
@@ -58,6 +65,7 @@ public sealed class ReadOnlyListStream(IReadOnlyList<byte> list) : Stream
         }
     }
 
+    /// <inheritdoc />
     public override bool CanSeek
     {
         get
@@ -67,6 +75,7 @@ public sealed class ReadOnlyListStream(IReadOnlyList<byte> list) : Stream
         }
     }
 
+    /// <inheritdoc />
     public override bool CanWrite
     {
         get
@@ -76,6 +85,7 @@ public sealed class ReadOnlyListStream(IReadOnlyList<byte> list) : Stream
         }
     }
 
+    /// <inheritdoc />
     public override long Length
     {
         get
@@ -85,6 +95,7 @@ public sealed class ReadOnlyListStream(IReadOnlyList<byte> list) : Stream
         }
     }
 
+    /// <inheritdoc />
     public override long Position
     {
         get
@@ -103,12 +114,16 @@ public sealed class ReadOnlyListStream(IReadOnlyList<byte> list) : Stream
         }
     }
 
+    /// <inheritdoc />
     public override void Flush() => ThrowNotWriteable();
 
+    /// <inheritdoc />
     public override void SetLength(long value) => ThrowNotWriteable();
 
+    /// <inheritdoc />
     public override void Write(byte[] buffer, int offset, int count) => ThrowNotWriteable();
 
+    /// <inheritdoc />
     protected override void Dispose(bool disposing)
     {
         if (disposing && !disposed)
