@@ -7,6 +7,7 @@ public sealed class EndianExtensionsTests
     public void ToUInt24(Endian endian, byte msb, byte mid, byte lsb, int expected) =>
         endian.ToUInt24(msb, mid, lsb).Should().Equal(expected);
 
+
     [Test]
     public void ToWord()
     {

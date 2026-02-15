@@ -13,28 +13,6 @@ public static class ByteListExtensions
     /// <param name="bytes">The list of bytes.</param>
     extension(List<byte> bytes)
     {
-        /// <summary>
-        /// Reads a little-endian word from a <see cref="List{T}" /> of bytes at the specified index.
-        /// </summary>
-        /// <param name="index">The zero-based index to read from.</param>
-        /// <returns>The word value.</returns>
-        [Pure]
-        [OverloadResolutionPriority(ConcreteTypePriority)]
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ushort GetWord(int index) =>
-            CollectionsMarshal.AsSpan(bytes)[index..].GetWord();
-
-        /// <summary>
-        /// Reads a word from a <see cref="List{T}" /> of bytes at the specified index using the specified endianness.
-        /// </summary>
-        /// <param name="index">The zero-based index to read from.</param>
-        /// <param name="endian">The endianness to use.</param>
-        /// <returns>The word value.</returns>
-        [Pure]
-        [OverloadResolutionPriority(ConcreteTypePriority)]
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ushort GetWord(int index, Endian endian) =>
-            CollectionsMarshal.AsSpan(bytes)[index..].GetWord(endian);
 
         /// <summary>
         /// Reads a little-endian <see cref="short" /> from a <see cref="List{T}" /> of bytes at the specified index.
@@ -59,28 +37,6 @@ public static class ByteListExtensions
         public short GetInt16(int index, Endian endian) =>
             CollectionsMarshal.AsSpan(bytes)[index..].GetInt16(endian);
 
-        /// <summary>
-        /// Reads a little-endian unsigned 24-bit integer from a <see cref="List{T}" /> of bytes at the specified index.
-        /// </summary>
-        /// <param name="index">The zero-based index to read from.</param>
-        /// <returns>The 24-bit value stored in an <see cref="int" />.</returns>
-        [Pure]
-        [OverloadResolutionPriority(ConcreteTypePriority)]
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int GetUInt24(int index) =>
-            CollectionsMarshal.AsSpan(bytes)[index..].GetUInt24();
-
-        /// <summary>
-        /// Reads an unsigned 24-bit integer from a <see cref="List{T}" /> of bytes at the specified index using the specified endianness.
-        /// </summary>
-        /// <param name="index">The zero-based index to read from.</param>
-        /// <param name="endian">The endianness to use.</param>
-        /// <returns>The 24-bit value stored in an <see cref="int" />.</returns>
-        [Pure]
-        [OverloadResolutionPriority(ConcreteTypePriority)]
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int GetUInt24(int index, Endian endian) =>
-            CollectionsMarshal.AsSpan(bytes)[index..].GetUInt24(endian);
 
         /// <summary>
         /// Reads a little-endian <see cref="int" /> from a <see cref="List{T}" /> of bytes at the specified index.
@@ -105,28 +61,6 @@ public static class ByteListExtensions
         public int GetInt32(int index, Endian endian) =>
             CollectionsMarshal.AsSpan(bytes)[index..].GetInt32(endian);
 
-        /// <summary>
-        /// Reads a little-endian <see cref="uint" /> from a <see cref="List{T}" /> of bytes at the specified index.
-        /// </summary>
-        /// <param name="index">The zero-based index to read from.</param>
-        /// <returns>The <see cref="uint" /> value.</returns>
-        [Pure]
-        [OverloadResolutionPriority(ConcreteTypePriority)]
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public uint GetUInt32(int index) =>
-            CollectionsMarshal.AsSpan(bytes)[index..].GetUInt32();
-
-        /// <summary>
-        /// Reads a <see cref="uint" /> from a <see cref="List{T}" /> of bytes at the specified index using the specified endianness.
-        /// </summary>
-        /// <param name="index">The zero-based index to read from.</param>
-        /// <param name="endian">The endianness to use.</param>
-        /// <returns>The <see cref="uint" /> value.</returns>
-        [Pure]
-        [OverloadResolutionPriority(ConcreteTypePriority)]
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public uint GetUInt32(int index, Endian endian) =>
-            CollectionsMarshal.AsSpan(bytes)[index..].GetUInt32(endian);
 
         /// <summary>
         /// Reads a little-endian <see cref="long" /> from a <see cref="List{T}" /> of bytes at the specified index.
@@ -151,6 +85,55 @@ public static class ByteListExtensions
         public long GetInt64(int index, Endian endian) =>
             CollectionsMarshal.AsSpan(bytes)[index..].GetInt64(endian);
 
+
+        /// <summary>
+        /// Reads a little-endian unsigned 24-bit integer from a <see cref="List{T}" /> of bytes at the specified index.
+        /// </summary>
+        /// <param name="index">The zero-based index to read from.</param>
+        /// <returns>The 24-bit value stored in an <see cref="int" />.</returns>
+        [Pure]
+        [OverloadResolutionPriority(ConcreteTypePriority)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int GetUInt24(int index) =>
+            CollectionsMarshal.AsSpan(bytes)[index..].GetUInt24();
+
+        /// <summary>
+        /// Reads an unsigned 24-bit integer from a <see cref="List{T}" /> of bytes at the specified index using the specified endianness.
+        /// </summary>
+        /// <param name="index">The zero-based index to read from.</param>
+        /// <param name="endian">The endianness to use.</param>
+        /// <returns>The 24-bit value stored in an <see cref="int" />.</returns>
+        [Pure]
+        [OverloadResolutionPriority(ConcreteTypePriority)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int GetUInt24(int index, Endian endian) =>
+            CollectionsMarshal.AsSpan(bytes)[index..].GetUInt24(endian);
+
+
+        /// <summary>
+        /// Reads a little-endian <see cref="uint" /> from a <see cref="List{T}" /> of bytes at the specified index.
+        /// </summary>
+        /// <param name="index">The zero-based index to read from.</param>
+        /// <returns>The <see cref="uint" /> value.</returns>
+        [Pure]
+        [OverloadResolutionPriority(ConcreteTypePriority)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public uint GetUInt32(int index) =>
+            CollectionsMarshal.AsSpan(bytes)[index..].GetUInt32();
+
+        /// <summary>
+        /// Reads a <see cref="uint" /> from a <see cref="List{T}" /> of bytes at the specified index using the specified endianness.
+        /// </summary>
+        /// <param name="index">The zero-based index to read from.</param>
+        /// <param name="endian">The endianness to use.</param>
+        /// <returns>The <see cref="uint" /> value.</returns>
+        [Pure]
+        [OverloadResolutionPriority(ConcreteTypePriority)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public uint GetUInt32(int index, Endian endian) =>
+            CollectionsMarshal.AsSpan(bytes)[index..].GetUInt32(endian);
+
+
         /// <summary>
         /// Reads a little-endian <see cref="ulong" /> from a <see cref="List{T}" /> of bytes at the specified index.
         /// </summary>
@@ -173,5 +156,28 @@ public static class ByteListExtensions
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public ulong GetUInt64(int index, Endian endian) =>
             CollectionsMarshal.AsSpan(bytes)[index..].GetUInt64(endian);
+
+        /// <summary>
+        /// Reads a little-endian word from a <see cref="List{T}" /> of bytes at the specified index.
+        /// </summary>
+        /// <param name="index">The zero-based index to read from.</param>
+        /// <returns>The word value.</returns>
+        [Pure]
+        [OverloadResolutionPriority(ConcreteTypePriority)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public ushort GetWord(int index) =>
+            CollectionsMarshal.AsSpan(bytes)[index..].GetWord();
+
+        /// <summary>
+        /// Reads a word from a <see cref="List{T}" /> of bytes at the specified index using the specified endianness.
+        /// </summary>
+        /// <param name="index">The zero-based index to read from.</param>
+        /// <param name="endian">The endianness to use.</param>
+        /// <returns>The word value.</returns>
+        [Pure]
+        [OverloadResolutionPriority(ConcreteTypePriority)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public ushort GetWord(int index, Endian endian) =>
+            CollectionsMarshal.AsSpan(bytes)[index..].GetWord(endian);
     }
 }

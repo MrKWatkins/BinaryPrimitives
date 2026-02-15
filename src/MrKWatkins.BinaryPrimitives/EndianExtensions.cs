@@ -11,19 +11,6 @@ public static class EndianExtensions
     extension(Endian endian)
     {
         /// <summary>
-        /// Composes a word from two bytes.
-        /// </summary>
-        /// <param name="msb">The most significant byte.</param>
-        /// <param name="lsb">The least significant byte.</param>
-        /// <returns>The composed word.</returns>
-        [Pure]
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ushort ToWord(byte msb, byte lsb) =>
-            endian == Endian.Little
-                ? (ushort)(msb | lsb << 8)
-                : (ushort)(lsb | msb << 8);
-
-        /// <summary>
         /// Composes an unsigned 24-bit integer from three bytes.
         /// </summary>
         /// <param name="msb">The most significant byte.</param>
@@ -41,5 +28,18 @@ public static class EndianExtensions
 
             return lsb | mid << 8 | msb << 16;
         }
+
+        /// <summary>
+        /// Composes a word from two bytes.
+        /// </summary>
+        /// <param name="msb">The most significant byte.</param>
+        /// <param name="lsb">The least significant byte.</param>
+        /// <returns>The composed word.</returns>
+        [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public ushort ToWord(byte msb, byte lsb) =>
+            endian == Endian.Little
+                ? (ushort)(msb | lsb << 8)
+                : (ushort)(lsb | msb << 8);
     }
 }

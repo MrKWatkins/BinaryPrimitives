@@ -1,6 +1,6 @@
 namespace MrKWatkins.BinaryPrimitives.Tests;
 
-public sealed class IntExtensionsTests
+public sealed class Int32ExtensionsTests
 {
     [TestCase(0b00000000, 0, false)]
     [TestCase(0b00000001, 0, true)]

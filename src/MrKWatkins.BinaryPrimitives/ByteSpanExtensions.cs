@@ -11,50 +11,6 @@ public static class ByteSpanExtensions
     /// <param name="bytes">The span of bytes.</param>
     extension(Span<byte> bytes)
     {
-        /// <summary>
-        /// Reads a little-endian word from a span of bytes.
-        /// </summary>
-        /// <returns>The word value.</returns>
-        [Pure]
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ushort GetWord() => MemoryMarshal.Read<ushort>(bytes);
-
-        /// <summary>
-        /// Reads a word from a span of bytes using the specified endianness.
-        /// </summary>
-        /// <param name="endian">The endianness to use.</param>
-        /// <returns>The word value.</returns>
-        [Pure]
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ushort GetWord(Endian endian) =>
-            endian == Endian.Little
-                ? bytes.GetWord()
-                : System.Buffers.Binary.BinaryPrimitives.ReadUInt16BigEndian(bytes);
-
-        /// <summary>
-        /// Writes a little-endian word to a span of bytes.
-        /// </summary>
-        /// <param name="value">The word value to write.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void SetWord(ushort value) => MemoryMarshal.Write(bytes, value);
-
-        /// <summary>
-        /// Writes a word to a span of bytes using the specified endianness.
-        /// </summary>
-        /// <param name="value">The word value to write.</param>
-        /// <param name="endian">The endianness to use.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void SetWord(ushort value, Endian endian)
-        {
-            if (endian == Endian.Little)
-            {
-                bytes.SetWord(value);
-            }
-            else
-            {
-                System.Buffers.Binary.BinaryPrimitives.WriteUInt16BigEndian(bytes, value);
-            }
-        }
 
         /// <summary>
         /// Reads a little-endian <see cref="short" /> from a span of bytes.
@@ -100,6 +56,99 @@ public static class ByteSpanExtensions
                 System.Buffers.Binary.BinaryPrimitives.WriteInt16BigEndian(bytes, value);
             }
         }
+
+
+        /// <summary>
+        /// Reads a little-endian <see cref="int" /> from a span of bytes.
+        /// </summary>
+        /// <returns>The <see cref="int" /> value.</returns>
+        [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int GetInt32() => MemoryMarshal.Read<int>(bytes);
+
+        /// <summary>
+        /// Reads an <see cref="int" /> from a span of bytes using the specified endianness.
+        /// </summary>
+        /// <param name="endian">The endianness to use.</param>
+        /// <returns>The <see cref="int" /> value.</returns>
+        [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int GetInt32(Endian endian) =>
+            endian == Endian.Little
+                ? bytes.GetInt32()
+                : System.Buffers.Binary.BinaryPrimitives.ReadInt32BigEndian(bytes);
+
+        /// <summary>
+        /// Writes a little-endian <see cref="int" /> to a span of bytes.
+        /// </summary>
+        /// <param name="value">The value to write.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void SetInt32(int value) => Unsafe.WriteUnaligned(ref MemoryMarshal.GetReference(bytes), value);
+
+        /// <summary>
+        /// Writes an <see cref="int" /> to a span of bytes using the specified endianness.
+        /// </summary>
+        /// <param name="value">The value to write.</param>
+        /// <param name="endian">The endianness to use.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void SetInt32(int value, Endian endian)
+        {
+            if (endian == Endian.Little)
+            {
+                System.Buffers.Binary.BinaryPrimitives.WriteInt32LittleEndian(bytes, value);
+            }
+            else
+            {
+                System.Buffers.Binary.BinaryPrimitives.WriteInt32BigEndian(bytes, value);
+            }
+        }
+
+
+        /// <summary>
+        /// Reads a little-endian <see cref="long" /> from a span of bytes.
+        /// </summary>
+        /// <returns>The <see cref="long" /> value.</returns>
+        [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public long GetInt64() => MemoryMarshal.Read<long>(bytes);
+
+        /// <summary>
+        /// Reads a <see cref="long" /> from a span of bytes using the specified endianness.
+        /// </summary>
+        /// <param name="endian">The endianness to use.</param>
+        /// <returns>The <see cref="long" /> value.</returns>
+        [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public long GetInt64(Endian endian) =>
+            endian == Endian.Little
+                ? bytes.GetInt64()
+                : System.Buffers.Binary.BinaryPrimitives.ReadInt64BigEndian(bytes);
+
+        /// <summary>
+        /// Writes a little-endian <see cref="long" /> to a span of bytes.
+        /// </summary>
+        /// <param name="value">The value to write.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void SetInt64(long value) => Unsafe.WriteUnaligned(ref MemoryMarshal.GetReference(bytes), value);
+
+        /// <summary>
+        /// Writes a <see cref="long" /> to a span of bytes using the specified endianness.
+        /// </summary>
+        /// <param name="value">The value to write.</param>
+        /// <param name="endian">The endianness to use.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void SetInt64(long value, Endian endian)
+        {
+            if (endian == Endian.Little)
+            {
+                System.Buffers.Binary.BinaryPrimitives.WriteInt64LittleEndian(bytes, value);
+            }
+            else
+            {
+                System.Buffers.Binary.BinaryPrimitives.WriteInt64BigEndian(bytes, value);
+            }
+        }
+
 
         /// <summary>
         /// Reads a little-endian unsigned 24-bit integer from a span of bytes.
@@ -154,50 +203,6 @@ public static class ByteSpanExtensions
             }
         }
 
-        /// <summary>
-        /// Reads a little-endian <see cref="int" /> from a span of bytes.
-        /// </summary>
-        /// <returns>The <see cref="int" /> value.</returns>
-        [Pure]
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int GetInt32() => MemoryMarshal.Read<int>(bytes);
-
-        /// <summary>
-        /// Reads an <see cref="int" /> from a span of bytes using the specified endianness.
-        /// </summary>
-        /// <param name="endian">The endianness to use.</param>
-        /// <returns>The <see cref="int" /> value.</returns>
-        [Pure]
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int GetInt32(Endian endian) =>
-            endian == Endian.Little
-                ? bytes.GetInt32()
-                : System.Buffers.Binary.BinaryPrimitives.ReadInt32BigEndian(bytes);
-
-        /// <summary>
-        /// Writes a little-endian <see cref="int" /> to a span of bytes.
-        /// </summary>
-        /// <param name="value">The value to write.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void SetInt32(int value) => Unsafe.WriteUnaligned(ref MemoryMarshal.GetReference(bytes), value);
-
-        /// <summary>
-        /// Writes an <see cref="int" /> to a span of bytes using the specified endianness.
-        /// </summary>
-        /// <param name="value">The value to write.</param>
-        /// <param name="endian">The endianness to use.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void SetInt32(int value, Endian endian)
-        {
-            if (endian == Endian.Little)
-            {
-                System.Buffers.Binary.BinaryPrimitives.WriteInt32LittleEndian(bytes, value);
-            }
-            else
-            {
-                System.Buffers.Binary.BinaryPrimitives.WriteInt32BigEndian(bytes, value);
-            }
-        }
 
         /// <summary>
         /// Reads a little-endian <see cref="uint" /> from a span of bytes.
@@ -244,50 +249,6 @@ public static class ByteSpanExtensions
             }
         }
 
-        /// <summary>
-        /// Reads a little-endian <see cref="long" /> from a span of bytes.
-        /// </summary>
-        /// <returns>The <see cref="long" /> value.</returns>
-        [Pure]
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public long GetInt64() => MemoryMarshal.Read<long>(bytes);
-
-        /// <summary>
-        /// Reads a <see cref="long" /> from a span of bytes using the specified endianness.
-        /// </summary>
-        /// <param name="endian">The endianness to use.</param>
-        /// <returns>The <see cref="long" /> value.</returns>
-        [Pure]
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public long GetInt64(Endian endian) =>
-            endian == Endian.Little
-                ? bytes.GetInt64()
-                : System.Buffers.Binary.BinaryPrimitives.ReadInt64BigEndian(bytes);
-
-        /// <summary>
-        /// Writes a little-endian <see cref="long" /> to a span of bytes.
-        /// </summary>
-        /// <param name="value">The value to write.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void SetInt64(long value) => Unsafe.WriteUnaligned(ref MemoryMarshal.GetReference(bytes), value);
-
-        /// <summary>
-        /// Writes a <see cref="long" /> to a span of bytes using the specified endianness.
-        /// </summary>
-        /// <param name="value">The value to write.</param>
-        /// <param name="endian">The endianness to use.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void SetInt64(long value, Endian endian)
-        {
-            if (endian == Endian.Little)
-            {
-                System.Buffers.Binary.BinaryPrimitives.WriteInt64LittleEndian(bytes, value);
-            }
-            else
-            {
-                System.Buffers.Binary.BinaryPrimitives.WriteInt64BigEndian(bytes, value);
-            }
-        }
 
         /// <summary>
         /// Reads a little-endian <see cref="ulong" /> from a span of bytes.
@@ -331,6 +292,51 @@ public static class ByteSpanExtensions
             else
             {
                 System.Buffers.Binary.BinaryPrimitives.WriteUInt64BigEndian(bytes, value);
+            }
+        }
+
+        /// <summary>
+        /// Reads a little-endian word from a span of bytes.
+        /// </summary>
+        /// <returns>The word value.</returns>
+        [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public ushort GetWord() => MemoryMarshal.Read<ushort>(bytes);
+
+        /// <summary>
+        /// Reads a word from a span of bytes using the specified endianness.
+        /// </summary>
+        /// <param name="endian">The endianness to use.</param>
+        /// <returns>The word value.</returns>
+        [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public ushort GetWord(Endian endian) =>
+            endian == Endian.Little
+                ? bytes.GetWord()
+                : System.Buffers.Binary.BinaryPrimitives.ReadUInt16BigEndian(bytes);
+
+        /// <summary>
+        /// Writes a little-endian word to a span of bytes.
+        /// </summary>
+        /// <param name="value">The word value to write.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void SetWord(ushort value) => MemoryMarshal.Write(bytes, value);
+
+        /// <summary>
+        /// Writes a word to a span of bytes using the specified endianness.
+        /// </summary>
+        /// <param name="value">The word value to write.</param>
+        /// <param name="endian">The endianness to use.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void SetWord(ushort value, Endian endian)
+        {
+            if (endian == Endian.Little)
+            {
+                bytes.SetWord(value);
+            }
+            else
+            {
+                System.Buffers.Binary.BinaryPrimitives.WriteUInt16BigEndian(bytes, value);
             }
         }
     }

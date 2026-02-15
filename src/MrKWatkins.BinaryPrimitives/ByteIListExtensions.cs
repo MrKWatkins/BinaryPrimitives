@@ -10,61 +10,6 @@ public static class ByteIListExtensions
     /// <param name="bytes">The list of bytes.</param>
     extension(IList<byte> bytes)
     {
-        /// <summary>
-        /// Reads a little-endian word from a list of bytes at the specified index.
-        /// </summary>
-        /// <param name="index">The zero-based index to read from.</param>
-        /// <returns>The word value.</returns>
-        [Pure]
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ushort GetWord(int index) => (ushort)(bytes[index] | bytes[index + 1] << 8);
-
-        /// <summary>
-        /// Reads a word from a list of bytes at the specified index using the specified endianness.
-        /// </summary>
-        /// <param name="index">The zero-based index to read from.</param>
-        /// <param name="endian">The endianness to use.</param>
-        /// <returns>The word value.</returns>
-        [Pure]
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ushort GetWord(int index, Endian endian) =>
-            endian == Endian.Little
-                ? bytes.GetWord(index)
-                : (ushort)(bytes[index + 1] | bytes[index] << 8);
-
-        /// <summary>
-        /// Writes a little-endian word to a list of bytes at the specified index.
-        /// </summary>
-        /// <param name="index">The zero-based index to write to.</param>
-        /// <param name="value">The word value to write.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void SetWord(int index, ushort value)
-        {
-            var (msb, lsb) = value.ToBytes();
-            bytes[index] = lsb;
-            bytes[index + 1] = msb;
-        }
-
-        /// <summary>
-        /// Writes a word to a list of bytes at the specified index using the specified endianness.
-        /// </summary>
-        /// <param name="index">The zero-based index to write to.</param>
-        /// <param name="value">The word value to write.</param>
-        /// <param name="endian">The endianness to use.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void SetWord(int index, ushort value, Endian endian)
-        {
-            var (msb, lsb) = value.ToBytes();
-            if (endian == Endian.Little)
-            {
-                bytes.SetWord(index, value);
-            }
-            else
-            {
-                bytes[index] = msb;
-                bytes[index + 1] = lsb;
-            }
-        }
 
         /// <summary>
         /// Reads a little-endian <see cref="short" /> from a list of bytes at the specified index.
@@ -120,62 +65,6 @@ public static class ByteIListExtensions
             }
         }
 
-        /// <summary>
-        /// Reads a little-endian unsigned 24-bit integer from a list of bytes at the specified index.
-        /// </summary>
-        /// <param name="index">The zero-based index to read from.</param>
-        /// <returns>The 24-bit value stored in an <see cref="int" />.</returns>
-        [Pure]
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int GetUInt24(int index) => bytes[index] | bytes[index + 1] << 8 | bytes[index + 2] << 16;
-
-        /// <summary>
-        /// Reads an unsigned 24-bit integer from a list of bytes at the specified index using the specified endianness.
-        /// </summary>
-        /// <param name="index">The zero-based index to read from.</param>
-        /// <param name="endian">The endianness to use.</param>
-        /// <returns>The 24-bit value stored in an <see cref="int" />.</returns>
-        [Pure]
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int GetUInt24(int index, Endian endian) =>
-            endian == Endian.Little
-                ? bytes.GetUInt24(index)
-                : bytes[index] << 16 | bytes[index + 1] << 8 | bytes[index + 2];
-
-        /// <summary>
-        /// Writes a little-endian unsigned 24-bit integer to a list of bytes at the specified index.
-        /// </summary>
-        /// <param name="index">The zero-based index to write to.</param>
-        /// <param name="value">The 24-bit value to write. Only the lower 24 bits are used.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void SetUInt24(int index, int value)
-        {
-            value &= 0xFFFFFF;
-            bytes[index] = (byte)value;
-            bytes[index + 1] = (byte)(value >> 8);
-            bytes[index + 2] = (byte)(value >> 16);
-        }
-
-        /// <summary>
-        /// Writes an unsigned 24-bit integer to a list of bytes at the specified index using the specified endianness.
-        /// </summary>
-        /// <param name="index">The zero-based index to write to.</param>
-        /// <param name="value">The 24-bit value to write. Only the lower 24 bits are used.</param>
-        /// <param name="endian">The endianness to use.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void SetUInt24(int index, int value, Endian endian)
-        {
-            if (endian == Endian.Little)
-            {
-                bytes.SetUInt24(index, value);
-            }
-            else
-            {
-                bytes[index] = (byte)(value >> 16);
-                bytes[index + 1] = (byte)(value >> 8);
-                bytes[index + 2] = (byte)value;
-            }
-        }
 
         /// <summary>
         /// Reads a little-endian <see cref="int" /> from a list of bytes at the specified index.
@@ -235,65 +124,10 @@ public static class ByteIListExtensions
             }
         }
 
-        /// <summary>
-        /// Reads a little-endian <see cref="uint" /> from a list of bytes at the specified index.
-        /// </summary>
-        /// <param name="index">The zero-based index to read from.</param>
-        /// <returns>The <see cref="uint" /> value.</returns>
-        [Pure]
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public uint GetUInt32(int index) => (uint)(bytes[index] | bytes[index + 1] << 8 | bytes[index + 2] << 16 | bytes[index + 3] << 24);
-
-        /// <summary>
-        /// Reads a <see cref="uint" /> from a list of bytes at the specified index using the specified endianness.
-        /// </summary>
-        /// <param name="index">The zero-based index to read from.</param>
-        /// <param name="endian">The endianness to use.</param>
-        /// <returns>The <see cref="uint" /> value.</returns>
-        [Pure]
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public uint GetUInt32(int index, Endian endian) =>
-            endian == Endian.Little
-                ? bytes.GetUInt32(index)
-                : (uint)(bytes[index + 3] | bytes[index + 2] << 8 | bytes[index + 1] << 16 | bytes[index] << 24);
-
-        /// <summary>
-        /// Writes a little-endian <see cref="uint" /> to a list of bytes at the specified index.
-        /// </summary>
-        /// <param name="index">The zero-based index to write to.</param>
-        /// <param name="value">The value to write.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void SetUInt32(int index, uint value)
-        {
-            bytes[index] = (byte)(value & 0x000000FF);
-            bytes[index + 1] = (byte)((value & 0x0000FF00) >> 8);
-            bytes[index + 2] = (byte)((value & 0x00FF0000) >> 16);
-            bytes[index + 3] = (byte)((value & 0xFF000000) >> 24);
-        }
-
-        /// <summary>
-        /// Writes a <see cref="uint" /> to a list of bytes at the specified index using the specified endianness.
-        /// </summary>
-        /// <param name="index">The zero-based index to write to.</param>
-        /// <param name="value">The value to write.</param>
-        /// <param name="endian">The endianness to use.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void SetUInt32(int index, uint value, Endian endian)
-        {
-            if (endian == Endian.Little)
-            {
-                bytes.SetUInt32(index, value);
-            }
-            else
-            {
-                bytes[index + 3] = (byte)(value & 0x000000FF);
-                bytes[index + 2] = (byte)((value & 0x0000FF00) >> 8);
-                bytes[index + 1] = (byte)((value & 0x00FF0000) >> 16);
-                bytes[index] = (byte)((value & 0xFF000000) >> 24);
-            }
-        }
-
 #pragma warning disable CS0675 // Bitwise-or operator used on a sign-extended operand
+
+
+
 
         /// <summary>
         /// Reads a little-endian <see cref="long" /> from a list of bytes at the specified index.
@@ -364,6 +198,124 @@ public static class ByteIListExtensions
             }
         }
 
+
+        /// <summary>
+        /// Reads a little-endian unsigned 24-bit integer from a list of bytes at the specified index.
+        /// </summary>
+        /// <param name="index">The zero-based index to read from.</param>
+        /// <returns>The 24-bit value stored in an <see cref="int" />.</returns>
+        [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int GetUInt24(int index) => bytes[index] | bytes[index + 1] << 8 | bytes[index + 2] << 16;
+
+        /// <summary>
+        /// Reads an unsigned 24-bit integer from a list of bytes at the specified index using the specified endianness.
+        /// </summary>
+        /// <param name="index">The zero-based index to read from.</param>
+        /// <param name="endian">The endianness to use.</param>
+        /// <returns>The 24-bit value stored in an <see cref="int" />.</returns>
+        [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int GetUInt24(int index, Endian endian) =>
+            endian == Endian.Little
+                ? bytes.GetUInt24(index)
+                : bytes[index] << 16 | bytes[index + 1] << 8 | bytes[index + 2];
+
+        /// <summary>
+        /// Writes a little-endian unsigned 24-bit integer to a list of bytes at the specified index.
+        /// </summary>
+        /// <param name="index">The zero-based index to write to.</param>
+        /// <param name="value">The 24-bit value to write. Only the lower 24 bits are used.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void SetUInt24(int index, int value)
+        {
+            value &= 0xFFFFFF;
+            bytes[index] = (byte)value;
+            bytes[index + 1] = (byte)(value >> 8);
+            bytes[index + 2] = (byte)(value >> 16);
+        }
+
+        /// <summary>
+        /// Writes an unsigned 24-bit integer to a list of bytes at the specified index using the specified endianness.
+        /// </summary>
+        /// <param name="index">The zero-based index to write to.</param>
+        /// <param name="value">The 24-bit value to write. Only the lower 24 bits are used.</param>
+        /// <param name="endian">The endianness to use.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void SetUInt24(int index, int value, Endian endian)
+        {
+            if (endian == Endian.Little)
+            {
+                bytes.SetUInt24(index, value);
+            }
+            else
+            {
+                bytes[index] = (byte)(value >> 16);
+                bytes[index + 1] = (byte)(value >> 8);
+                bytes[index + 2] = (byte)value;
+            }
+        }
+
+
+        /// <summary>
+        /// Reads a little-endian <see cref="uint" /> from a list of bytes at the specified index.
+        /// </summary>
+        /// <param name="index">The zero-based index to read from.</param>
+        /// <returns>The <see cref="uint" /> value.</returns>
+        [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public uint GetUInt32(int index) => (uint)(bytes[index] | bytes[index + 1] << 8 | bytes[index + 2] << 16 | bytes[index + 3] << 24);
+
+        /// <summary>
+        /// Reads a <see cref="uint" /> from a list of bytes at the specified index using the specified endianness.
+        /// </summary>
+        /// <param name="index">The zero-based index to read from.</param>
+        /// <param name="endian">The endianness to use.</param>
+        /// <returns>The <see cref="uint" /> value.</returns>
+        [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public uint GetUInt32(int index, Endian endian) =>
+            endian == Endian.Little
+                ? bytes.GetUInt32(index)
+                : (uint)(bytes[index + 3] | bytes[index + 2] << 8 | bytes[index + 1] << 16 | bytes[index] << 24);
+
+        /// <summary>
+        /// Writes a little-endian <see cref="uint" /> to a list of bytes at the specified index.
+        /// </summary>
+        /// <param name="index">The zero-based index to write to.</param>
+        /// <param name="value">The value to write.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void SetUInt32(int index, uint value)
+        {
+            bytes[index] = (byte)(value & 0x000000FF);
+            bytes[index + 1] = (byte)((value & 0x0000FF00) >> 8);
+            bytes[index + 2] = (byte)((value & 0x00FF0000) >> 16);
+            bytes[index + 3] = (byte)((value & 0xFF000000) >> 24);
+        }
+
+        /// <summary>
+        /// Writes a <see cref="uint" /> to a list of bytes at the specified index using the specified endianness.
+        /// </summary>
+        /// <param name="index">The zero-based index to write to.</param>
+        /// <param name="value">The value to write.</param>
+        /// <param name="endian">The endianness to use.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void SetUInt32(int index, uint value, Endian endian)
+        {
+            if (endian == Endian.Little)
+            {
+                bytes.SetUInt32(index, value);
+            }
+            else
+            {
+                bytes[index + 3] = (byte)(value & 0x000000FF);
+                bytes[index + 2] = (byte)((value & 0x0000FF00) >> 8);
+                bytes[index + 1] = (byte)((value & 0x00FF0000) >> 16);
+                bytes[index] = (byte)((value & 0xFF000000) >> 24);
+            }
+        }
+
+
         /// <summary>
         /// Reads a little-endian <see cref="ulong" /> from a list of bytes at the specified index.
         /// </summary>
@@ -433,6 +385,63 @@ public static class ByteIListExtensions
             }
         }
 
+
 #pragma warning restore CS0675
+
+        /// <summary>
+        /// Reads a little-endian word from a list of bytes at the specified index.
+        /// </summary>
+        /// <param name="index">The zero-based index to read from.</param>
+        /// <returns>The word value.</returns>
+        [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public ushort GetWord(int index) => (ushort)(bytes[index] | bytes[index + 1] << 8);
+
+        /// <summary>
+        /// Reads a word from a list of bytes at the specified index using the specified endianness.
+        /// </summary>
+        /// <param name="index">The zero-based index to read from.</param>
+        /// <param name="endian">The endianness to use.</param>
+        /// <returns>The word value.</returns>
+        [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public ushort GetWord(int index, Endian endian) =>
+            endian == Endian.Little
+                ? bytes.GetWord(index)
+                : (ushort)(bytes[index + 1] | bytes[index] << 8);
+
+        /// <summary>
+        /// Writes a little-endian word to a list of bytes at the specified index.
+        /// </summary>
+        /// <param name="index">The zero-based index to write to.</param>
+        /// <param name="value">The word value to write.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void SetWord(int index, ushort value)
+        {
+            var (msb, lsb) = value.ToBytes();
+            bytes[index] = lsb;
+            bytes[index + 1] = msb;
+        }
+
+        /// <summary>
+        /// Writes a word to a list of bytes at the specified index using the specified endianness.
+        /// </summary>
+        /// <param name="index">The zero-based index to write to.</param>
+        /// <param name="value">The word value to write.</param>
+        /// <param name="endian">The endianness to use.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void SetWord(int index, ushort value, Endian endian)
+        {
+            var (msb, lsb) = value.ToBytes();
+            if (endian == Endian.Little)
+            {
+                bytes.SetWord(index, value);
+            }
+            else
+            {
+                bytes[index] = msb;
+                bytes[index + 1] = lsb;
+            }
+        }
     }
 }

@@ -5,7 +5,7 @@ namespace MrKWatkins.BinaryPrimitives;
 /// <summary>
 /// Extension methods for <see cref="int" />.
 /// </summary>
-public static class IntExtensions
+public static class Int32Extensions
 {
     /// <param name="value">The int value.</param>
     extension(int value)
