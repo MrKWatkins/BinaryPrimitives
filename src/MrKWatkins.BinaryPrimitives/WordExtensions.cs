@@ -114,28 +114,6 @@ public static class WordExtensions
     }
 
     /// <summary>
-    /// Reads a little-endian word from a span of bytes.
-    /// </summary>
-    /// <param name="bytes">The span of bytes.</param>
-    /// <returns>The word value.</returns>
-    [Pure]
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static ushort GetWord(this Span<byte> bytes) => MemoryMarshal.Read<ushort>(bytes);
-
-    /// <summary>
-    /// Reads a word from a span of bytes using the specified endianness.
-    /// </summary>
-    /// <param name="bytes">The span of bytes.</param>
-    /// <param name="endian">The endianness to use.</param>
-    /// <returns>The word value.</returns>
-    [Pure]
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static ushort GetWord(this Span<byte> bytes, Endian endian) =>
-        endian == Endian.Little
-            ? bytes.GetWord()
-            : System.Buffers.Binary.BinaryPrimitives.ReadUInt16BigEndian(bytes);
-
-    /// <summary>
     /// Reads a little-endian word from a read-only span of bytes.
     /// </summary>
     /// <param name="bytes">The read-only span of bytes.</param>
@@ -231,33 +209,6 @@ public static class WordExtensions
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static ushort GetWord(this List<byte> bytes, int index, Endian endian) =>
         CollectionsMarshal.AsSpan(bytes)[index..].GetWord(endian);
-
-    /// <summary>
-    /// Writes a little-endian word to a span of bytes.
-    /// </summary>
-    /// <param name="bytes">The span of bytes.</param>
-    /// <param name="value">The word value to write.</param>
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void SetWord(this Span<byte> bytes, ushort value) => MemoryMarshal.Write(bytes, value);
-
-    /// <summary>
-    /// Writes a word to a span of bytes using the specified endianness.
-    /// </summary>
-    /// <param name="bytes">The span of bytes.</param>
-    /// <param name="value">The word value to write.</param>
-    /// <param name="endian">The endianness to use.</param>
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void SetWord(this Span<byte> bytes, ushort value, Endian endian)
-    {
-        if (endian == Endian.Little)
-        {
-            bytes.SetWord(value);
-        }
-        else
-        {
-            System.Buffers.Binary.BinaryPrimitives.WriteUInt16BigEndian(bytes, value);
-        }
-    }
 
     /// <summary>
     /// Writes a little-endian word to a list of bytes at the specified index.

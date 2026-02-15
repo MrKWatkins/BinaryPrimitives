@@ -13,28 +13,6 @@ public static class UInt64Extensions
     private const int ReadOnlyPriority = 1;
 
     /// <summary>
-    /// Reads a little-endian <see cref="ulong" /> from a span of bytes.
-    /// </summary>
-    /// <param name="bytes">The span of bytes.</param>
-    /// <returns>The <see cref="ulong" /> value.</returns>
-    [Pure]
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static ulong GetUInt64(this Span<byte> bytes) => MemoryMarshal.Read<ulong>(bytes);
-
-    /// <summary>
-    /// Reads a <see cref="ulong" /> from a span of bytes using the specified endianness.
-    /// </summary>
-    /// <param name="bytes">The span of bytes.</param>
-    /// <param name="endian">The endianness to use.</param>
-    /// <returns>The <see cref="ulong" /> value.</returns>
-    [Pure]
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static ulong GetUInt64(this Span<byte> bytes, Endian endian) =>
-        endian == Endian.Little
-            ? bytes.GetUInt64()
-            : System.Buffers.Binary.BinaryPrimitives.ReadUInt64BigEndian(bytes);
-
-    /// <summary>
     /// Reads a little-endian <see cref="ulong" /> from a read-only span of bytes.
     /// </summary>
     /// <param name="bytes">The read-only span of bytes.</param>
@@ -136,33 +114,6 @@ public static class UInt64Extensions
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static ulong GetUInt64(this List<byte> bytes, int index, Endian endian) =>
         CollectionsMarshal.AsSpan(bytes)[index..].GetUInt64(endian);
-
-    /// <summary>
-    /// Writes a little-endian <see cref="ulong" /> to a span of bytes.
-    /// </summary>
-    /// <param name="bytes">The span of bytes.</param>
-    /// <param name="value">The value to write.</param>
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void SetUInt64(this Span<byte> bytes, ulong value) => Unsafe.WriteUnaligned(ref MemoryMarshal.GetReference(bytes), value);
-
-    /// <summary>
-    /// Writes a <see cref="ulong" /> to a span of bytes using the specified endianness.
-    /// </summary>
-    /// <param name="bytes">The span of bytes.</param>
-    /// <param name="value">The value to write.</param>
-    /// <param name="endian">The endianness to use.</param>
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void SetUInt64(this Span<byte> bytes, ulong value, Endian endian)
-    {
-        if (endian == Endian.Little)
-        {
-            System.Buffers.Binary.BinaryPrimitives.WriteUInt64LittleEndian(bytes, value);
-        }
-        else
-        {
-            System.Buffers.Binary.BinaryPrimitives.WriteUInt64BigEndian(bytes, value);
-        }
-    }
 
     /// <summary>
     /// Writes a little-endian <see cref="ulong" /> to a list of bytes at the specified index.

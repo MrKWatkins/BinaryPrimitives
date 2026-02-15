@@ -13,28 +13,6 @@ public static class Int64Extensions
     private const int ReadOnlyPriority = 1;
 
     /// <summary>
-    /// Reads a little-endian <see cref="long" /> from a span of bytes.
-    /// </summary>
-    /// <param name="bytes">The span of bytes.</param>
-    /// <returns>The <see cref="long" /> value.</returns>
-    [Pure]
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static long GetInt64(this Span<byte> bytes) => MemoryMarshal.Read<long>(bytes);
-
-    /// <summary>
-    /// Reads a <see cref="long" /> from a span of bytes using the specified endianness.
-    /// </summary>
-    /// <param name="bytes">The span of bytes.</param>
-    /// <param name="endian">The endianness to use.</param>
-    /// <returns>The <see cref="long" /> value.</returns>
-    [Pure]
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static long GetInt64(this Span<byte> bytes, Endian endian) =>
-        endian == Endian.Little
-            ? bytes.GetInt64()
-            : System.Buffers.Binary.BinaryPrimitives.ReadInt64BigEndian(bytes);
-
-    /// <summary>
     /// Reads a little-endian <see cref="long" /> from a read-only span of bytes.
     /// </summary>
     /// <param name="bytes">The read-only span of bytes.</param>
@@ -136,33 +114,6 @@ public static class Int64Extensions
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static long GetInt64(this List<byte> bytes, int index, Endian endian) =>
         CollectionsMarshal.AsSpan(bytes)[index..].GetInt64(endian);
-
-    /// <summary>
-    /// Writes a little-endian <see cref="long" /> to a span of bytes.
-    /// </summary>
-    /// <param name="bytes">The span of bytes.</param>
-    /// <param name="value">The value to write.</param>
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void SetInt64(this Span<byte> bytes, long value) => Unsafe.WriteUnaligned(ref MemoryMarshal.GetReference(bytes), value);
-
-    /// <summary>
-    /// Writes a <see cref="long" /> to a span of bytes using the specified endianness.
-    /// </summary>
-    /// <param name="bytes">The span of bytes.</param>
-    /// <param name="value">The value to write.</param>
-    /// <param name="endian">The endianness to use.</param>
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void SetInt64(this Span<byte> bytes, long value, Endian endian)
-    {
-        if (endian == Endian.Little)
-        {
-            System.Buffers.Binary.BinaryPrimitives.WriteInt64LittleEndian(bytes, value);
-        }
-        else
-        {
-            System.Buffers.Binary.BinaryPrimitives.WriteInt64BigEndian(bytes, value);
-        }
-    }
 
     /// <summary>
     /// Writes a little-endian <see cref="long" /> to a list of bytes at the specified index.

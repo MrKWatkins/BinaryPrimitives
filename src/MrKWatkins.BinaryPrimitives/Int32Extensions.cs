@@ -12,28 +12,6 @@ public static class Int32Extensions
     private const int ReadOnlyPriority = 1;
 
     /// <summary>
-    /// Reads a little-endian <see cref="int" /> from a span of bytes.
-    /// </summary>
-    /// <param name="bytes">The span of bytes.</param>
-    /// <returns>The <see cref="int" /> value.</returns>
-    [Pure]
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static int GetInt32(this Span<byte> bytes) => MemoryMarshal.Read<int>(bytes);
-
-    /// <summary>
-    /// Reads an <see cref="int" /> from a span of bytes using the specified endianness.
-    /// </summary>
-    /// <param name="bytes">The span of bytes.</param>
-    /// <param name="endian">The endianness to use.</param>
-    /// <returns>The <see cref="int" /> value.</returns>
-    [Pure]
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static int GetInt32(this Span<byte> bytes, Endian endian) =>
-        endian == Endian.Little
-            ? bytes.GetInt32()
-            : System.Buffers.Binary.BinaryPrimitives.ReadInt32BigEndian(bytes);
-
-    /// <summary>
     /// Reads a little-endian <see cref="int" /> from a read-only span of bytes.
     /// </summary>
     /// <param name="bytes">The read-only span of bytes.</param>
@@ -129,33 +107,6 @@ public static class Int32Extensions
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static int GetInt32(this List<byte> bytes, int index, Endian endian) =>
         CollectionsMarshal.AsSpan(bytes)[index..].GetInt32(endian);
-
-    /// <summary>
-    /// Writes a little-endian <see cref="int" /> to a span of bytes.
-    /// </summary>
-    /// <param name="bytes">The span of bytes.</param>
-    /// <param name="value">The value to write.</param>
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void SetInt32(this Span<byte> bytes, int value) => Unsafe.WriteUnaligned(ref MemoryMarshal.GetReference(bytes), value);
-
-    /// <summary>
-    /// Writes an <see cref="int" /> to a span of bytes using the specified endianness.
-    /// </summary>
-    /// <param name="bytes">The span of bytes.</param>
-    /// <param name="value">The value to write.</param>
-    /// <param name="endian">The endianness to use.</param>
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void SetInt32(this Span<byte> bytes, int value, Endian endian)
-    {
-        if (endian == Endian.Little)
-        {
-            System.Buffers.Binary.BinaryPrimitives.WriteInt32LittleEndian(bytes, value);
-        }
-        else
-        {
-            System.Buffers.Binary.BinaryPrimitives.WriteInt32BigEndian(bytes, value);
-        }
-    }
 
     /// <summary>
     /// Writes a little-endian <see cref="int" /> to a list of bytes at the specified index.

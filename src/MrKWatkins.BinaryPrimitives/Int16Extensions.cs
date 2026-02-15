@@ -12,28 +12,6 @@ public static class Int16Extensions
     private const int ReadOnlyPriority = 1;
 
     /// <summary>
-    /// Reads a little-endian <see cref="short" /> from a span of bytes.
-    /// </summary>
-    /// <param name="bytes">The span of bytes.</param>
-    /// <returns>The <see cref="short" /> value.</returns>
-    [Pure]
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static short GetInt16(this Span<byte> bytes) => MemoryMarshal.Read<short>(bytes);
-
-    /// <summary>
-    /// Reads a <see cref="short" /> from a span of bytes using the specified endianness.
-    /// </summary>
-    /// <param name="bytes">The span of bytes.</param>
-    /// <param name="endian">The endianness to use.</param>
-    /// <returns>The <see cref="short" /> value.</returns>
-    [Pure]
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static short GetInt16(this Span<byte> bytes, Endian endian) =>
-        endian == Endian.Little
-            ? bytes.GetInt16()
-            : System.Buffers.Binary.BinaryPrimitives.ReadInt16BigEndian(bytes);
-
-    /// <summary>
     /// Reads a little-endian <see cref="short" /> from a read-only span of bytes.
     /// </summary>
     /// <param name="bytes">The read-only span of bytes.</param>
@@ -129,33 +107,6 @@ public static class Int16Extensions
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static short GetInt16(this List<byte> bytes, int index, Endian endian) =>
         CollectionsMarshal.AsSpan(bytes)[index..].GetInt16(endian);
-
-    /// <summary>
-    /// Writes a little-endian <see cref="short" /> to a span of bytes.
-    /// </summary>
-    /// <param name="bytes">The span of bytes.</param>
-    /// <param name="value">The value to write.</param>
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void SetInt16(this Span<byte> bytes, short value) => Unsafe.WriteUnaligned(ref MemoryMarshal.GetReference(bytes), value);
-
-    /// <summary>
-    /// Writes a <see cref="short" /> to a span of bytes using the specified endianness.
-    /// </summary>
-    /// <param name="bytes">The span of bytes.</param>
-    /// <param name="value">The value to write.</param>
-    /// <param name="endian">The endianness to use.</param>
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void SetInt16(this Span<byte> bytes, short value, Endian endian)
-    {
-        if (endian == Endian.Little)
-        {
-            System.Buffers.Binary.BinaryPrimitives.WriteInt16LittleEndian(bytes, value);
-        }
-        else
-        {
-            System.Buffers.Binary.BinaryPrimitives.WriteInt16BigEndian(bytes, value);
-        }
-    }
 
     /// <summary>
     /// Writes a little-endian <see cref="short" /> to a list of bytes at the specified index.
