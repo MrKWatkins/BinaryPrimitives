@@ -2,12 +2,12 @@ using System.Buffers;
 
 namespace MrKWatkins.BinaryPrimitives.Tests;
 
-public sealed class ReadOnlyMemoryExtensionsTests
+public sealed class ArrayExtensionsTests
 {
     [Test]
-    public void CreateWrappedSequence_ReadOnlyMemory()
+    public void CreateWrappedSequence_Array()
     {
-        ReadOnlyMemory<byte> bytes = new byte[] { 1, 2 };
+        byte[] bytes = [1, 2];
         var wrap = bytes.CreateWrappedSequence();
 
         var reader = new SequenceReader<byte>(wrap);
@@ -23,9 +23,9 @@ public sealed class ReadOnlyMemoryExtensionsTests
     }
 
     [Test]
-    public void CreateWrappedSequence_ReadOnlyMemory_StartIndex()
+    public void CreateWrappedSequence_Array_StartIndex()
     {
-        ReadOnlyMemory<byte> bytes = new byte[] { 1, 2, 3 };
+        byte[] bytes = [1, 2, 3];
         var wrap = bytes.CreateWrappedSequence(2);
 
         var reader = new SequenceReader<byte>(wrap);
