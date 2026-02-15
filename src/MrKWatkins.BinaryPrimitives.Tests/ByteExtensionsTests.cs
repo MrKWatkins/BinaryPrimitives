@@ -7,14 +7,7 @@ public sealed class ByteExtensionsTests
     [TestCase(0b00000010, 0, false)]
     [TestCase(0b00000010, 1, true)]
     [TestCase(0b10000010, 7, true)]
-    public void GetBit_Byte(byte @byte, int index, bool expected) => @byte.GetBit(index).Should().Equal(expected);
-
-    [TestCase(0b00000000, 0, false)]
-    [TestCase(0b00000001, 0, true)]
-    [TestCase(0b00000010, 0, false)]
-    [TestCase(0b00000010, 1, true)]
-    [TestCase(0b10000010, 7, true)]
-    public void GetBit_Int(int @byte, int index, bool expected) => @byte.GetBit(index).Should().Equal(expected);
+    public void GetBit(byte @byte, int index, bool expected) => @byte.GetBit(index).Should().Equal(expected);
 
     [TestCase(0b11111111, 0, 7, 0b11111111)]
     [TestCase(0b11111111, 1, 6, 0b00111111)]
