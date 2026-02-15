@@ -1,5 +1,4 @@
 using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 
 namespace MrKWatkins.BinaryPrimitives;
 
@@ -8,8 +7,6 @@ namespace MrKWatkins.BinaryPrimitives;
 /// </summary>
 public static class WordExtensions
 {
-    private const int ConcreteTypePriority = 2;
-
     [ExcludeFromCodeCoverage]
     static WordExtensions()
     {
@@ -111,31 +108,6 @@ public static class WordExtensions
             bytes.Add(lsb);
         }
     }
-
-    /// <summary>
-    /// Reads a little-endian word from a <see cref="List{T}" /> of bytes at the specified index.
-    /// </summary>
-    /// <param name="bytes">The list of bytes.</param>
-    /// <param name="index">The zero-based index to read from.</param>
-    /// <returns>The word value.</returns>
-    [Pure]
-    [OverloadResolutionPriority(ConcreteTypePriority)]
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static ushort GetWord(this List<byte> bytes, int index) =>
-        CollectionsMarshal.AsSpan(bytes)[index..].GetWord();
-
-    /// <summary>
-    /// Reads a word from a <see cref="List{T}" /> of bytes at the specified index using the specified endianness.
-    /// </summary>
-    /// <param name="bytes">The list of bytes.</param>
-    /// <param name="index">The zero-based index to read from.</param>
-    /// <param name="endian">The endianness to use.</param>
-    /// <returns>The word value.</returns>
-    [Pure]
-    [OverloadResolutionPriority(ConcreteTypePriority)]
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static ushort GetWord(this List<byte> bytes, int index, Endian endian) =>
-        CollectionsMarshal.AsSpan(bytes)[index..].GetWord(endian);
 
     /// <summary>
     /// Determines whether a signed addition overflowed by examining the sum and its operands.
