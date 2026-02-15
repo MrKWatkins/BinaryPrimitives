@@ -15,8 +15,6 @@ jobs:
 
       - name: Build
         uses: MrKWatkins/dotnet-build@main
-        env:
-          DEEPSOURCE_DSN: ${{ secrets.DEEPSOURCE_DSN }}
         with:
           name: MrKWatkins.BinaryPrimitives
           directory: src
