@@ -114,30 +114,6 @@ public static class WordExtensions
     }
 
     /// <summary>
-    /// Reads a little-endian word from a list of bytes at the specified index.
-    /// </summary>
-    /// <param name="bytes">The list of bytes.</param>
-    /// <param name="index">The zero-based index to read from.</param>
-    /// <returns>The word value.</returns>
-    [Pure]
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static ushort GetWord(this IList<byte> bytes, int index) => (ushort)(bytes[index] | bytes[index + 1] << 8);
-
-    /// <summary>
-    /// Reads a word from a list of bytes at the specified index using the specified endianness.
-    /// </summary>
-    /// <param name="bytes">The list of bytes.</param>
-    /// <param name="index">The zero-based index to read from.</param>
-    /// <param name="endian">The endianness to use.</param>
-    /// <returns>The word value.</returns>
-    [Pure]
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static ushort GetWord(this IList<byte> bytes, int index, Endian endian) =>
-        endian == Endian.Little
-            ? bytes.GetWord(index)
-            : (ushort)(bytes[index + 1] | bytes[index] << 8);
-
-    /// <summary>
     /// Reads a little-endian word from a read-only list of bytes at the specified index.
     /// </summary>
     /// <param name="bytes">The read-only list of bytes.</param>
@@ -187,42 +163,6 @@ public static class WordExtensions
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static ushort GetWord(this List<byte> bytes, int index, Endian endian) =>
         CollectionsMarshal.AsSpan(bytes)[index..].GetWord(endian);
-
-    /// <summary>
-    /// Writes a little-endian word to a list of bytes at the specified index.
-    /// </summary>
-    /// <param name="bytes">The list of bytes.</param>
-    /// <param name="index">The zero-based index to write to.</param>
-    /// <param name="value">The word value to write.</param>
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void SetWord(this IList<byte> bytes, int index, ushort value)
-    {
-        var (msb, lsb) = value.ToBytes();
-        bytes[index] = lsb;
-        bytes[index + 1] = msb;
-    }
-
-    /// <summary>
-    /// Writes a word to a list of bytes at the specified index using the specified endianness.
-    /// </summary>
-    /// <param name="bytes">The list of bytes.</param>
-    /// <param name="index">The zero-based index to write to.</param>
-    /// <param name="value">The word value to write.</param>
-    /// <param name="endian">The endianness to use.</param>
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void SetWord(this IList<byte> bytes, int index, ushort value, Endian endian)
-    {
-        var (msb, lsb) = value.ToBytes();
-        if (endian == Endian.Little)
-        {
-            bytes.SetWord(index, value);
-        }
-        else
-        {
-            bytes[index] = msb;
-            bytes[index + 1] = lsb;
-        }
-    }
 
     /// <summary>
     /// Determines whether a signed addition overflowed by examining the sum and its operands.
