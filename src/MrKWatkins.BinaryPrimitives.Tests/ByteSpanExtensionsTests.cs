@@ -3,44 +3,6 @@ namespace MrKWatkins.BinaryPrimitives.Tests;
 public sealed class ByteSpanExtensionsTests
 {
     [Test]
-    public void GetWord_Span()
-    {
-        Span<byte> bytes = [0x01, 0x02];
-
-        bytes.GetWord().Should().Equal(0x0201);
-    }
-
-    [Test]
-    public void GetWord_Span_Endian()
-    {
-        Span<byte> bytes = [0x01, 0x02];
-
-        bytes.GetWord(Endian.Little).Should().Equal(0x0201);
-        bytes.GetWord(Endian.Big).Should().Equal(0x0102);
-    }
-
-    [Test]
-    public void SetWord_Span()
-    {
-        Span<byte> bytes = [0xFF, 0xFE];
-
-        bytes.SetWord(0x1234);
-        bytes.ToArray().Should().SequenceEqual(0x34, 0x12);
-    }
-
-    [Test]
-    public void SetWord_Span_Endian()
-    {
-        Span<byte> bytes = [0xFF, 0xFE];
-
-        bytes.SetWord(0x1234, Endian.Little);
-        bytes.ToArray().Should().SequenceEqual(0x34, 0x12);
-
-        bytes.SetWord(0x1234, Endian.Big);
-        bytes.ToArray().Should().SequenceEqual(0x12, 0x34);
-    }
-
-    [Test]
     public void GetInt16_Span()
     {
         Span<byte> bytes = [0x01, 0x02];
@@ -76,6 +38,82 @@ public sealed class ByteSpanExtensionsTests
 
         bytes.SetInt16(0x1234, Endian.Big);
         bytes.ToArray().Should().SequenceEqual(0x12, 0x34);
+    }
+
+    [Test]
+    public void GetInt32_Span()
+    {
+        Span<byte> bytes = [0x01, 0x02, 0x03, 0x04];
+
+        bytes.GetInt32().Should().Equal(0x04030201);
+    }
+
+    [Test]
+    public void GetInt32_Span_Endian()
+    {
+        Span<byte> bytes = [0x01, 0x02, 0x03, 0x04];
+
+        bytes.GetInt32(Endian.Little).Should().Equal(0x04030201);
+        bytes.GetInt32(Endian.Big).Should().Equal(0x01020304);
+    }
+
+    [Test]
+    public void SetInt32_Span()
+    {
+        Span<byte> bytes = [0xFF, 0xFE, 0xFD, 0xFC];
+
+        bytes.SetInt32(0x12345678);
+        bytes.ToArray().Should().SequenceEqual(0x78, 0x56, 0x34, 0x12);
+    }
+
+    [Test]
+    public void SetInt32_Span_Endian()
+    {
+        Span<byte> bytes = [0xFF, 0xFE, 0xFD, 0xFC];
+
+        bytes.SetInt32(0x12345678, Endian.Little);
+        bytes.ToArray().Should().SequenceEqual(0x78, 0x56, 0x34, 0x12);
+
+        bytes.SetInt32(0x12345678, Endian.Big);
+        bytes.ToArray().Should().SequenceEqual(0x12, 0x34, 0x56, 0x78);
+    }
+
+    [Test]
+    public void GetInt64_Span()
+    {
+        Span<byte> bytes = [0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08];
+
+        bytes.GetInt64().Should().Equal(0x0807060504030201L);
+    }
+
+    [Test]
+    public void GetInt64_Span_Endian()
+    {
+        Span<byte> bytes = [0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08];
+
+        bytes.GetInt64(Endian.Little).Should().Equal(0x0807060504030201L);
+        bytes.GetInt64(Endian.Big).Should().Equal(0x0102030405060708L);
+    }
+
+    [Test]
+    public void SetInt64_Span()
+    {
+        Span<byte> bytes = [0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08];
+
+        bytes.SetInt64(0x123456789ABCDEF0L);
+        bytes.ToArray().Should().SequenceEqual(0xF0, 0xDE, 0xBC, 0x9A, 0x78, 0x56, 0x34, 0x12);
+    }
+
+    [Test]
+    public void SetInt64_Span_Endian()
+    {
+        Span<byte> bytes = [0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08];
+
+        bytes.SetInt64(0x123456789ABCDEF0L, Endian.Little);
+        bytes.ToArray().Should().SequenceEqual(0xF0, 0xDE, 0xBC, 0x9A, 0x78, 0x56, 0x34, 0x12);
+
+        bytes.SetInt64(0x123456789ABCDEF0L, Endian.Big);
+        bytes.ToArray().Should().SequenceEqual(0x12, 0x34, 0x56, 0x78, 0x9A, 0xBC, 0xDE, 0xF0);
     }
 
     [Test]
@@ -120,44 +158,6 @@ public sealed class ByteSpanExtensionsTests
     }
 
     [Test]
-    public void GetInt32_Span()
-    {
-        Span<byte> bytes = [0x01, 0x02, 0x03, 0x04];
-
-        bytes.GetInt32().Should().Equal(0x04030201);
-    }
-
-    [Test]
-    public void GetInt32_Span_Endian()
-    {
-        Span<byte> bytes = [0x01, 0x02, 0x03, 0x04];
-
-        bytes.GetInt32(Endian.Little).Should().Equal(0x04030201);
-        bytes.GetInt32(Endian.Big).Should().Equal(0x01020304);
-    }
-
-    [Test]
-    public void SetInt32_Span()
-    {
-        Span<byte> bytes = [0xFF, 0xFE, 0xFD, 0xFC];
-
-        bytes.SetInt32(0x12345678);
-        bytes.ToArray().Should().SequenceEqual(0x78, 0x56, 0x34, 0x12);
-    }
-
-    [Test]
-    public void SetInt32_Span_Endian()
-    {
-        Span<byte> bytes = [0xFF, 0xFE, 0xFD, 0xFC];
-
-        bytes.SetInt32(0x12345678, Endian.Little);
-        bytes.ToArray().Should().SequenceEqual(0x78, 0x56, 0x34, 0x12);
-
-        bytes.SetInt32(0x12345678, Endian.Big);
-        bytes.ToArray().Should().SequenceEqual(0x12, 0x34, 0x56, 0x78);
-    }
-
-    [Test]
     public void GetUInt32_Span()
     {
         Span<byte> bytes = [0x01, 0x02, 0x03, 0x04];
@@ -196,44 +196,6 @@ public sealed class ByteSpanExtensionsTests
     }
 
     [Test]
-    public void GetInt64_Span()
-    {
-        Span<byte> bytes = [0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08];
-
-        bytes.GetInt64().Should().Equal(0x0807060504030201L);
-    }
-
-    [Test]
-    public void GetInt64_Span_Endian()
-    {
-        Span<byte> bytes = [0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08];
-
-        bytes.GetInt64(Endian.Little).Should().Equal(0x0807060504030201L);
-        bytes.GetInt64(Endian.Big).Should().Equal(0x0102030405060708L);
-    }
-
-    [Test]
-    public void SetInt64_Span()
-    {
-        Span<byte> bytes = [0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08];
-
-        bytes.SetInt64(0x123456789ABCDEF0L);
-        bytes.ToArray().Should().SequenceEqual(0xF0, 0xDE, 0xBC, 0x9A, 0x78, 0x56, 0x34, 0x12);
-    }
-
-    [Test]
-    public void SetInt64_Span_Endian()
-    {
-        Span<byte> bytes = [0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08];
-
-        bytes.SetInt64(0x123456789ABCDEF0L, Endian.Little);
-        bytes.ToArray().Should().SequenceEqual(0xF0, 0xDE, 0xBC, 0x9A, 0x78, 0x56, 0x34, 0x12);
-
-        bytes.SetInt64(0x123456789ABCDEF0L, Endian.Big);
-        bytes.ToArray().Should().SequenceEqual(0x12, 0x34, 0x56, 0x78, 0x9A, 0xBC, 0xDE, 0xF0);
-    }
-
-    [Test]
     public void GetUInt64_Span()
     {
         Span<byte> bytes = [0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08];
@@ -269,5 +231,43 @@ public sealed class ByteSpanExtensionsTests
 
         bytes.SetUInt64(0x123456789ABCDEF0UL, Endian.Big);
         bytes.ToArray().Should().SequenceEqual(0x12, 0x34, 0x56, 0x78, 0x9A, 0xBC, 0xDE, 0xF0);
+    }
+
+    [Test]
+    public void GetWord_Span()
+    {
+        Span<byte> bytes = [0x01, 0x02];
+
+        bytes.GetWord().Should().Equal(0x0201);
+    }
+
+    [Test]
+    public void GetWord_Span_Endian()
+    {
+        Span<byte> bytes = [0x01, 0x02];
+
+        bytes.GetWord(Endian.Little).Should().Equal(0x0201);
+        bytes.GetWord(Endian.Big).Should().Equal(0x0102);
+    }
+
+    [Test]
+    public void SetWord_Span()
+    {
+        Span<byte> bytes = [0xFF, 0xFE];
+
+        bytes.SetWord(0x1234);
+        bytes.ToArray().Should().SequenceEqual(0x34, 0x12);
+    }
+
+    [Test]
+    public void SetWord_Span_Endian()
+    {
+        Span<byte> bytes = [0xFF, 0xFE];
+
+        bytes.SetWord(0x1234, Endian.Little);
+        bytes.ToArray().Should().SequenceEqual(0x34, 0x12);
+
+        bytes.SetWord(0x1234, Endian.Big);
+        bytes.ToArray().Should().SequenceEqual(0x12, 0x34);
     }
 }
