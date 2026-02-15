@@ -6,7 +6,7 @@ using System.Runtime.Intrinsics;
 namespace MrKWatkins.BinaryPrimitives;
 
 /// <summary>
-/// Extension methods for <see cref="byte" /> and <see cref="int" />.
+/// Extension methods for <see cref="byte" />.
 /// </summary>
 public static class ByteExtensions
 {
@@ -19,16 +19,6 @@ public static class ByteExtensions
     [Pure]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool GetBit(this byte value, int index) => (value & (1 << index)) != 0;
-
-    /// <summary>
-    /// Gets the value of the bit at the specified index.
-    /// </summary>
-    /// <param name="value">The int value.</param>
-    /// <param name="index">The zero-based bit index.</param>
-    /// <returns><see langword="true" /> if the bit is set; <see langword="false" /> otherwise.</returns>
-    [Pure]
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static bool GetBit(this int value, int index) => (value & (1 << index)) != 0;
 
     /// <summary>
     /// Gets a range of bits from a byte, shifted down to the least significant position.
