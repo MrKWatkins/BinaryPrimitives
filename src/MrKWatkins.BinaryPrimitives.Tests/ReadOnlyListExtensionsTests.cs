@@ -1,6 +1,6 @@
 namespace MrKWatkins.BinaryPrimitives.Tests;
 
-[TestOf(typeof(ReadOnlyListExtensions))]
+[TestOf(typeof(ByteIReadOnlyListExtensions))]
 public sealed class ReadOnlyListExtensionsTests
 {
     [Test]

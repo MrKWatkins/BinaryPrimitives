@@ -9,7 +9,6 @@ namespace MrKWatkins.BinaryPrimitives;
 public static class WordExtensions
 {
     private const int ConcreteTypePriority = 2;
-    private const int ReadOnlyPriority = 1;
 
     [ExcludeFromCodeCoverage]
     static WordExtensions()
@@ -112,32 +111,6 @@ public static class WordExtensions
             bytes.Add(lsb);
         }
     }
-
-    /// <summary>
-    /// Reads a little-endian word from a read-only list of bytes at the specified index.
-    /// </summary>
-    /// <param name="bytes">The read-only list of bytes.</param>
-    /// <param name="index">The zero-based index to read from.</param>
-    /// <returns>The word value.</returns>
-    [Pure]
-    [OverloadResolutionPriority(ReadOnlyPriority)]
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static ushort GetWord(this IReadOnlyList<byte> bytes, int index) => (ushort)(bytes[index] | bytes[index + 1] << 8);
-
-    /// <summary>
-    /// Reads a word from a read-only list of bytes at the specified index using the specified endianness.
-    /// </summary>
-    /// <param name="bytes">The read-only list of bytes.</param>
-    /// <param name="index">The zero-based index to read from.</param>
-    /// <param name="endian">The endianness to use.</param>
-    /// <returns>The word value.</returns>
-    [Pure]
-    [OverloadResolutionPriority(ReadOnlyPriority)]
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static ushort GetWord(this IReadOnlyList<byte> bytes, int index, Endian endian) =>
-        endian == Endian.Little
-            ? bytes.GetWord(index)
-            : (ushort)(bytes[index + 1] | bytes[index] << 8);
 
     /// <summary>
     /// Reads a little-endian word from a <see cref="List{T}" /> of bytes at the specified index.

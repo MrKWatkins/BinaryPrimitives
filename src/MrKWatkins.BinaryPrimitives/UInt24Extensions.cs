@@ -9,7 +9,6 @@ namespace MrKWatkins.BinaryPrimitives;
 public static class UInt24Extensions
 {
     private const int ConcreteTypePriority = 2;
-    private const int ReadOnlyPriority = 1;
 
     [ExcludeFromCodeCoverage]
     static UInt24Extensions()
@@ -41,32 +40,6 @@ public static class UInt24Extensions
 
         return lsb | mid << 8 | msb << 16;
     }
-
-    /// <summary>
-    /// Reads a little-endian unsigned 24-bit integer from a read-only list of bytes at the specified index.
-    /// </summary>
-    /// <param name="bytes">The read-only list of bytes.</param>
-    /// <param name="index">The zero-based index to read from.</param>
-    /// <returns>The 24-bit value stored in an <see cref="int" />.</returns>
-    [Pure]
-    [OverloadResolutionPriority(ReadOnlyPriority)]
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static int GetUInt24(this IReadOnlyList<byte> bytes, int index) => bytes[index] | bytes[index + 1] << 8 | bytes[index + 2] << 16;
-
-    /// <summary>
-    /// Reads an unsigned 24-bit integer from a read-only list of bytes at the specified index using the specified endianness.
-    /// </summary>
-    /// <param name="bytes">The read-only list of bytes.</param>
-    /// <param name="index">The zero-based index to read from.</param>
-    /// <param name="endian">The endianness to use.</param>
-    /// <returns>The 24-bit value stored in an <see cref="int" />.</returns>
-    [Pure]
-    [OverloadResolutionPriority(ReadOnlyPriority)]
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static int GetUInt24(this IReadOnlyList<byte> bytes, int index, Endian endian) =>
-        endian == Endian.Little
-            ? bytes.GetUInt24(index)
-            : bytes[index] << 16 | bytes[index + 1] << 8 | bytes[index + 2];
 
     /// <summary>
     /// Reads a little-endian unsigned 24-bit integer from a <see cref="List{T}" /> of bytes at the specified index.
