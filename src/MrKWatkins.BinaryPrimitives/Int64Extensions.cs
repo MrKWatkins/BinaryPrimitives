@@ -13,28 +13,6 @@ public static class Int64Extensions
     private const int ReadOnlyPriority = 1;
 
     /// <summary>
-    /// Reads a little-endian <see cref="long" /> from a read-only span of bytes.
-    /// </summary>
-    /// <param name="bytes">The read-only span of bytes.</param>
-    /// <returns>The <see cref="long" /> value.</returns>
-    [Pure]
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static long GetInt64(this ReadOnlySpan<byte> bytes) => MemoryMarshal.Read<long>(bytes);
-
-    /// <summary>
-    /// Reads a <see cref="long" /> from a read-only span of bytes using the specified endianness.
-    /// </summary>
-    /// <param name="bytes">The read-only span of bytes.</param>
-    /// <param name="endian">The endianness to use.</param>
-    /// <returns>The <see cref="long" /> value.</returns>
-    [Pure]
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static long GetInt64(this ReadOnlySpan<byte> bytes, Endian endian) =>
-        endian == Endian.Little
-            ? bytes.GetInt64()
-            : System.Buffers.Binary.BinaryPrimitives.ReadInt64BigEndian(bytes);
-
-    /// <summary>
     /// Reads a little-endian <see cref="long" /> from a list of bytes at the specified index.
     /// </summary>
     /// <param name="bytes">The list of bytes.</param>

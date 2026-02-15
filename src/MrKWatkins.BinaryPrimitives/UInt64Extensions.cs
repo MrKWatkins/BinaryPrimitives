@@ -13,28 +13,6 @@ public static class UInt64Extensions
     private const int ReadOnlyPriority = 1;
 
     /// <summary>
-    /// Reads a little-endian <see cref="ulong" /> from a read-only span of bytes.
-    /// </summary>
-    /// <param name="bytes">The read-only span of bytes.</param>
-    /// <returns>The <see cref="ulong" /> value.</returns>
-    [Pure]
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static ulong GetUInt64(this ReadOnlySpan<byte> bytes) => MemoryMarshal.Read<ulong>(bytes);
-
-    /// <summary>
-    /// Reads a <see cref="ulong" /> from a read-only span of bytes using the specified endianness.
-    /// </summary>
-    /// <param name="bytes">The read-only span of bytes.</param>
-    /// <param name="endian">The endianness to use.</param>
-    /// <returns>The <see cref="ulong" /> value.</returns>
-    [Pure]
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static ulong GetUInt64(this ReadOnlySpan<byte> bytes, Endian endian) =>
-        endian == Endian.Little
-            ? bytes.GetUInt64()
-            : System.Buffers.Binary.BinaryPrimitives.ReadUInt64BigEndian(bytes);
-
-    /// <summary>
     /// Reads a little-endian <see cref="ulong" /> from a list of bytes at the specified index.
     /// </summary>
     /// <param name="bytes">The list of bytes.</param>

@@ -12,28 +12,6 @@ public static class Int32Extensions
     private const int ReadOnlyPriority = 1;
 
     /// <summary>
-    /// Reads a little-endian <see cref="int" /> from a read-only span of bytes.
-    /// </summary>
-    /// <param name="bytes">The read-only span of bytes.</param>
-    /// <returns>The <see cref="int" /> value.</returns>
-    [Pure]
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static int GetInt32(this ReadOnlySpan<byte> bytes) => MemoryMarshal.Read<int>(bytes);
-
-    /// <summary>
-    /// Reads an <see cref="int" /> from a read-only span of bytes using the specified endianness.
-    /// </summary>
-    /// <param name="bytes">The read-only span of bytes.</param>
-    /// <param name="endian">The endianness to use.</param>
-    /// <returns>The <see cref="int" /> value.</returns>
-    [Pure]
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static int GetInt32(this ReadOnlySpan<byte> bytes, Endian endian) =>
-        endian == Endian.Little
-            ? bytes.GetInt32()
-            : System.Buffers.Binary.BinaryPrimitives.ReadInt32BigEndian(bytes);
-
-    /// <summary>
     /// Reads a little-endian <see cref="int" /> from a list of bytes at the specified index.
     /// </summary>
     /// <param name="bytes">The list of bytes.</param>

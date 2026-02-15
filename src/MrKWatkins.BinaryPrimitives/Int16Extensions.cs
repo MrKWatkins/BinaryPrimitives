@@ -12,28 +12,6 @@ public static class Int16Extensions
     private const int ReadOnlyPriority = 1;
 
     /// <summary>
-    /// Reads a little-endian <see cref="short" /> from a read-only span of bytes.
-    /// </summary>
-    /// <param name="bytes">The read-only span of bytes.</param>
-    /// <returns>The <see cref="short" /> value.</returns>
-    [Pure]
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static short GetInt16(this ReadOnlySpan<byte> bytes) => MemoryMarshal.Read<short>(bytes);
-
-    /// <summary>
-    /// Reads a <see cref="short" /> from a read-only span of bytes using the specified endianness.
-    /// </summary>
-    /// <param name="bytes">The read-only span of bytes.</param>
-    /// <param name="endian">The endianness to use.</param>
-    /// <returns>The <see cref="short" /> value.</returns>
-    [Pure]
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static short GetInt16(this ReadOnlySpan<byte> bytes, Endian endian) =>
-        endian == Endian.Little
-            ? bytes.GetInt16()
-            : System.Buffers.Binary.BinaryPrimitives.ReadInt16BigEndian(bytes);
-
-    /// <summary>
     /// Reads a little-endian <see cref="short" /> from a list of bytes at the specified index.
     /// </summary>
     /// <param name="bytes">The list of bytes.</param>
