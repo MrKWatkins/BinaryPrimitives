@@ -12,32 +12,6 @@ public static class Int16Extensions
     private const int ReadOnlyPriority = 1;
 
     /// <summary>
-    /// Reads a little-endian <see cref="short" /> from a byte array at the specified index.
-    /// </summary>
-    /// <param name="bytes">The byte array.</param>
-    /// <param name="index">The zero-based index to read from.</param>
-    /// <returns>The <see cref="short" /> value.</returns>
-    [Pure]
-    [OverloadResolutionPriority(ConcreteTypePriority)]
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static short GetInt16(this byte[] bytes, int index) => Unsafe.ReadUnaligned<short>(ref bytes[index]);
-
-    /// <summary>
-    /// Reads a <see cref="short" /> from a byte array at the specified index using the specified endianness.
-    /// </summary>
-    /// <param name="bytes">The byte array.</param>
-    /// <param name="index">The zero-based index to read from.</param>
-    /// <param name="endian">The endianness to use.</param>
-    /// <returns>The <see cref="short" /> value.</returns>
-    [Pure]
-    [OverloadResolutionPriority(ConcreteTypePriority)]
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static short GetInt16(this byte[] bytes, int index, Endian endian) =>
-        endian == Endian.Little
-            ? bytes.GetInt16(index)
-            : bytes.AsSpan(index).GetInt16(Endian.Big);
-
-    /// <summary>
     /// Reads a little-endian <see cref="short" /> from a span of bytes.
     /// </summary>
     /// <param name="bytes">The span of bytes.</param>
@@ -155,27 +129,6 @@ public static class Int16Extensions
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static short GetInt16(this List<byte> bytes, int index, Endian endian) =>
         CollectionsMarshal.AsSpan(bytes)[index..].GetInt16(endian);
-
-    /// <summary>
-    /// Writes a little-endian <see cref="short" /> to a byte array at the specified index.
-    /// </summary>
-    /// <param name="bytes">The byte array.</param>
-    /// <param name="index">The zero-based index to write to.</param>
-    /// <param name="value">The value to write.</param>
-    [OverloadResolutionPriority(ConcreteTypePriority)]
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void SetInt16(this byte[] bytes, int index, short value) => bytes.AsSpan(index).SetInt16(value);
-
-    /// <summary>
-    /// Writes a <see cref="short" /> to a byte array at the specified index using the specified endianness.
-    /// </summary>
-    /// <param name="bytes">The byte array.</param>
-    /// <param name="index">The zero-based index to write to.</param>
-    /// <param name="value">The value to write.</param>
-    /// <param name="endian">The endianness to use.</param>
-    [OverloadResolutionPriority(ConcreteTypePriority)]
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void SetInt16(this byte[] bytes, int index, short value, Endian endian) => bytes.AsSpan(index).SetInt16(value, endian);
 
     /// <summary>
     /// Writes a little-endian <see cref="short" /> to a span of bytes.

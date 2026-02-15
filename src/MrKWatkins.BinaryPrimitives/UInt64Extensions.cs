@@ -13,32 +13,6 @@ public static class UInt64Extensions
     private const int ReadOnlyPriority = 1;
 
     /// <summary>
-    /// Reads a little-endian <see cref="ulong" /> from a byte array at the specified index.
-    /// </summary>
-    /// <param name="bytes">The byte array.</param>
-    /// <param name="index">The zero-based index to read from.</param>
-    /// <returns>The <see cref="ulong" /> value.</returns>
-    [Pure]
-    [OverloadResolutionPriority(ConcreteTypePriority)]
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static ulong GetUInt64(this byte[] bytes, int index) => Unsafe.ReadUnaligned<ulong>(ref bytes[index]);
-
-    /// <summary>
-    /// Reads a <see cref="ulong" /> from a byte array at the specified index using the specified endianness.
-    /// </summary>
-    /// <param name="bytes">The byte array.</param>
-    /// <param name="index">The zero-based index to read from.</param>
-    /// <param name="endian">The endianness to use.</param>
-    /// <returns>The <see cref="ulong" /> value.</returns>
-    [Pure]
-    [OverloadResolutionPriority(ConcreteTypePriority)]
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static ulong GetUInt64(this byte[] bytes, int index, Endian endian) =>
-        endian == Endian.Little
-            ? bytes.GetUInt64(index)
-            : bytes.AsSpan(index).GetUInt64(Endian.Big);
-
-    /// <summary>
     /// Reads a little-endian <see cref="ulong" /> from a span of bytes.
     /// </summary>
     /// <param name="bytes">The span of bytes.</param>
@@ -162,27 +136,6 @@ public static class UInt64Extensions
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static ulong GetUInt64(this List<byte> bytes, int index, Endian endian) =>
         CollectionsMarshal.AsSpan(bytes)[index..].GetUInt64(endian);
-
-    /// <summary>
-    /// Writes a little-endian <see cref="ulong" /> to a byte array at the specified index.
-    /// </summary>
-    /// <param name="bytes">The byte array.</param>
-    /// <param name="index">The zero-based index to write to.</param>
-    /// <param name="value">The value to write.</param>
-    [OverloadResolutionPriority(ConcreteTypePriority)]
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void SetUInt64(this byte[] bytes, int index, ulong value) => bytes.AsSpan(index).SetUInt64(value);
-
-    /// <summary>
-    /// Writes a <see cref="ulong" /> to a byte array at the specified index using the specified endianness.
-    /// </summary>
-    /// <param name="bytes">The byte array.</param>
-    /// <param name="index">The zero-based index to write to.</param>
-    /// <param name="value">The value to write.</param>
-    /// <param name="endian">The endianness to use.</param>
-    [OverloadResolutionPriority(ConcreteTypePriority)]
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void SetUInt64(this byte[] bytes, int index, ulong value, Endian endian) => bytes.AsSpan(index).SetUInt64(value, endian);
 
     /// <summary>
     /// Writes a little-endian <see cref="ulong" /> to a span of bytes.

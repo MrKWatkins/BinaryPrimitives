@@ -43,32 +43,6 @@ public static class UInt24Extensions
     }
 
     /// <summary>
-    /// Reads a little-endian unsigned 24-bit integer from a byte array at the specified index.
-    /// </summary>
-    /// <param name="bytes">The byte array.</param>
-    /// <param name="index">The zero-based index to read from.</param>
-    /// <returns>The 24-bit value stored in an <see cref="int" />.</returns>
-    [Pure]
-    [OverloadResolutionPriority(ConcreteTypePriority)]
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static int GetUInt24(this byte[] bytes, int index) => Unsafe.ReadUnaligned<ushort>(ref bytes[index]) | bytes[index + 2] << 16;
-
-    /// <summary>
-    /// Reads an unsigned 24-bit integer from a byte array at the specified index using the specified endianness.
-    /// </summary>
-    /// <param name="bytes">The byte array.</param>
-    /// <param name="index">The zero-based index to read from.</param>
-    /// <param name="endian">The endianness to use.</param>
-    /// <returns>The 24-bit value stored in an <see cref="int" />.</returns>
-    [Pure]
-    [OverloadResolutionPriority(ConcreteTypePriority)]
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static int GetUInt24(this byte[] bytes, int index, Endian endian) =>
-        endian == Endian.Little
-            ? bytes.GetUInt24(index)
-            : bytes[index] << 16 | bytes[index + 1] << 8 | bytes[index + 2];
-
-    /// <summary>
     /// Reads a little-endian unsigned 24-bit integer from a span of bytes.
     /// </summary>
     /// <param name="bytes">The span of bytes.</param>
@@ -186,45 +160,6 @@ public static class UInt24Extensions
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static int GetUInt24(this List<byte> bytes, int index, Endian endian) =>
         CollectionsMarshal.AsSpan(bytes)[index..].GetUInt24(endian);
-
-    /// <summary>
-    /// Writes a little-endian unsigned 24-bit integer to a byte array at the specified index.
-    /// </summary>
-    /// <param name="bytes">The byte array.</param>
-    /// <param name="index">The zero-based index to write to.</param>
-    /// <param name="value">The 24-bit value to write. Only the lower 24 bits are used.</param>
-    [OverloadResolutionPriority(ConcreteTypePriority)]
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void SetUInt24(this byte[] bytes, int index, int value)
-    {
-        value &= 0xFFFFFF;
-        bytes[index] = (byte)value;
-        bytes[index + 1] = (byte)(value >> 8);
-        bytes[index + 2] = (byte)(value >> 16);
-    }
-
-    /// <summary>
-    /// Writes an unsigned 24-bit integer to a byte array at the specified index using the specified endianness.
-    /// </summary>
-    /// <param name="bytes">The byte array.</param>
-    /// <param name="index">The zero-based index to write to.</param>
-    /// <param name="value">The 24-bit value to write. Only the lower 24 bits are used.</param>
-    /// <param name="endian">The endianness to use.</param>
-    [OverloadResolutionPriority(ConcreteTypePriority)]
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void SetUInt24(this byte[] bytes, int index, int value, Endian endian)
-    {
-        if (endian == Endian.Little)
-        {
-            bytes.SetUInt24(index, value);
-        }
-        else
-        {
-            bytes[index] = (byte)(value >> 16);
-            bytes[index + 1] = (byte)(value >> 8);
-            bytes[index + 2] = (byte)value;
-        }
-    }
 
     /// <summary>
     /// Writes a little-endian unsigned 24-bit integer to a span of bytes.

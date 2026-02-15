@@ -13,32 +13,6 @@ public static class Int64Extensions
     private const int ReadOnlyPriority = 1;
 
     /// <summary>
-    /// Reads a little-endian <see cref="long" /> from a byte array at the specified index.
-    /// </summary>
-    /// <param name="bytes">The byte array.</param>
-    /// <param name="index">The zero-based index to read from.</param>
-    /// <returns>The <see cref="long" /> value.</returns>
-    [Pure]
-    [OverloadResolutionPriority(ConcreteTypePriority)]
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static long GetInt64(this byte[] bytes, int index) => Unsafe.ReadUnaligned<long>(ref bytes[index]);
-
-    /// <summary>
-    /// Reads a <see cref="long" /> from a byte array at the specified index using the specified endianness.
-    /// </summary>
-    /// <param name="bytes">The byte array.</param>
-    /// <param name="index">The zero-based index to read from.</param>
-    /// <param name="endian">The endianness to use.</param>
-    /// <returns>The <see cref="long" /> value.</returns>
-    [Pure]
-    [OverloadResolutionPriority(ConcreteTypePriority)]
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static long GetInt64(this byte[] bytes, int index, Endian endian) =>
-        endian == Endian.Little
-            ? bytes.GetInt64(index)
-            : bytes.AsSpan(index).GetInt64(Endian.Big);
-
-    /// <summary>
     /// Reads a little-endian <see cref="long" /> from a span of bytes.
     /// </summary>
     /// <param name="bytes">The span of bytes.</param>
@@ -162,27 +136,6 @@ public static class Int64Extensions
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static long GetInt64(this List<byte> bytes, int index, Endian endian) =>
         CollectionsMarshal.AsSpan(bytes)[index..].GetInt64(endian);
-
-    /// <summary>
-    /// Writes a little-endian <see cref="long" /> to a byte array at the specified index.
-    /// </summary>
-    /// <param name="bytes">The byte array.</param>
-    /// <param name="index">The zero-based index to write to.</param>
-    /// <param name="value">The value to write.</param>
-    [OverloadResolutionPriority(ConcreteTypePriority)]
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void SetInt64(this byte[] bytes, int index, long value) => bytes.AsSpan(index).SetInt64(value);
-
-    /// <summary>
-    /// Writes a <see cref="long" /> to a byte array at the specified index using the specified endianness.
-    /// </summary>
-    /// <param name="bytes">The byte array.</param>
-    /// <param name="index">The zero-based index to write to.</param>
-    /// <param name="value">The value to write.</param>
-    /// <param name="endian">The endianness to use.</param>
-    [OverloadResolutionPriority(ConcreteTypePriority)]
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void SetInt64(this byte[] bytes, int index, long value, Endian endian) => bytes.AsSpan(index).SetInt64(value, endian);
 
     /// <summary>
     /// Writes a little-endian <see cref="long" /> to a span of bytes.

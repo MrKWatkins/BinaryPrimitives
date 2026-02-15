@@ -114,32 +114,6 @@ public static class WordExtensions
     }
 
     /// <summary>
-    /// Reads a little-endian word from a byte array at the specified index.
-    /// </summary>
-    /// <param name="bytes">The byte array.</param>
-    /// <param name="index">The zero-based index to read from.</param>
-    /// <returns>The word value.</returns>
-    [Pure]
-    [OverloadResolutionPriority(ConcreteTypePriority)]
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static ushort GetWord(this byte[] bytes, int index) => Unsafe.ReadUnaligned<ushort>(ref bytes[index]);
-
-    /// <summary>
-    /// Reads a word from a byte array at the specified index using the specified endianness.
-    /// </summary>
-    /// <param name="bytes">The byte array.</param>
-    /// <param name="index">The zero-based index to read from.</param>
-    /// <param name="endian">The endianness to use.</param>
-    /// <returns>The word value.</returns>
-    [Pure]
-    [OverloadResolutionPriority(ConcreteTypePriority)]
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static ushort GetWord(this byte[] bytes, int index, Endian endian) =>
-        endian == Endian.Little
-            ? bytes.GetWord(index)
-            : (ushort)(bytes[index + 1] | bytes[index] << 8);
-
-    /// <summary>
     /// Reads a little-endian word from a span of bytes.
     /// </summary>
     /// <param name="bytes">The span of bytes.</param>
@@ -257,27 +231,6 @@ public static class WordExtensions
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static ushort GetWord(this List<byte> bytes, int index, Endian endian) =>
         CollectionsMarshal.AsSpan(bytes)[index..].GetWord(endian);
-
-    /// <summary>
-    /// Writes a little-endian word to a byte array at the specified index.
-    /// </summary>
-    /// <param name="bytes">The byte array.</param>
-    /// <param name="index">The zero-based index to write to.</param>
-    /// <param name="value">The word value to write.</param>
-    [OverloadResolutionPriority(ConcreteTypePriority)]
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void SetWord(this byte[] bytes, int index, ushort value) => bytes.AsSpan(index).SetWord(value);
-
-    /// <summary>
-    /// Writes a word to a byte array at the specified index using the specified endianness.
-    /// </summary>
-    /// <param name="bytes">The byte array.</param>
-    /// <param name="index">The zero-based index to write to.</param>
-    /// <param name="value">The word value to write.</param>
-    /// <param name="endian">The endianness to use.</param>
-    [OverloadResolutionPriority(ConcreteTypePriority)]
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void SetWord(this byte[] bytes, int index, ushort value, Endian endian) => bytes.AsSpan(index).SetWord(value, endian);
 
     /// <summary>
     /// Writes a little-endian word to a span of bytes.
