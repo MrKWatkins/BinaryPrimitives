@@ -147,23 +147,23 @@ public static class ReadOnlyMemoryExtensions
         public ulong GetUInt64(int index, Endian endian) => bytes.Span[index..].GetUInt64(endian);
 
         /// <summary>
-        /// Reads a little-endian word from read-only memory at the specified index.
+        /// Reads a little-endian <see cref="ushort" /> from read-only memory at the specified index.
         /// </summary>
         /// <param name="index">The zero-based index to read from.</param>
-        /// <returns>The word value.</returns>
+        /// <returns>The <see cref="ushort" /> value.</returns>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ushort GetWord(int index) => bytes.Span[index..].GetWord();
+        public ushort GetUInt16(int index) => bytes.Span[index..].GetUInt16();
 
         /// <summary>
-        /// Reads a word from read-only memory at the specified index using the specified endianness.
+        /// Reads a <see cref="ushort" /> from read-only memory at the specified index using the specified endianness.
         /// </summary>
         /// <param name="index">The zero-based index to read from.</param>
         /// <param name="endian">The endianness to use.</param>
-        /// <returns>The word value.</returns>
+        /// <returns>The <see cref="ushort" /> value.</returns>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ushort GetWord(int index, Endian endian) => bytes.Span[index..].GetWord(endian);
+        public ushort GetUInt16(int index, Endian endian) => bytes.Span[index..].GetUInt16(endian);
     }
 
     private sealed class WrapSegment<T> : ReadOnlySequenceSegment<T>

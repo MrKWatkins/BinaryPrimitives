@@ -258,43 +258,43 @@ public sealed class ByteSpanExtensionsTests
 
 
     [Test]
-    public void GetWord_Span()
+    public void GetUInt16_Span()
     {
         Span<byte> bytes = [0x01, 0x02];
 
-        bytes.GetWord().Should().Equal(0x0201);
+        bytes.GetUInt16().Should().Equal(0x0201);
     }
 
 
     [Test]
-    public void GetWord_Span_Endian()
+    public void GetUInt16_Span_Endian()
     {
         Span<byte> bytes = [0x01, 0x02];
 
-        bytes.GetWord(Endian.Little).Should().Equal(0x0201);
-        bytes.GetWord(Endian.Big).Should().Equal(0x0102);
+        bytes.GetUInt16(Endian.Little).Should().Equal(0x0201);
+        bytes.GetUInt16(Endian.Big).Should().Equal(0x0102);
     }
 
 
     [Test]
-    public void SetWord_Span()
+    public void SetUInt16_Span()
     {
         Span<byte> bytes = [0xFF, 0xFE];
 
-        bytes.SetWord(0x1234);
+        bytes.SetUInt16(0x1234);
         bytes.ToArray().Should().SequenceEqual(0x34, 0x12);
     }
 
 
     [Test]
-    public void SetWord_Span_Endian()
+    public void SetUInt16_Span_Endian()
     {
         Span<byte> bytes = [0xFF, 0xFE];
 
-        bytes.SetWord(0x1234, Endian.Little);
+        bytes.SetUInt16(0x1234, Endian.Little);
         bytes.ToArray().Should().SequenceEqual(0x34, 0x12);
 
-        bytes.SetWord(0x1234, Endian.Big);
+        bytes.SetUInt16(0x1234, Endian.Big);
         bytes.ToArray().Should().SequenceEqual(0x12, 0x34);
     }
 }

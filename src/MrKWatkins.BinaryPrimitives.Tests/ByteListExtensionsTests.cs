@@ -120,21 +120,21 @@ public sealed class ByteListExtensionsTests
 
 
     [Test]
-    public void GetWord_List()
+    public void GetUInt16_List()
     {
         List<byte> bytes = [0x01, 0x02, 0x03, 0x04];
 
-        bytes.GetWord(1).Should().Equal(0x0302);
+        bytes.GetUInt16(1).Should().Equal(0x0302);
     }
 
 
     [Test]
-    public void GetWord_List_Endian()
+    public void GetUInt16_List_Endian()
     {
         List<byte> bytes = [0x01, 0x02, 0x03, 0x04];
 
-        bytes.GetWord(1, Endian.Little).Should().Equal(0x0302);
-        bytes.GetWord(2, Endian.Big).Should().Equal(0x0304);
+        bytes.GetUInt16(1, Endian.Little).Should().Equal(0x0302);
+        bytes.GetUInt16(2, Endian.Big).Should().Equal(0x0304);
     }
 
 
@@ -271,23 +271,23 @@ public sealed class ByteListExtensionsTests
 
 
     [Test]
-    public void SetWord_List()
+    public void SetUInt16_List()
     {
         List<byte> bytes = [0x01, 0x00, 0x00, 0x04];
 
-        bytes.SetWord(1, 0x1234);
+        bytes.SetUInt16(1, 0x1234);
         bytes.Should().SequenceEqual(0x01, 0x34, 0x12, 0x04);
     }
 
     [Test]
-    public void SetWord_List_Endian()
+    public void SetUInt16_List_Endian()
     {
         List<byte> bytes = [0x01, 0x00, 0x00, 0x04];
 
-        bytes.SetWord(1, 0x1234, Endian.Little);
+        bytes.SetUInt16(1, 0x1234, Endian.Little);
         bytes.Should().SequenceEqual(0x01, 0x34, 0x12, 0x04);
 
-        bytes.SetWord(1, 0x1234, Endian.Big);
+        bytes.SetUInt16(1, 0x1234, Endian.Big);
         bytes.Should().SequenceEqual(0x01, 0x12, 0x34, 0x04);
     }
 }

@@ -212,27 +212,27 @@ public static class ByteIReadOnlyListExtensions
 
 
         /// <summary>
-        /// Reads a little-endian word from a read-only list of bytes at the specified index.
+        /// Reads a little-endian <see cref="ushort" /> from a read-only list of bytes at the specified index.
         /// </summary>
         /// <param name="index">The zero-based index to read from.</param>
-        /// <returns>The word value.</returns>
+        /// <returns>The <see cref="ushort" /> value.</returns>
         [Pure]
         [OverloadResolutionPriority(ReadOnlyPriority)]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ushort GetWord(int index) => (ushort)(bytes[index] | bytes[index + 1] << 8);
+        public ushort GetUInt16(int index) => (ushort)(bytes[index] | bytes[index + 1] << 8);
 
         /// <summary>
-        /// Reads a word from a read-only list of bytes at the specified index using the specified endianness.
+        /// Reads a <see cref="ushort" /> from a read-only list of bytes at the specified index using the specified endianness.
         /// </summary>
         /// <param name="index">The zero-based index to read from.</param>
         /// <param name="endian">The endianness to use.</param>
-        /// <returns>The word value.</returns>
+        /// <returns>The <see cref="ushort" /> value.</returns>
         [Pure]
         [OverloadResolutionPriority(ReadOnlyPriority)]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ushort GetWord(int index, Endian endian) =>
+        public ushort GetUInt16(int index, Endian endian) =>
             endian == Endian.Little
-                ? bytes.GetWord(index)
+                ? bytes.GetUInt16(index)
                 : (ushort)(bytes[index + 1] | bytes[index] << 8);
     }
 }

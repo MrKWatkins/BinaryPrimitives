@@ -117,20 +117,20 @@ public sealed class ByteReadOnlySpanExtensionsTests
 
 
     [Test]
-    public void GetWord_ReadOnlySpan()
+    public void GetUInt16_ReadOnlySpan()
     {
         ReadOnlySpan<byte> bytes = [0x01, 0x02];
 
-        bytes.GetWord().Should().Equal(0x0201);
+        bytes.GetUInt16().Should().Equal(0x0201);
     }
 
 
     [Test]
-    public void GetWord_ReadOnlySpan_Endian()
+    public void GetUInt16_ReadOnlySpan_Endian()
     {
         ReadOnlySpan<byte> bytes = [0x01, 0x02];
 
-        bytes.GetWord(Endian.Little).Should().Equal(0x0201);
-        bytes.GetWord(Endian.Big).Should().Equal(0x0102);
+        bytes.GetUInt16(Endian.Little).Should().Equal(0x0201);
+        bytes.GetUInt16(Endian.Big).Should().Equal(0x0102);
     }
 }

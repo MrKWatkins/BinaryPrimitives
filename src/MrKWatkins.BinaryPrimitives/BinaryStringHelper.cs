@@ -7,7 +7,7 @@ namespace MrKWatkins.BinaryPrimitives;
 // Writes the binary string representation of bytes into a span using SIMD,
 // with one lane per bit processed in parallel. Three widths are supported:
 //   WriteByteChars   — 1 byte  →  8 chars  (Vector128)
-//   WriteWordChars   — 2 bytes → 16 chars  (Vector256)
+//   WriteUInt16Chars — 2 bytes → 16 chars  (Vector256)
 //   WriteUInt32Chars — 4 bytes → 32 chars  (Vector512)
 internal static class BinaryStringHelper
 {
@@ -53,7 +53,7 @@ internal static class BinaryStringHelper
 
     // Writes 16 chars for a ushort (Vector256, one lane per bit).
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    internal static void WriteWordChars(Span<char> chars, ushort value)
+    internal static void WriteUInt16Chars(Span<char> chars, ushort value)
     {
         // Broadcast the ushort value to all 16 lanes.
         var vector = Vector256.Create(value);

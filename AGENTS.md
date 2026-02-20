@@ -29,7 +29,7 @@ The test project uses the NUnit runner with Microsoft Testing Platform (`EnableN
 The library is a single project with extension methods organized one class per primitive type:
 
 - **`Endian`** enum (Little, Big) controls byte ordering for multi-byte operations.
-- **Type-specific extensions** (`ByteExtensions`, `WordExtensions`, `UInt24Extensions`, `Int32Extensions`, `UInt32Extensions`, `Int64Extensions`, `UInt64Extensions`) provide read/write operations for each primitive size.
+- **Type-specific extensions** (`ByteExtensions`, `Int32Extensions`, `Int64Extensions`, `UInt16Extensions`, `UInt24Extensions`, `UInt32Extensions`, `UInt64Extensions`) provide read/write operations for each primitive size.
 - **Container-specific extensions** (`ReadOnlyListExtensions`, `ReadOnlyMemoryExtensions`, `StreamExtensions`) adapt operations for different byte container types. (byte[], Span, IReadOnlyList, Stream, ReadOnlyMemory)
 - **`ReadOnlyListStream`** wraps IReadOnlyList<byte> as a read-only seekable Stream.
 - **`BoolExtensions`** provides `ToBitChar()` conversion.

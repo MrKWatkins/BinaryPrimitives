@@ -9,11 +9,11 @@ public static class ByteICollectionExtensions
     extension(ICollection<byte> bytes)
     {
         /// <summary>
-        /// Adds a word to a byte collection.
+        /// Adds a <see cref="ushort" /> to a byte collection.
         /// </summary>
-        /// <param name="value">The word value to add.</param>
+        /// <param name="value">The <see cref="ushort" /> value to add.</param>
         /// <param name="endian">The endianness to use.</param>
-        public void AddWord(ushort value, Endian endian = Endian.Little)
+        public void AddUInt16(ushort value, Endian endian = Endian.Little)
         {
             var (msb, lsb) = value.ToBytes();
             if (endian == Endian.Little)
