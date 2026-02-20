@@ -38,10 +38,10 @@ public sealed class ReadOnlyListStreamTests
         stream.Position.Should().Equal(1);
 
         stream.Seek(3, SeekOrigin.End);
-        stream.Position.Should().Equal(1);
+        stream.Position.Should().Equal(2);
 
         stream.Seek(2, SeekOrigin.Current);
-        stream.Position.Should().Equal(3);
+        stream.Position.Should().Equal(4);
 
         stream.Invoking(s => s.Seek(0, (SeekOrigin)int.MaxValue)).Should().Throw<NotSupportedException>();
     }
@@ -63,8 +63,11 @@ public sealed class ReadOnlyListStreamTests
         stream.Position = 0;
         stream.ReadByte().Should().Equal(1);
 
+        stream.Position = 5;
+        stream.Position.Should().Equal(5);
+
         stream.Invoking(s => s.Position = -1).Should().Throw<ArgumentOutOfRangeException>();
-        stream.Invoking(s => s.Position = 5).Should().Throw<ArgumentOutOfRangeException>();
+        stream.Invoking(s => s.Position = 6).Should().Throw<ArgumentOutOfRangeException>();
     }
 
     [Test]
@@ -100,7 +103,7 @@ public sealed class ReadOnlyListStreamTests
     {
         using var stream = new ReadOnlyListStream([1, 2, 3, 4, 5]);
 
-        stream.Invoking(p => p.Flush()).Should().Throw<NotSupportedException>();
+        stream.Invoking(p => p.Flush()).Should().NotThrow();
         stream.Invoking(p => p.SetLength(1)).Should().Throw<NotSupportedException>();
         stream.Invoking(p => p.Write([], 0, 0)).Should().Throw<NotSupportedException>();
     }
@@ -125,9 +128,9 @@ public sealed class ReadOnlyListStreamTests
         stream.Invoking(p => p.Seek(0, SeekOrigin.Begin)).Should().Throw<ObjectDisposedException>();
         stream.Invoking(p => p.Position).Should().Throw<ObjectDisposedException>();
         stream.Invoking(p => p.Position = 0).Should().Throw<ObjectDisposedException>();
-        stream.Invoking(p => p.CanRead).Should().Throw<ObjectDisposedException>();
-        stream.Invoking(p => p.CanSeek).Should().Throw<ObjectDisposedException>();
-        stream.Invoking(p => p.CanWrite).Should().Throw<ObjectDisposedException>();
+        stream.CanRead.Should().BeFalse();
+        stream.CanSeek.Should().BeFalse();
+        stream.CanWrite.Should().BeFalse();
         stream.Invoking(p => p.Length).Should().Throw<ObjectDisposedException>();
         stream.Invoking(p => p.Flush()).Should().Throw<ObjectDisposedException>();
         stream.Invoking(p => p.SetLength(1)).Should().Throw<ObjectDisposedException>();

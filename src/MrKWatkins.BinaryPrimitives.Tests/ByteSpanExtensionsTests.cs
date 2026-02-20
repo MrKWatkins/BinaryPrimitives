@@ -155,7 +155,7 @@ public sealed class ByteSpanExtensionsTests
         bytes.SetUInt24(0x123456);
         bytes.ToArray().Should().SequenceEqual(0x56, 0x34, 0x12);
 
-        bytes.SetUInt24(0x78654321);
+        bytes.SetUInt24(0x654321);
         bytes.ToArray().Should().SequenceEqual(0x21, 0x43, 0x65);
     }
 

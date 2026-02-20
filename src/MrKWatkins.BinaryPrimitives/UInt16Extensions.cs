@@ -71,7 +71,7 @@ public static class UInt16Extensions
         /// <summary>
         /// Gets the value of the bit at the specified index.
         /// </summary>
-        /// <param name="index">The zero-based bit index.</param>
+        /// <param name="index">The zero-based bit index. Must be in the range 0 to 15.</param>
         /// <returns><see langword="true" /> if the bit is set; <see langword="false" /> otherwise.</returns>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -86,6 +86,14 @@ public static class UInt16Extensions
         public byte LeastSignificantByte() => (byte)value;
 
         /// <summary>
+        /// Gets the left-most bit (bit 15) of a word.
+        /// </summary>
+        /// <returns><see langword="true" /> if the left-most bit is set; <see langword="false" /> otherwise.</returns>
+        [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public bool LeftMostBit() => value.SignBit();
+
+        /// <summary>
         /// Gets the most significant byte of a word.
         /// </summary>
         /// <returns>The most significant byte.</returns>
@@ -94,12 +102,51 @@ public static class UInt16Extensions
         public byte MostSignificantByte() => (byte)(value >> 8);
 
         /// <summary>
+        /// Returns a new word with the bit at the specified index cleared.
+        /// </summary>
+        /// <param name="index">The zero-based bit index to reset.</param>
+        /// <returns>A new word with the specified bit cleared.</returns>
+        [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public ushort ResetBit(int index) => (ushort)(value & ~(1 << index));
+
+        /// <summary>
+        /// Gets the right-most bit (bit 0) of a word.
+        /// </summary>
+        /// <returns><see langword="true" /> if the right-most bit is set; <see langword="false" /> otherwise.</returns>
+        [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public bool RightMostBit() => value.GetBit(0);
+
+        /// <summary>
+        /// Returns a new word with the bit at the specified index set.
+        /// </summary>
+        /// <param name="index">The zero-based bit index to set.</param>
+        /// <returns>A new word with the specified bit set.</returns>
+        [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public ushort SetBit(int index) => (ushort)(value | (1 << index));
+
+        /// <summary>
         /// Gets the sign bit (bit 15) of a word.
         /// </summary>
         /// <returns><see langword="true" /> if the sign bit is set; <see langword="false" /> otherwise.</returns>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool SignBit() => (value & 0b10000000_00000000) != 0;
+
+        /// <summary>
+        /// Converts a word to its binary string representation, e.g. <c>"0b0001001000110100"</c>.
+        /// </summary>
+        /// <returns>An 18-character string prefixed with <c>"0b"</c> followed by 16 binary digits.</returns>
+        [Pure]
+        public string ToBinaryString() =>
+            string.Create(18, value, (chars, v) =>
+            {
+                chars[0] = '0';
+                chars[1] = 'b';
+                BinaryStringHelper.WriteWordChars(chars[2..], v);
+            });
 
         /// <summary>
         /// Decomposes a word into its most and least significant bytes.

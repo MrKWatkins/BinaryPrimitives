@@ -17,9 +17,9 @@ public sealed class ReadOnlyListStream(IReadOnlyList<byte> list) : Stream
     {
         VerifyNotDisposed();
 
-        if (offset < 0 || offset >= buffer.Length)
+        if (offset < 0 || offset > buffer.Length)
         {
-            throw new ArgumentOutOfRangeException(nameof(offset), offset, $"Value must be not be negative and be less than the length of {nameof(buffer)}, {buffer.Length}.");
+            throw new ArgumentOutOfRangeException(nameof(offset), offset, $"Value must be not be negative and be less than or equal to the length of {nameof(buffer)}, {buffer.Length}.");
         }
         if (count < 0)
         {
@@ -48,7 +48,7 @@ public sealed class ReadOnlyListStream(IReadOnlyList<byte> list) : Stream
         {
             SeekOrigin.Begin => offset,
             SeekOrigin.Current => position + offset,
-            SeekOrigin.End => list.Count - 1 - offset,
+            SeekOrigin.End => list.Count - offset,
             _ => throw new NotSupportedException($"The {nameof(SeekOrigin)} value {origin} is not supported.")
         };
 
@@ -56,34 +56,13 @@ public sealed class ReadOnlyListStream(IReadOnlyList<byte> list) : Stream
     }
 
     /// <inheritdoc />
-    public override bool CanRead
-    {
-        get
-        {
-            VerifyNotDisposed();
-            return true;
-        }
-    }
+    public override bool CanRead => !disposed;
 
     /// <inheritdoc />
-    public override bool CanSeek
-    {
-        get
-        {
-            VerifyNotDisposed();
-            return true;
-        }
-    }
+    public override bool CanSeek => !disposed;
 
     /// <inheritdoc />
-    public override bool CanWrite
-    {
-        get
-        {
-            VerifyNotDisposed();
-            return false;
-        }
-    }
+    public override bool CanWrite => false;
 
     /// <inheritdoc />
     public override long Length
@@ -106,16 +85,16 @@ public sealed class ReadOnlyListStream(IReadOnlyList<byte> list) : Stream
         set
         {
             VerifyNotDisposed();
-            if (value < 0 || value >= list.Count)
+            if (value < 0 || value > list.Count)
             {
-                throw new ArgumentOutOfRangeException(nameof(value), value, $"Value must be in the range 0 -> {list.Count - 1}");
+                throw new ArgumentOutOfRangeException(nameof(value), value, $"Value must be in the range 0 -> {list.Count}");
             }
             position = (int)value;
         }
     }
 
     /// <inheritdoc />
-    public override void Flush() => ThrowNotWriteable();
+    public override void Flush() { VerifyNotDisposed(); }
 
     /// <inheritdoc />
     public override void SetLength(long value) => ThrowNotWriteable();

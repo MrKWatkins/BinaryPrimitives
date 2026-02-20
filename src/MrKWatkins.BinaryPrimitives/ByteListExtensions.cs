@@ -179,5 +179,158 @@ public static class ByteListExtensions
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public ushort GetWord(int index, Endian endian) =>
             CollectionsMarshal.AsSpan(bytes)[index..].GetWord(endian);
+
+
+        /// <summary>
+        /// Writes a little-endian <see cref="short" /> to a <see cref="List{T}" /> of bytes at the specified index.
+        /// </summary>
+        /// <param name="index">The zero-based index to write to.</param>
+        /// <param name="value">The value to write.</param>
+        [OverloadResolutionPriority(ConcreteTypePriority)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void SetInt16(int index, short value) =>
+            CollectionsMarshal.AsSpan(bytes)[index..].SetInt16(value);
+
+        /// <summary>
+        /// Writes a <see cref="short" /> to a <see cref="List{T}" /> of bytes at the specified index using the specified endianness.
+        /// </summary>
+        /// <param name="index">The zero-based index to write to.</param>
+        /// <param name="value">The value to write.</param>
+        /// <param name="endian">The endianness to use.</param>
+        [OverloadResolutionPriority(ConcreteTypePriority)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void SetInt16(int index, short value, Endian endian) =>
+            CollectionsMarshal.AsSpan(bytes)[index..].SetInt16(value, endian);
+
+
+        /// <summary>
+        /// Writes a little-endian <see cref="int" /> to a <see cref="List{T}" /> of bytes at the specified index.
+        /// </summary>
+        /// <param name="index">The zero-based index to write to.</param>
+        /// <param name="value">The value to write.</param>
+        [OverloadResolutionPriority(ConcreteTypePriority)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void SetInt32(int index, int value) =>
+            CollectionsMarshal.AsSpan(bytes)[index..].SetInt32(value);
+
+        /// <summary>
+        /// Writes an <see cref="int" /> to a <see cref="List{T}" /> of bytes at the specified index using the specified endianness.
+        /// </summary>
+        /// <param name="index">The zero-based index to write to.</param>
+        /// <param name="value">The value to write.</param>
+        /// <param name="endian">The endianness to use.</param>
+        [OverloadResolutionPriority(ConcreteTypePriority)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void SetInt32(int index, int value, Endian endian) =>
+            CollectionsMarshal.AsSpan(bytes)[index..].SetInt32(value, endian);
+
+
+        /// <summary>
+        /// Writes a little-endian <see cref="long" /> to a <see cref="List{T}" /> of bytes at the specified index.
+        /// </summary>
+        /// <param name="index">The zero-based index to write to.</param>
+        /// <param name="value">The value to write.</param>
+        [OverloadResolutionPriority(ConcreteTypePriority)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void SetInt64(int index, long value) =>
+            CollectionsMarshal.AsSpan(bytes)[index..].SetInt64(value);
+
+        /// <summary>
+        /// Writes a <see cref="long" /> to a <see cref="List{T}" /> of bytes at the specified index using the specified endianness.
+        /// </summary>
+        /// <param name="index">The zero-based index to write to.</param>
+        /// <param name="value">The value to write.</param>
+        /// <param name="endian">The endianness to use.</param>
+        [OverloadResolutionPriority(ConcreteTypePriority)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void SetInt64(int index, long value, Endian endian) =>
+            CollectionsMarshal.AsSpan(bytes)[index..].SetInt64(value, endian);
+
+
+        /// <summary>
+        /// Writes a little-endian unsigned 24-bit integer to a <see cref="List{T}" /> of bytes at the specified index.
+        /// </summary>
+        /// <param name="index">The zero-based index to write to.</param>
+        /// <param name="value">The 24-bit value to write. Only the lower 24 bits are used.</param>
+        [OverloadResolutionPriority(ConcreteTypePriority)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void SetUInt24(int index, int value) =>
+            CollectionsMarshal.AsSpan(bytes)[index..].SetUInt24(value);
+
+        /// <summary>
+        /// Writes an unsigned 24-bit integer to a <see cref="List{T}" /> of bytes at the specified index using the specified endianness.
+        /// </summary>
+        /// <param name="index">The zero-based index to write to.</param>
+        /// <param name="value">The 24-bit value to write. Only the lower 24 bits are used.</param>
+        /// <param name="endian">The endianness to use.</param>
+        [OverloadResolutionPriority(ConcreteTypePriority)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void SetUInt24(int index, int value, Endian endian) =>
+            CollectionsMarshal.AsSpan(bytes)[index..].SetUInt24(value, endian);
+
+
+        /// <summary>
+        /// Writes a little-endian <see cref="uint" /> to a <see cref="List{T}" /> of bytes at the specified index.
+        /// </summary>
+        /// <param name="index">The zero-based index to write to.</param>
+        /// <param name="value">The value to write.</param>
+        [OverloadResolutionPriority(ConcreteTypePriority)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void SetUInt32(int index, uint value) =>
+            CollectionsMarshal.AsSpan(bytes)[index..].SetUInt32(value);
+
+        /// <summary>
+        /// Writes a <see cref="uint" /> to a <see cref="List{T}" /> of bytes at the specified index using the specified endianness.
+        /// </summary>
+        /// <param name="index">The zero-based index to write to.</param>
+        /// <param name="value">The value to write.</param>
+        /// <param name="endian">The endianness to use.</param>
+        [OverloadResolutionPriority(ConcreteTypePriority)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void SetUInt32(int index, uint value, Endian endian) =>
+            CollectionsMarshal.AsSpan(bytes)[index..].SetUInt32(value, endian);
+
+
+        /// <summary>
+        /// Writes a little-endian <see cref="ulong" /> to a <see cref="List{T}" /> of bytes at the specified index.
+        /// </summary>
+        /// <param name="index">The zero-based index to write to.</param>
+        /// <param name="value">The value to write.</param>
+        [OverloadResolutionPriority(ConcreteTypePriority)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void SetUInt64(int index, ulong value) =>
+            CollectionsMarshal.AsSpan(bytes)[index..].SetUInt64(value);
+
+        /// <summary>
+        /// Writes a <see cref="ulong" /> to a <see cref="List{T}" /> of bytes at the specified index using the specified endianness.
+        /// </summary>
+        /// <param name="index">The zero-based index to write to.</param>
+        /// <param name="value">The value to write.</param>
+        /// <param name="endian">The endianness to use.</param>
+        [OverloadResolutionPriority(ConcreteTypePriority)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void SetUInt64(int index, ulong value, Endian endian) =>
+            CollectionsMarshal.AsSpan(bytes)[index..].SetUInt64(value, endian);
+
+        /// <summary>
+        /// Writes a little-endian word to a <see cref="List{T}" /> of bytes at the specified index.
+        /// </summary>
+        /// <param name="index">The zero-based index to write to.</param>
+        /// <param name="value">The word value to write.</param>
+        [OverloadResolutionPriority(ConcreteTypePriority)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void SetWord(int index, ushort value) =>
+            CollectionsMarshal.AsSpan(bytes)[index..].SetWord(value);
+
+        /// <summary>
+        /// Writes a word to a <see cref="List{T}" /> of bytes at the specified index using the specified endianness.
+        /// </summary>
+        /// <param name="index">The zero-based index to write to.</param>
+        /// <param name="value">The word value to write.</param>
+        /// <param name="endian">The endianness to use.</param>
+        [OverloadResolutionPriority(ConcreteTypePriority)]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void SetWord(int index, ushort value, Endian endian) =>
+            CollectionsMarshal.AsSpan(bytes)[index..].SetWord(value, endian);
     }
 }

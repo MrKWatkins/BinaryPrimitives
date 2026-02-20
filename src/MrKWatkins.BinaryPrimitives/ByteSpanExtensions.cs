@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
@@ -177,6 +178,7 @@ public static class ByteSpanExtensions
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void SetUInt24(int value)
         {
+            Debug.Assert((value & ~0xFFFFFF) == 0, "Value exceeds 24 bits.");
             value &= 0xFFFFFF;
             bytes[0] = (byte)value;
             bytes[1] = (byte)(value >> 8);
@@ -197,6 +199,7 @@ public static class ByteSpanExtensions
             }
             else
             {
+                Debug.Assert((value & ~0xFFFFFF) == 0, "Value exceeds 24 bits.");
                 bytes[0] = (byte)(value >> 16);
                 bytes[1] = (byte)(value >> 8);
                 bytes[2] = (byte)value;

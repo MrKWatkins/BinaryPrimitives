@@ -39,6 +39,7 @@ public static class StreamExtensions
         /// </summary>
         /// <returns>The byte read from the stream.</returns>
         /// <exception cref="EndOfStreamException">The end of the stream has been reached.</exception>
+        [MustUseReturnValue]
         public byte ReadByteOrThrow()
         {
             var @byte = stream.ReadByte();
@@ -66,8 +67,8 @@ public static class StreamExtensions
         /// <param name="endian">The endianness to use.</param>
         public void WriteInt16(short value, Endian endian = Endian.Little)
         {
-            var bytes = new byte[2];
-            bytes.SetInt16(0, value, endian);
+            Span<byte> bytes = stackalloc byte[2];
+            bytes.SetInt16(value, endian);
             stream.Write(bytes);
         }
 
@@ -78,13 +79,7 @@ public static class StreamExtensions
         /// <returns>The word value read from the stream.</returns>
         /// <exception cref="EndOfStreamException">The end of the stream has been reached.</exception>
         [MustUseReturnValue]
-        public ushort ReadWordOrThrow(Endian endian = Endian.Little)
-        {
-            var byte0 = stream.ReadByteOrThrow();
-            var byte1 = stream.ReadByteOrThrow();
-
-            return endian.ToWord(byte0, byte1);
-        }
+        public ushort ReadWordOrThrow(Endian endian = Endian.Little) => stream.ReadExactly(2).GetWord(0, endian);
 
         /// <summary>
         /// Writes a word to the stream.
@@ -93,18 +88,9 @@ public static class StreamExtensions
         /// <param name="endian">The endianness to use.</param>
         public void WriteWord(ushort value, Endian endian = Endian.Little)
         {
-            var (msb, lsb) = value.ToBytes();
-
-            if (endian == Endian.Little)
-            {
-                stream.WriteByte(lsb);
-                stream.WriteByte(msb);
-            }
-            else
-            {
-                stream.WriteByte(msb);
-                stream.WriteByte(lsb);
-            }
+            Span<byte> bytes = stackalloc byte[2];
+            bytes.SetWord(value, endian);
+            stream.Write(bytes);
         }
 
         /// <summary>
@@ -123,8 +109,8 @@ public static class StreamExtensions
         /// <param name="endian">The endianness to use.</param>
         public void WriteUInt24(int value, Endian endian = Endian.Little)
         {
-            var bytes = new byte[3];
-            bytes.SetUInt24(0, value, endian);
+            Span<byte> bytes = stackalloc byte[3];
+            bytes.SetUInt24(value, endian);
             stream.Write(bytes);
         }
 
@@ -144,8 +130,8 @@ public static class StreamExtensions
         /// <param name="endian">The endianness to use.</param>
         public void WriteInt32(int value, Endian endian = Endian.Little)
         {
-            var bytes = new byte[4];
-            bytes.SetInt32(0, value, endian);
+            Span<byte> bytes = stackalloc byte[4];
+            bytes.SetInt32(value, endian);
             stream.Write(bytes);
         }
 
@@ -165,8 +151,8 @@ public static class StreamExtensions
         /// <param name="endian">The endianness to use.</param>
         public void WriteUInt32(uint value, Endian endian = Endian.Little)
         {
-            var bytes = new byte[4];
-            bytes.SetUInt32(0, value, endian);
+            Span<byte> bytes = stackalloc byte[4];
+            bytes.SetUInt32(value, endian);
             stream.Write(bytes);
         }
 
@@ -186,8 +172,8 @@ public static class StreamExtensions
         /// <param name="endian">The endianness to use.</param>
         public void WriteInt64(long value, Endian endian = Endian.Little)
         {
-            var bytes = new byte[8];
-            bytes.SetInt64(0, value, endian);
+            Span<byte> bytes = stackalloc byte[8];
+            bytes.SetInt64(value, endian);
             stream.Write(bytes);
         }
 
@@ -207,9 +193,240 @@ public static class StreamExtensions
         /// <param name="endian">The endianness to use.</param>
         public void WriteUInt64(ulong value, Endian endian = Endian.Little)
         {
+            Span<byte> bytes = stackalloc byte[8];
+            bytes.SetUInt64(value, endian);
+            stream.Write(bytes);
+        }
+
+        /// <summary>
+        /// Reads all remaining bytes from the stream asynchronously.
+        /// </summary>
+        /// <param name="cancellationToken">A cancellation token.</param>
+        /// <returns>A byte array containing all remaining bytes from the stream.</returns>
+        [MustUseReturnValue]
+        public async ValueTask<byte[]> ReadAllBytesAsync(CancellationToken cancellationToken = default)
+        {
+            using var memoryStream = new MemoryStream();
+            await stream.CopyToAsync(memoryStream, cancellationToken).ConfigureAwait(false);
+            return memoryStream.ToArray();
+        }
+
+        /// <summary>
+        /// Reads exactly <paramref name="length" /> bytes from the stream asynchronously, throwing <see cref="EndOfStreamException" /> if the end of the stream has been reached.
+        /// </summary>
+        /// <param name="length">The number of bytes to read.</param>
+        /// <param name="cancellationToken">A cancellation token.</param>
+        /// <returns>A byte array containing the bytes read from the stream.</returns>
+        /// <exception cref="EndOfStreamException">The end of the stream has been reached before <paramref name="length" /> bytes could be read.</exception>
+        [MustUseReturnValue]
+        public async ValueTask<byte[]> ReadExactlyAsync(int length, CancellationToken cancellationToken = default)
+        {
+            var result = new byte[length];
+            await stream.ReadExactlyAsync(result, cancellationToken).ConfigureAwait(false);
+            return result;
+        }
+
+        /// <summary>
+        /// Reads a single byte from the stream asynchronously, throwing <see cref="EndOfStreamException" /> if the end of the stream has been reached.
+        /// </summary>
+        /// <param name="cancellationToken">A cancellation token.</param>
+        /// <returns>The byte read from the stream.</returns>
+        /// <exception cref="EndOfStreamException">The end of the stream has been reached.</exception>
+        [MustUseReturnValue]
+        public async ValueTask<byte> ReadByteOrThrowAsync(CancellationToken cancellationToken = default)
+        {
+            var buffer = new byte[1];
+            await stream.ReadExactlyAsync(buffer, cancellationToken).ConfigureAwait(false);
+            return buffer[0];
+        }
+
+        /// <summary>
+        /// Reads a <see cref="short" /> from the stream asynchronously, throwing <see cref="EndOfStreamException" /> if the end of the stream has been reached.
+        /// </summary>
+        /// <param name="endian">The endianness to use.</param>
+        /// <param name="cancellationToken">A cancellation token.</param>
+        /// <returns>The <see cref="short" /> value read from the stream.</returns>
+        /// <exception cref="EndOfStreamException">The end of the stream has been reached.</exception>
+        [MustUseReturnValue]
+        public async ValueTask<short> ReadInt16OrThrowAsync(Endian endian = Endian.Little, CancellationToken cancellationToken = default)
+        {
+            var buffer = await stream.ReadExactlyAsync(2, cancellationToken).ConfigureAwait(false);
+            return buffer.GetInt16(0, endian);
+        }
+
+        /// <summary>
+        /// Writes a <see cref="short" /> to the stream asynchronously.
+        /// </summary>
+        /// <param name="value">The <see cref="short" /> value to write.</param>
+        /// <param name="endian">The endianness to use.</param>
+        /// <param name="cancellationToken">A cancellation token.</param>
+        public async ValueTask WriteInt16Async(short value, Endian endian = Endian.Little, CancellationToken cancellationToken = default)
+        {
+            var bytes = new byte[2];
+            bytes.SetInt16(0, value, endian);
+            await stream.WriteAsync(bytes, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Reads a word from the stream asynchronously, throwing <see cref="EndOfStreamException" /> if the end of the stream has been reached.
+        /// </summary>
+        /// <param name="endian">The endianness to use.</param>
+        /// <param name="cancellationToken">A cancellation token.</param>
+        /// <returns>The word value read from the stream.</returns>
+        /// <exception cref="EndOfStreamException">The end of the stream has been reached.</exception>
+        [MustUseReturnValue]
+        public async ValueTask<ushort> ReadWordOrThrowAsync(Endian endian = Endian.Little, CancellationToken cancellationToken = default)
+        {
+            var buffer = await stream.ReadExactlyAsync(2, cancellationToken).ConfigureAwait(false);
+            return buffer.GetWord(0, endian);
+        }
+
+        /// <summary>
+        /// Writes a word to the stream asynchronously.
+        /// </summary>
+        /// <param name="value">The word value to write.</param>
+        /// <param name="endian">The endianness to use.</param>
+        /// <param name="cancellationToken">A cancellation token.</param>
+        public async ValueTask WriteWordAsync(ushort value, Endian endian = Endian.Little, CancellationToken cancellationToken = default)
+        {
+            var bytes = new byte[2];
+            bytes.SetWord(0, value, endian);
+            await stream.WriteAsync(bytes, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Reads an unsigned 24-bit integer from the stream asynchronously, throwing <see cref="EndOfStreamException" /> if the end of the stream has been reached.
+        /// </summary>
+        /// <param name="endian">The endianness to use.</param>
+        /// <param name="cancellationToken">A cancellation token.</param>
+        /// <returns>The 24-bit value stored in an <see cref="int" />.</returns>
+        /// <exception cref="EndOfStreamException">The end of the stream has been reached.</exception>
+        [MustUseReturnValue]
+        public async ValueTask<int> ReadUInt24OrThrowAsync(Endian endian = Endian.Little, CancellationToken cancellationToken = default)
+        {
+            var buffer = await stream.ReadExactlyAsync(3, cancellationToken).ConfigureAwait(false);
+            return buffer.GetUInt24(0, endian);
+        }
+
+        /// <summary>
+        /// Writes an unsigned 24-bit integer to the stream asynchronously.
+        /// </summary>
+        /// <param name="value">The 24-bit value to write. Only the lower 24 bits are used.</param>
+        /// <param name="endian">The endianness to use.</param>
+        /// <param name="cancellationToken">A cancellation token.</param>
+        public async ValueTask WriteUInt24Async(int value, Endian endian = Endian.Little, CancellationToken cancellationToken = default)
+        {
+            var bytes = new byte[3];
+            bytes.SetUInt24(0, value, endian);
+            await stream.WriteAsync(bytes, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Reads an <see cref="int" /> from the stream asynchronously, throwing <see cref="EndOfStreamException" /> if the end of the stream has been reached.
+        /// </summary>
+        /// <param name="endian">The endianness to use.</param>
+        /// <param name="cancellationToken">A cancellation token.</param>
+        /// <returns>The <see cref="int" /> value read from the stream.</returns>
+        /// <exception cref="EndOfStreamException">The end of the stream has been reached.</exception>
+        [MustUseReturnValue]
+        public async ValueTask<int> ReadInt32OrThrowAsync(Endian endian = Endian.Little, CancellationToken cancellationToken = default)
+        {
+            var buffer = await stream.ReadExactlyAsync(4, cancellationToken).ConfigureAwait(false);
+            return buffer.GetInt32(0, endian);
+        }
+
+        /// <summary>
+        /// Writes an <see cref="int" /> to the stream asynchronously.
+        /// </summary>
+        /// <param name="value">The <see cref="int" /> value to write.</param>
+        /// <param name="endian">The endianness to use.</param>
+        /// <param name="cancellationToken">A cancellation token.</param>
+        public async ValueTask WriteInt32Async(int value, Endian endian = Endian.Little, CancellationToken cancellationToken = default)
+        {
+            var bytes = new byte[4];
+            bytes.SetInt32(0, value, endian);
+            await stream.WriteAsync(bytes, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Reads a <see cref="uint" /> from the stream asynchronously, throwing <see cref="EndOfStreamException" /> if the end of the stream has been reached.
+        /// </summary>
+        /// <param name="endian">The endianness to use.</param>
+        /// <param name="cancellationToken">A cancellation token.</param>
+        /// <returns>The <see cref="uint" /> value read from the stream.</returns>
+        /// <exception cref="EndOfStreamException">The end of the stream has been reached.</exception>
+        [MustUseReturnValue]
+        public async ValueTask<uint> ReadUInt32OrThrowAsync(Endian endian = Endian.Little, CancellationToken cancellationToken = default)
+        {
+            var buffer = await stream.ReadExactlyAsync(4, cancellationToken).ConfigureAwait(false);
+            return buffer.GetUInt32(0, endian);
+        }
+
+        /// <summary>
+        /// Writes a <see cref="uint" /> to the stream asynchronously.
+        /// </summary>
+        /// <param name="value">The <see cref="uint" /> value to write.</param>
+        /// <param name="endian">The endianness to use.</param>
+        /// <param name="cancellationToken">A cancellation token.</param>
+        public async ValueTask WriteUInt32Async(uint value, Endian endian = Endian.Little, CancellationToken cancellationToken = default)
+        {
+            var bytes = new byte[4];
+            bytes.SetUInt32(0, value, endian);
+            await stream.WriteAsync(bytes, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Reads a <see cref="long" /> from the stream asynchronously, throwing <see cref="EndOfStreamException" /> if the end of the stream has been reached.
+        /// </summary>
+        /// <param name="endian">The endianness to use.</param>
+        /// <param name="cancellationToken">A cancellation token.</param>
+        /// <returns>The <see cref="long" /> value read from the stream.</returns>
+        /// <exception cref="EndOfStreamException">The end of the stream has been reached.</exception>
+        [MustUseReturnValue]
+        public async ValueTask<long> ReadInt64OrThrowAsync(Endian endian = Endian.Little, CancellationToken cancellationToken = default)
+        {
+            var buffer = await stream.ReadExactlyAsync(8, cancellationToken).ConfigureAwait(false);
+            return buffer.GetInt64(0, endian);
+        }
+
+        /// <summary>
+        /// Writes a <see cref="long" /> to the stream asynchronously.
+        /// </summary>
+        /// <param name="value">The <see cref="long" /> value to write.</param>
+        /// <param name="endian">The endianness to use.</param>
+        /// <param name="cancellationToken">A cancellation token.</param>
+        public async ValueTask WriteInt64Async(long value, Endian endian = Endian.Little, CancellationToken cancellationToken = default)
+        {
+            var bytes = new byte[8];
+            bytes.SetInt64(0, value, endian);
+            await stream.WriteAsync(bytes, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Reads a <see cref="ulong" /> from the stream asynchronously, throwing <see cref="EndOfStreamException" /> if the end of the stream has been reached.
+        /// </summary>
+        /// <param name="endian">The endianness to use.</param>
+        /// <param name="cancellationToken">A cancellation token.</param>
+        /// <returns>The <see cref="ulong" /> value read from the stream.</returns>
+        /// <exception cref="EndOfStreamException">The end of the stream has been reached.</exception>
+        [MustUseReturnValue]
+        public async ValueTask<ulong> ReadUInt64OrThrowAsync(Endian endian = Endian.Little, CancellationToken cancellationToken = default)
+        {
+            var buffer = await stream.ReadExactlyAsync(8, cancellationToken).ConfigureAwait(false);
+            return buffer.GetUInt64(0, endian);
+        }
+
+        /// <summary>
+        /// Writes a <see cref="ulong" /> to the stream asynchronously.
+        /// </summary>
+        /// <param name="value">The <see cref="ulong" /> value to write.</param>
+        /// <param name="endian">The endianness to use.</param>
+        /// <param name="cancellationToken">A cancellation token.</param>
+        public async ValueTask WriteUInt64Async(ulong value, Endian endian = Endian.Little, CancellationToken cancellationToken = default)
+        {
             var bytes = new byte[8];
             bytes.SetUInt64(0, value, endian);
-            stream.Write(bytes);
+            await stream.WriteAsync(bytes, cancellationToken).ConfigureAwait(false);
         }
     }
 }

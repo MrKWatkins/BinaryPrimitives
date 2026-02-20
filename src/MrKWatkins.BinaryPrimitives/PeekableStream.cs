@@ -101,34 +101,13 @@ public sealed class PeekableStream : Stream
     }
 
     /// <inheritdoc />
-    public override bool CanRead
-    {
-        get
-        {
-            VerifyNotDisposed();
-            return true;
-        }
-    }
+    public override bool CanRead => !disposed && stream.CanRead;
 
     /// <inheritdoc />
-    public override bool CanSeek
-    {
-        get
-        {
-            VerifyNotDisposed();
-            return stream.CanSeek;
-        }
-    }
+    public override bool CanSeek => !disposed && stream.CanSeek;
 
     /// <inheritdoc />
-    public override bool CanWrite
-    {
-        get
-        {
-            VerifyNotDisposed();
-            return false;
-        }
-    }
+    public override bool CanWrite => false;
 
     /// <inheritdoc />
     public override long Length
@@ -141,7 +120,7 @@ public sealed class PeekableStream : Stream
     }
 
     /// <inheritdoc />
-    public override void Flush() => ThrowNotWriteable();
+    public override void Flush() { VerifyNotDisposed(); }
 
     /// <inheritdoc />
     public override void SetLength(long value) => ThrowNotWriteable();
