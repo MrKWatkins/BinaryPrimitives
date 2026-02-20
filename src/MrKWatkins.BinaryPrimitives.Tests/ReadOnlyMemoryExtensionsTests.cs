@@ -153,19 +153,19 @@ public sealed class ReadOnlyMemoryExtensionsTests
 
 
     [Test]
-    public void GetWord_ReadOnlyMemory()
+    public void GetUInt16_ReadOnlyMemory()
     {
         ReadOnlyMemory<byte> bytes = new byte[] { 0x01, 0x02, 0x03, 0x04 };
 
-        bytes.GetWord(1).Should().Equal(0x0302);
+        bytes.GetUInt16(1).Should().Equal(0x0302);
     }
 
     [Test]
-    public void GetWord_ReadOnlyMemory_Endian()
+    public void GetUInt16_ReadOnlyMemory_Endian()
     {
         ReadOnlyMemory<byte> bytes = new byte[] { 0x01, 0x02, 0x03, 0x04 };
 
-        bytes.GetWord(1, Endian.Little).Should().Equal(0x0302);
-        bytes.GetWord(2, Endian.Big).Should().Equal(0x0304);
+        bytes.GetUInt16(1, Endian.Little).Should().Equal(0x0302);
+        bytes.GetUInt16(2, Endian.Big).Should().Equal(0x0304);
     }
 }

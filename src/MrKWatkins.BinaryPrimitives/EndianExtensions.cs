@@ -30,14 +30,14 @@ public static class EndianExtensions
         }
 
         /// <summary>
-        /// Composes a word from two bytes.
+        /// Composes a <see cref="ushort" /> (UInt16) from two bytes.
         /// </summary>
         /// <param name="byte0">The first byte.</param>
         /// <param name="byte1">The second byte.</param>
-        /// <returns>The composed word.</returns>
+        /// <returns>The composed <see cref="ushort" />.</returns>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ushort ToWord(byte byte0, byte byte1) =>
+        public ushort ToUInt16(byte byte0, byte byte1) =>
             endian == Endian.Little
                 ? (ushort)(byte0 | byte1 << 8)
                 : (ushort)(byte1 | byte0 << 8);

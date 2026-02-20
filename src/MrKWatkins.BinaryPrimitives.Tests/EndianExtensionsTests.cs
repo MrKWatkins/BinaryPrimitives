@@ -9,9 +9,9 @@ public sealed class EndianExtensionsTests
 
 
     [Test]
-    public void ToWord()
+    public void ToUInt16()
     {
-        Endian.Little.ToWord(0x12, 0x34).Should().Equal(0x3412);
-        Endian.Big.ToWord(0x12, 0x34).Should().Equal(0x1234);
+        Endian.Little.ToUInt16(0x12, 0x34).Should().Equal(0x3412);
+        Endian.Big.ToUInt16(0x12, 0x34).Should().Equal(0x1234);
     }
 }

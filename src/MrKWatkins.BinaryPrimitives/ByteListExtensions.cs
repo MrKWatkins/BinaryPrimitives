@@ -158,27 +158,27 @@ public static class ByteListExtensions
             CollectionsMarshal.AsSpan(bytes)[index..].GetUInt64(endian);
 
         /// <summary>
-        /// Reads a little-endian word from a <see cref="List{T}" /> of bytes at the specified index.
+        /// Reads a little-endian <see cref="ushort" /> from a <see cref="List{T}" /> of bytes at the specified index.
         /// </summary>
         /// <param name="index">The zero-based index to read from.</param>
-        /// <returns>The word value.</returns>
+        /// <returns>The <see cref="ushort" /> value.</returns>
         [Pure]
         [OverloadResolutionPriority(ConcreteTypePriority)]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ushort GetWord(int index) =>
-            CollectionsMarshal.AsSpan(bytes)[index..].GetWord();
+        public ushort GetUInt16(int index) =>
+            CollectionsMarshal.AsSpan(bytes)[index..].GetUInt16();
 
         /// <summary>
-        /// Reads a word from a <see cref="List{T}" /> of bytes at the specified index using the specified endianness.
+        /// Reads a <see cref="ushort" /> from a <see cref="List{T}" /> of bytes at the specified index using the specified endianness.
         /// </summary>
         /// <param name="index">The zero-based index to read from.</param>
         /// <param name="endian">The endianness to use.</param>
-        /// <returns>The word value.</returns>
+        /// <returns>The <see cref="ushort" /> value.</returns>
         [Pure]
         [OverloadResolutionPriority(ConcreteTypePriority)]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ushort GetWord(int index, Endian endian) =>
-            CollectionsMarshal.AsSpan(bytes)[index..].GetWord(endian);
+        public ushort GetUInt16(int index, Endian endian) =>
+            CollectionsMarshal.AsSpan(bytes)[index..].GetUInt16(endian);
 
 
         /// <summary>
@@ -313,24 +313,24 @@ public static class ByteListExtensions
             CollectionsMarshal.AsSpan(bytes)[index..].SetUInt64(value, endian);
 
         /// <summary>
-        /// Writes a little-endian word to a <see cref="List{T}" /> of bytes at the specified index.
+        /// Writes a little-endian <see cref="ushort" /> to a <see cref="List{T}" /> of bytes at the specified index.
         /// </summary>
         /// <param name="index">The zero-based index to write to.</param>
-        /// <param name="value">The word value to write.</param>
+        /// <param name="value">The <see cref="ushort" /> value to write.</param>
         [OverloadResolutionPriority(ConcreteTypePriority)]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void SetWord(int index, ushort value) =>
-            CollectionsMarshal.AsSpan(bytes)[index..].SetWord(value);
+        public void SetUInt16(int index, ushort value) =>
+            CollectionsMarshal.AsSpan(bytes)[index..].SetUInt16(value);
 
         /// <summary>
-        /// Writes a word to a <see cref="List{T}" /> of bytes at the specified index using the specified endianness.
+        /// Writes a <see cref="ushort" /> to a <see cref="List{T}" /> of bytes at the specified index using the specified endianness.
         /// </summary>
         /// <param name="index">The zero-based index to write to.</param>
-        /// <param name="value">The word value to write.</param>
+        /// <param name="value">The <see cref="ushort" /> value to write.</param>
         /// <param name="endian">The endianness to use.</param>
         [OverloadResolutionPriority(ConcreteTypePriority)]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void SetWord(int index, ushort value, Endian endian) =>
-            CollectionsMarshal.AsSpan(bytes)[index..].SetWord(value, endian);
+        public void SetUInt16(int index, ushort value, Endian endian) =>
+            CollectionsMarshal.AsSpan(bytes)[index..].SetUInt16(value, endian);
     }
 }

@@ -299,43 +299,43 @@ public static class ByteSpanExtensions
         }
 
         /// <summary>
-        /// Reads a little-endian word from a span of bytes.
+        /// Reads a little-endian <see cref="ushort" /> from a span of bytes.
         /// </summary>
-        /// <returns>The word value.</returns>
+        /// <returns>The <see cref="ushort" /> value.</returns>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ushort GetWord() => MemoryMarshal.Read<ushort>(bytes);
+        public ushort GetUInt16() => MemoryMarshal.Read<ushort>(bytes);
 
         /// <summary>
-        /// Reads a word from a span of bytes using the specified endianness.
+        /// Reads a <see cref="ushort" /> from a span of bytes using the specified endianness.
         /// </summary>
         /// <param name="endian">The endianness to use.</param>
-        /// <returns>The word value.</returns>
+        /// <returns>The <see cref="ushort" /> value.</returns>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ushort GetWord(Endian endian) =>
+        public ushort GetUInt16(Endian endian) =>
             endian == Endian.Little
-                ? bytes.GetWord()
+                ? bytes.GetUInt16()
                 : System.Buffers.Binary.BinaryPrimitives.ReadUInt16BigEndian(bytes);
 
         /// <summary>
-        /// Writes a little-endian word to a span of bytes.
+        /// Writes a little-endian <see cref="ushort" /> to a span of bytes.
         /// </summary>
-        /// <param name="value">The word value to write.</param>
+        /// <param name="value">The <see cref="ushort" /> value to write.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void SetWord(ushort value) => MemoryMarshal.Write(bytes, value);
+        public void SetUInt16(ushort value) => MemoryMarshal.Write(bytes, value);
 
         /// <summary>
-        /// Writes a word to a span of bytes using the specified endianness.
+        /// Writes a <see cref="ushort" /> to a span of bytes using the specified endianness.
         /// </summary>
-        /// <param name="value">The word value to write.</param>
+        /// <param name="value">The <see cref="ushort" /> value to write.</param>
         /// <param name="endian">The endianness to use.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void SetWord(ushort value, Endian endian)
+        public void SetUInt16(ushort value, Endian endian)
         {
             if (endian == Endian.Little)
             {
-                bytes.SetWord(value);
+                bytes.SetUInt16(value);
             }
             else
             {

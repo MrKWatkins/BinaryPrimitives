@@ -3,11 +3,11 @@ using System.Runtime.CompilerServices;
 namespace MrKWatkins.BinaryPrimitives;
 
 /// <summary>
-/// Extension methods for <see cref="ushort" /> (word) values.
+/// Extension methods for <see cref="ushort" /> (UInt16) values.
 /// </summary>
 public static class UInt16Extensions
 {
-    /// <param name="value">The word value.</param>
+    /// <param name="value">The UInt16 value.</param>
     extension(ushort value)
     {
         /// <summary>
@@ -78,7 +78,7 @@ public static class UInt16Extensions
         public bool GetBit(int index) => (value & (1 << index)) != 0;
 
         /// <summary>
-        /// Gets the least significant byte of a word.
+        /// Gets the least significant byte of a UInt16.
         /// </summary>
         /// <returns>The least significant byte.</returns>
         [Pure]
@@ -86,7 +86,7 @@ public static class UInt16Extensions
         public byte LeastSignificantByte() => (byte)value;
 
         /// <summary>
-        /// Gets the left-most bit (bit 15) of a word.
+        /// Gets the left-most bit (bit 15) of a UInt16.
         /// </summary>
         /// <returns><see langword="true" /> if the left-most bit is set; <see langword="false" /> otherwise.</returns>
         [Pure]
@@ -94,7 +94,7 @@ public static class UInt16Extensions
         public bool LeftMostBit() => value.SignBit();
 
         /// <summary>
-        /// Gets the most significant byte of a word.
+        /// Gets the most significant byte of a UInt16.
         /// </summary>
         /// <returns>The most significant byte.</returns>
         [Pure]
@@ -102,16 +102,16 @@ public static class UInt16Extensions
         public byte MostSignificantByte() => (byte)(value >> 8);
 
         /// <summary>
-        /// Returns a new word with the bit at the specified index cleared.
+        /// Returns a new UInt16 with the bit at the specified index cleared.
         /// </summary>
         /// <param name="index">The zero-based bit index to reset.</param>
-        /// <returns>A new word with the specified bit cleared.</returns>
+        /// <returns>A new UInt16 with the specified bit cleared.</returns>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public ushort ResetBit(int index) => (ushort)(value & ~(1 << index));
 
         /// <summary>
-        /// Gets the right-most bit (bit 0) of a word.
+        /// Gets the right-most bit (bit 0) of a UInt16.
         /// </summary>
         /// <returns><see langword="true" /> if the right-most bit is set; <see langword="false" /> otherwise.</returns>
         [Pure]
@@ -119,16 +119,16 @@ public static class UInt16Extensions
         public bool RightMostBit() => value.GetBit(0);
 
         /// <summary>
-        /// Returns a new word with the bit at the specified index set.
+        /// Returns a new UInt16 with the bit at the specified index set.
         /// </summary>
         /// <param name="index">The zero-based bit index to set.</param>
-        /// <returns>A new word with the specified bit set.</returns>
+        /// <returns>A new UInt16 with the specified bit set.</returns>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public ushort SetBit(int index) => (ushort)(value | (1 << index));
 
         /// <summary>
-        /// Gets the sign bit (bit 15) of a word.
+        /// Gets the sign bit (bit 15) of a UInt16.
         /// </summary>
         /// <returns><see langword="true" /> if the sign bit is set; <see langword="false" /> otherwise.</returns>
         [Pure]
@@ -136,7 +136,7 @@ public static class UInt16Extensions
         public bool SignBit() => (value & 0b10000000_00000000) != 0;
 
         /// <summary>
-        /// Converts a word to its binary string representation, e.g. <c>"0b0001001000110100"</c>.
+        /// Converts a UInt16 to its binary string representation, e.g. <c>"0b0001001000110100"</c>.
         /// </summary>
         /// <returns>An 18-character string prefixed with <c>"0b"</c> followed by 16 binary digits.</returns>
         [Pure]
@@ -145,11 +145,11 @@ public static class UInt16Extensions
             {
                 chars[0] = '0';
                 chars[1] = 'b';
-                BinaryStringHelper.WriteWordChars(chars[2..], v);
+                BinaryStringHelper.WriteUInt16Chars(chars[2..], v);
             });
 
         /// <summary>
-        /// Decomposes a word into its most and least significant bytes.
+        /// Decomposes a UInt16 into its most and least significant bytes.
         /// </summary>
         /// <returns>A tuple of the most significant byte and least significant byte.</returns>
         [Pure]

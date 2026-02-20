@@ -298,46 +298,46 @@ public static class ByteArrayExtensions
         public void SetUInt64(int index, ulong value, Endian endian) => bytes.AsSpan(index).SetUInt64(value, endian);
 
         /// <summary>
-        /// Reads a little-endian word from a byte array at the specified index.
+        /// Reads a little-endian <see cref="ushort" /> from a byte array at the specified index.
         /// </summary>
         /// <param name="index">The zero-based index to read from.</param>
-        /// <returns>The word value.</returns>
+        /// <returns>The <see cref="ushort" /> value.</returns>
         [Pure]
         [OverloadResolutionPriority(ConcreteTypePriority)]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ushort GetWord(int index) => Unsafe.ReadUnaligned<ushort>(ref bytes[index]);
+        public ushort GetUInt16(int index) => Unsafe.ReadUnaligned<ushort>(ref bytes[index]);
 
         /// <summary>
-        /// Reads a word from a byte array at the specified index using the specified endianness.
+        /// Reads a <see cref="ushort" /> from a byte array at the specified index using the specified endianness.
         /// </summary>
         /// <param name="index">The zero-based index to read from.</param>
         /// <param name="endian">The endianness to use.</param>
-        /// <returns>The word value.</returns>
+        /// <returns>The <see cref="ushort" /> value.</returns>
         [Pure]
         [OverloadResolutionPriority(ConcreteTypePriority)]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ushort GetWord(int index, Endian endian) =>
+        public ushort GetUInt16(int index, Endian endian) =>
             endian == Endian.Little
-                ? bytes.GetWord(index)
+                ? bytes.GetUInt16(index)
                 : (ushort)(bytes[index + 1] | bytes[index] << 8);
 
         /// <summary>
-        /// Writes a little-endian word to a byte array at the specified index.
+        /// Writes a little-endian <see cref="ushort" /> to a byte array at the specified index.
         /// </summary>
         /// <param name="index">The zero-based index to write to.</param>
-        /// <param name="value">The word value to write.</param>
+        /// <param name="value">The <see cref="ushort" /> value to write.</param>
         [OverloadResolutionPriority(ConcreteTypePriority)]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void SetWord(int index, ushort value) => bytes.AsSpan(index).SetWord(value);
+        public void SetUInt16(int index, ushort value) => bytes.AsSpan(index).SetUInt16(value);
 
         /// <summary>
-        /// Writes a word to a byte array at the specified index using the specified endianness.
+        /// Writes a <see cref="ushort" /> to a byte array at the specified index using the specified endianness.
         /// </summary>
         /// <param name="index">The zero-based index to write to.</param>
-        /// <param name="value">The word value to write.</param>
+        /// <param name="value">The <see cref="ushort" /> value to write.</param>
         /// <param name="endian">The endianness to use.</param>
         [OverloadResolutionPriority(ConcreteTypePriority)]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void SetWord(int index, ushort value, Endian endian) => bytes.AsSpan(index).SetWord(value, endian);
+        public void SetUInt16(int index, ushort value, Endian endian) => bytes.AsSpan(index).SetUInt16(value, endian);
     }
 }

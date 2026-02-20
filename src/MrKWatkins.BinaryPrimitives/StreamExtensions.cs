@@ -73,23 +73,23 @@ public static class StreamExtensions
         }
 
         /// <summary>
-        /// Reads a word from the stream, throwing <see cref="EndOfStreamException" /> if the end of the stream has been reached.
+        /// Reads a <see cref="ushort" /> from the stream, throwing <see cref="EndOfStreamException" /> if the end of the stream has been reached.
         /// </summary>
         /// <param name="endian">The endianness to use.</param>
-        /// <returns>The word value read from the stream.</returns>
+        /// <returns>The <see cref="ushort" /> value read from the stream.</returns>
         /// <exception cref="EndOfStreamException">The end of the stream has been reached.</exception>
         [MustUseReturnValue]
-        public ushort ReadWordOrThrow(Endian endian = Endian.Little) => stream.ReadExactly(2).GetWord(0, endian);
+        public ushort ReadUInt16OrThrow(Endian endian = Endian.Little) => stream.ReadExactly(2).GetUInt16(0, endian);
 
         /// <summary>
-        /// Writes a word to the stream.
+        /// Writes a <see cref="ushort" /> to the stream.
         /// </summary>
-        /// <param name="value">The word value to write.</param>
+        /// <param name="value">The <see cref="ushort" /> value to write.</param>
         /// <param name="endian">The endianness to use.</param>
-        public void WriteWord(ushort value, Endian endian = Endian.Little)
+        public void WriteUInt16(ushort value, Endian endian = Endian.Little)
         {
             Span<byte> bytes = stackalloc byte[2];
-            bytes.SetWord(value, endian);
+            bytes.SetUInt16(value, endian);
             stream.Write(bytes);
         }
 
@@ -268,29 +268,29 @@ public static class StreamExtensions
         }
 
         /// <summary>
-        /// Reads a word from the stream asynchronously, throwing <see cref="EndOfStreamException" /> if the end of the stream has been reached.
+        /// Reads a <see cref="ushort" /> from the stream asynchronously, throwing <see cref="EndOfStreamException" /> if the end of the stream has been reached.
         /// </summary>
         /// <param name="endian">The endianness to use.</param>
         /// <param name="cancellationToken">A cancellation token.</param>
-        /// <returns>The word value read from the stream.</returns>
+        /// <returns>The <see cref="ushort" /> value read from the stream.</returns>
         /// <exception cref="EndOfStreamException">The end of the stream has been reached.</exception>
         [MustUseReturnValue]
-        public async ValueTask<ushort> ReadWordOrThrowAsync(Endian endian = Endian.Little, CancellationToken cancellationToken = default)
+        public async ValueTask<ushort> ReadUInt16OrThrowAsync(Endian endian = Endian.Little, CancellationToken cancellationToken = default)
         {
             var buffer = await stream.ReadExactlyAsync(2, cancellationToken).ConfigureAwait(false);
-            return buffer.GetWord(0, endian);
+            return buffer.GetUInt16(0, endian);
         }
 
         /// <summary>
-        /// Writes a word to the stream asynchronously.
+        /// Writes a <see cref="ushort" /> to the stream asynchronously.
         /// </summary>
-        /// <param name="value">The word value to write.</param>
+        /// <param name="value">The <see cref="ushort" /> value to write.</param>
         /// <param name="endian">The endianness to use.</param>
         /// <param name="cancellationToken">A cancellation token.</param>
-        public async ValueTask WriteWordAsync(ushort value, Endian endian = Endian.Little, CancellationToken cancellationToken = default)
+        public async ValueTask WriteUInt16Async(ushort value, Endian endian = Endian.Little, CancellationToken cancellationToken = default)
         {
             var bytes = new byte[2];
-            bytes.SetWord(0, value, endian);
+            bytes.SetUInt16(0, value, endian);
             await stream.WriteAsync(bytes, cancellationToken).ConfigureAwait(false);
         }
 

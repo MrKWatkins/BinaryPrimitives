@@ -138,23 +138,23 @@ public static class ByteReadOnlySpanExtensions
                 : System.Buffers.Binary.BinaryPrimitives.ReadUInt64BigEndian(bytes);
 
         /// <summary>
-        /// Reads a little-endian word from a read-only span of bytes.
+        /// Reads a little-endian <see cref="ushort" /> from a read-only span of bytes.
         /// </summary>
-        /// <returns>The word value.</returns>
+        /// <returns>The <see cref="ushort" /> value.</returns>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ushort GetWord() => MemoryMarshal.Read<ushort>(bytes);
+        public ushort GetUInt16() => MemoryMarshal.Read<ushort>(bytes);
 
         /// <summary>
-        /// Reads a word from a read-only span of bytes using the specified endianness.
+        /// Reads a <see cref="ushort" /> from a read-only span of bytes using the specified endianness.
         /// </summary>
         /// <param name="endian">The endianness to use.</param>
-        /// <returns>The word value.</returns>
+        /// <returns>The <see cref="ushort" /> value.</returns>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ushort GetWord(Endian endian) =>
+        public ushort GetUInt16(Endian endian) =>
             endian == Endian.Little
-                ? bytes.GetWord()
+                ? bytes.GetUInt16()
                 : System.Buffers.Binary.BinaryPrimitives.ReadUInt16BigEndian(bytes);
     }
 }

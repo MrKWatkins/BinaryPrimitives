@@ -83,29 +83,29 @@ public sealed class StreamExtensionsTests
     }
 
     [Test]
-    public void ReadWordOrThrow()
+    public void ReadUInt16OrThrow()
     {
         using var stream = new MemoryStream([0x34, 0x12]);
-        stream.ReadWordOrThrow().Should().Equal(0x1234);
+        stream.ReadUInt16OrThrow().Should().Equal(0x1234);
     }
 
     [Test]
-    public void ReadWordOrThrow_BigEndian()
+    public void ReadUInt16OrThrow_BigEndian()
     {
         using var stream = new MemoryStream([0x12, 0x34]);
-        stream.ReadWordOrThrow(Endian.Big).Should().Equal(0x1234);
+        stream.ReadUInt16OrThrow(Endian.Big).Should().Equal(0x1234);
     }
 
     [Test]
-    public void WriteWord()
+    public void WriteUInt16()
     {
         using var bytes = new MemoryStream();
         bytes.WriteByte(0x01);
 
-        bytes.WriteWord(0x1234);
+        bytes.WriteUInt16(0x1234);
         bytes.ToArray().Should().SequenceEqual(0x01, 0x34, 0x12);
 
-        bytes.WriteWord(0x5678, Endian.Big);
+        bytes.WriteUInt16(0x5678, Endian.Big);
         bytes.ToArray().Should().SequenceEqual(0x01, 0x34, 0x12, 0x56, 0x78);
     }
 
@@ -323,29 +323,29 @@ public sealed class StreamExtensionsTests
     }
 
     [Test]
-    public async Task ReadWordOrThrowAsync()
+    public async Task ReadUInt16OrThrowAsync()
     {
         using var stream = new MemoryStream([0x34, 0x12]);
-        (await stream.ReadWordOrThrowAsync()).Should().Equal(0x1234);
+        (await stream.ReadUInt16OrThrowAsync()).Should().Equal(0x1234);
     }
 
     [Test]
-    public async Task ReadWordOrThrowAsync_BigEndian()
+    public async Task ReadUInt16OrThrowAsync_BigEndian()
     {
         using var stream = new MemoryStream([0x12, 0x34]);
-        (await stream.ReadWordOrThrowAsync(Endian.Big)).Should().Equal(0x1234);
+        (await stream.ReadUInt16OrThrowAsync(Endian.Big)).Should().Equal(0x1234);
     }
 
     [Test]
-    public async Task WriteWordAsync()
+    public async Task WriteUInt16Async()
     {
         using var bytes = new MemoryStream();
         bytes.WriteByte(0x01);
 
-        await bytes.WriteWordAsync(0x1234);
+        await bytes.WriteUInt16Async(0x1234);
         bytes.ToArray().Should().SequenceEqual(0x01, 0x34, 0x12);
 
-        await bytes.WriteWordAsync(0x5678, Endian.Big);
+        await bytes.WriteUInt16Async(0x5678, Endian.Big);
         bytes.ToArray().Should().SequenceEqual(0x01, 0x34, 0x12, 0x56, 0x78);
     }
 

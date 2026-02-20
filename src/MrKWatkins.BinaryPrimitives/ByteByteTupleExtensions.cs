@@ -8,12 +8,12 @@ namespace MrKWatkins.BinaryPrimitives;
 public static class ByteByteTupleExtensions
 {
     /// <summary>
-    /// Composes a word from a tuple of most and least significant bytes.
+    /// Composes a <see cref="ushort" /> from a tuple of most and least significant bytes.
     /// </summary>
     /// <param name="bytes">A tuple of the most significant byte and least significant byte.</param>
     /// <param name="endian">The endianness to use.</param>
-    /// <returns>The composed word.</returns>
+    /// <returns>The composed <see cref="ushort" />.</returns>
     [Pure]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static ushort ToWord(this (byte Msb, byte Lsb) bytes, Endian endian = Endian.Little) => endian.ToWord(bytes.Msb, bytes.Lsb);
+    public static ushort ToUInt16(this (byte Msb, byte Lsb) bytes, Endian endian = Endian.Little) => endian.ToUInt16(bytes.Msb, bytes.Lsb);
 }
