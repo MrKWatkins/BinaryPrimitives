@@ -26,7 +26,7 @@ public readonly struct UInt24 :
     {
         if (@checked && value > MaxValueUInt32)
         {
-            throw new OverflowException();
+            throw new OverflowException("Value was either too large or too small for a UInt24.");
         }
 
         _value = value;
@@ -228,7 +228,7 @@ public readonly struct UInt24 :
         var result = left._value + right._value;
         if (result > MaxValueUInt32)
         {
-            throw new OverflowException();
+            throw new OverflowException("UInt24 addition overflowed.");
         }
 
         return new UInt24(result);
@@ -246,7 +246,7 @@ public readonly struct UInt24 :
     {
         if (left._value < right._value)
         {
-            throw new OverflowException();
+            throw new OverflowException("UInt24 subtraction overflowed.");
         }
 
         return new UInt24(left._value - right._value);
@@ -265,7 +265,7 @@ public readonly struct UInt24 :
         var result = (ulong)left._value * right._value;
         if (result > MaxValueUInt32)
         {
-            throw new OverflowException();
+            throw new OverflowException("UInt24 multiplication overflowed.");
         }
 
         return new UInt24((uint)result);
@@ -297,7 +297,7 @@ public readonly struct UInt24 :
     {
         if (value._value >= MaxValueUInt32)
         {
-            throw new OverflowException();
+            throw new OverflowException("UInt24 increment overflowed.");
         }
 
         return new UInt24(value._value + 1u);
@@ -315,7 +315,7 @@ public readonly struct UInt24 :
     {
         if (value._value == 0u)
         {
-            throw new OverflowException();
+            throw new OverflowException("UInt24 decrement overflowed.");
         }
 
         return new UInt24(value._value - 1u);
@@ -342,7 +342,7 @@ public readonly struct UInt24 :
     {
         if (value._value != 0u)
         {
-            throw new OverflowException();
+            throw new OverflowException("UInt24 negation overflowed.");
         }
 
         return Zero;
@@ -755,7 +755,7 @@ public readonly struct UInt24 :
             var v = (uint)(object)value;
             if (v > MaxValueUInt32)
             {
-                throw new OverflowException();
+                throw new OverflowException("Value was either too large or too small for a UInt24.");
             }
 
             result = new UInt24(v);
@@ -767,7 +767,7 @@ public readonly struct UInt24 :
             var v = (ulong)(object)value;
             if (v > MaxValueUInt32)
             {
-                throw new OverflowException();
+                throw new OverflowException("Value was either too large or too small for a UInt24.");
             }
 
             result = new UInt24((uint)v);
@@ -779,7 +779,7 @@ public readonly struct UInt24 :
             var v = (nuint)(object)value;
             if (v > MaxValueUInt32)
             {
-                throw new OverflowException();
+                throw new OverflowException("Value was either too large or too small for a UInt24.");
             }
 
             result = new UInt24((uint)v);
@@ -1276,7 +1276,7 @@ public readonly struct UInt24 :
             var v = (ulong)(object)value;
             if (v > MaxValueUInt32)
             {
-                throw new OverflowException();
+                throw new OverflowException("Value was either too large or too small for a UInt24.");
             }
 
             return new UInt24((uint)v);
