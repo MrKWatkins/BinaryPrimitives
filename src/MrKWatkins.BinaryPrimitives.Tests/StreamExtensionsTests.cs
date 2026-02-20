@@ -113,14 +113,14 @@ public sealed class StreamExtensionsTests
     public void ReadUInt24OrThrow()
     {
         using var stream = new MemoryStream([0x56, 0x34, 0x12]);
-        stream.ReadUInt24OrThrow().Should().Equal(0x123456);
+        ((int)stream.ReadUInt24OrThrow()).Should().Equal(0x123456);
     }
 
     [Test]
     public void ReadUInt24OrThrow_BigEndian()
     {
         using var stream = new MemoryStream([0x12, 0x34, 0x56]);
-        stream.ReadUInt24OrThrow(Endian.Big).Should().Equal(0x123456);
+        ((int)stream.ReadUInt24OrThrow(Endian.Big)).Should().Equal(0x123456);
     }
 
     [Test]
@@ -129,10 +129,10 @@ public sealed class StreamExtensionsTests
         using var bytes = new MemoryStream();
         bytes.WriteByte(0x01);
 
-        bytes.WriteUInt24(0x123456);
+        bytes.WriteUInt24((UInt24)0x123456);
         bytes.ToArray().Should().SequenceEqual(0x01, 0x56, 0x34, 0x12);
 
-        bytes.WriteUInt24(0x789ABC, Endian.Big);
+        bytes.WriteUInt24((UInt24)0x789ABC, Endian.Big);
         bytes.ToArray().Should().SequenceEqual(0x01, 0x56, 0x34, 0x12, 0x78, 0x9A, 0xBC);
     }
 
@@ -353,14 +353,14 @@ public sealed class StreamExtensionsTests
     public async Task ReadUInt24OrThrowAsync()
     {
         using var stream = new MemoryStream([0x56, 0x34, 0x12]);
-        (await stream.ReadUInt24OrThrowAsync()).Should().Equal(0x123456);
+        ((int)await stream.ReadUInt24OrThrowAsync()).Should().Equal(0x123456);
     }
 
     [Test]
     public async Task ReadUInt24OrThrowAsync_BigEndian()
     {
         using var stream = new MemoryStream([0x12, 0x34, 0x56]);
-        (await stream.ReadUInt24OrThrowAsync(Endian.Big)).Should().Equal(0x123456);
+        ((int)await stream.ReadUInt24OrThrowAsync(Endian.Big)).Should().Equal(0x123456);
     }
 
     [Test]
@@ -369,10 +369,10 @@ public sealed class StreamExtensionsTests
         using var bytes = new MemoryStream();
         bytes.WriteByte(0x01);
 
-        await bytes.WriteUInt24Async(0x123456);
+        await bytes.WriteUInt24Async((UInt24)0x123456);
         bytes.ToArray().Should().SequenceEqual(0x01, 0x56, 0x34, 0x12);
 
-        await bytes.WriteUInt24Async(0x789ABC, Endian.Big);
+        await bytes.WriteUInt24Async((UInt24)0x789ABC, Endian.Big);
         bytes.ToArray().Should().SequenceEqual(0x01, 0x56, 0x34, 0x12, 0x78, 0x9A, 0xBC);
     }
 

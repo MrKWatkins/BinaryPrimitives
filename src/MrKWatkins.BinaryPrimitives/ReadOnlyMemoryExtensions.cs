@@ -88,23 +88,23 @@ public static class ReadOnlyMemoryExtensions
 
 
         /// <summary>
-        /// Reads a little-endian unsigned 24-bit integer from read-only memory at the specified index.
+        /// Reads a little-endian <see cref="UInt24" /> from read-only memory at the specified index.
         /// </summary>
         /// <param name="index">The zero-based index to read from.</param>
-        /// <returns>The 24-bit value stored in an <see cref="int" />.</returns>
+        /// <returns>The <see cref="UInt24" /> value.</returns>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int GetUInt24(int index) => bytes.Span[index..].GetUInt24();
+        public UInt24 GetUInt24(int index) => bytes.Span[index..].GetUInt24();
 
         /// <summary>
-        /// Reads an unsigned 24-bit integer from read-only memory at the specified index using the specified endianness.
+        /// Reads a <see cref="UInt24" /> from read-only memory at the specified index using the specified endianness.
         /// </summary>
         /// <param name="index">The zero-based index to read from.</param>
         /// <param name="endian">The endianness to use.</param>
-        /// <returns>The 24-bit value stored in an <see cref="int" />.</returns>
+        /// <returns>The <see cref="UInt24" /> value.</returns>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int GetUInt24(int index, Endian endian) => bytes.Span[index..].GetUInt24(endian);
+        public UInt24 GetUInt24(int index, Endian endian) => bytes.Span[index..].GetUInt24(endian);
 
 
         /// <summary>

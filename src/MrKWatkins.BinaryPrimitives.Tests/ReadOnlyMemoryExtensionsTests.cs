@@ -100,8 +100,8 @@ public sealed class ReadOnlyMemoryExtensionsTests
     {
         ReadOnlyMemory<byte> bytes = new byte[] { 0x78, 0x56, 0x34, 0x12 };
 
-        bytes.GetUInt24(0).Should().Equal(0x345678);
-        bytes.GetUInt24(1).Should().Equal(0x123456);
+        ((int)bytes.GetUInt24(0)).Should().Equal(0x345678);
+        ((int)bytes.GetUInt24(1)).Should().Equal(0x123456);
     }
 
     [Test]
@@ -109,10 +109,10 @@ public sealed class ReadOnlyMemoryExtensionsTests
     {
         ReadOnlyMemory<byte> bytes = new byte[] { 0x78, 0x56, 0x34, 0x12 };
 
-        bytes.GetUInt24(0, Endian.Little).Should().Equal(0x345678);
-        bytes.GetUInt24(1, Endian.Little).Should().Equal(0x123456);
-        bytes.GetUInt24(0, Endian.Big).Should().Equal(0x785634);
-        bytes.GetUInt24(1, Endian.Big).Should().Equal(0x563412);
+        ((int)bytes.GetUInt24(0, Endian.Little)).Should().Equal(0x345678);
+        ((int)bytes.GetUInt24(1, Endian.Little)).Should().Equal(0x123456);
+        ((int)bytes.GetUInt24(0, Endian.Big)).Should().Equal(0x785634);
+        ((int)bytes.GetUInt24(1, Endian.Big)).Should().Equal(0x563412);
     }
 
 

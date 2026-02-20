@@ -31,10 +31,10 @@ public sealed class ByteICollectionExtensionsTests
     {
         List<byte> bytes = [0x01];
 
-        bytes.AddUInt24(0x123456);
+        bytes.AddUInt24((UInt24)0x123456);
         bytes.Should().SequenceEqual(0x01, 0x56, 0x34, 0x12);
 
-        bytes.AddUInt24(0x789ABC, Endian.Big);
+        bytes.AddUInt24((UInt24)0x789ABC, Endian.Big);
         bytes.Should().SequenceEqual(0x01, 0x56, 0x34, 0x12, 0x78, 0x9A, 0xBC);
     }
 

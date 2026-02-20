@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
@@ -152,46 +151,45 @@ public static class ByteSpanExtensions
 
 
         /// <summary>
-        /// Reads a little-endian unsigned 24-bit integer from a span of bytes.
+        /// Reads a little-endian <see cref="UInt24" /> from a span of bytes.
         /// </summary>
-        /// <returns>The 24-bit value stored in an <see cref="int" />.</returns>
+        /// <returns>The <see cref="UInt24" /> value.</returns>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int GetUInt24() => bytes[0] | bytes[1] << 8 | bytes[2] << 16;
+        public UInt24 GetUInt24() => new((uint)(bytes[0] | bytes[1] << 8 | bytes[2] << 16));
 
         /// <summary>
-        /// Reads an unsigned 24-bit integer from a span of bytes using the specified endianness.
+        /// Reads a <see cref="UInt24" /> from a span of bytes using the specified endianness.
         /// </summary>
         /// <param name="endian">The endianness to use.</param>
-        /// <returns>The 24-bit value stored in an <see cref="int" />.</returns>
+        /// <returns>The <see cref="UInt24" /> value.</returns>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int GetUInt24(Endian endian) =>
+        public UInt24 GetUInt24(Endian endian) =>
             endian == Endian.Little
                 ? bytes.GetUInt24()
-                : bytes[0] << 16 | bytes[1] << 8 | bytes[2];
+                : new((uint)(bytes[0] << 16 | bytes[1] << 8 | bytes[2]));
 
         /// <summary>
-        /// Writes a little-endian unsigned 24-bit integer to a span of bytes.
+        /// Writes a little-endian <see cref="UInt24" /> to a span of bytes.
         /// </summary>
-        /// <param name="value">The 24-bit value to write. Only the lower 24 bits are used.</param>
+        /// <param name="value">The <see cref="UInt24" /> value to write.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void SetUInt24(int value)
+        public void SetUInt24(UInt24 value)
         {
-            Debug.Assert((value & ~0xFFFFFF) == 0, "Value exceeds 24 bits.");
-            value &= 0xFFFFFF;
-            bytes[0] = (byte)value;
-            bytes[1] = (byte)(value >> 8);
-            bytes[2] = (byte)(value >> 16);
+            uint v = value;
+            bytes[0] = (byte)v;
+            bytes[1] = (byte)(v >> 8);
+            bytes[2] = (byte)(v >> 16);
         }
 
         /// <summary>
-        /// Writes an unsigned 24-bit integer to a span of bytes using the specified endianness.
+        /// Writes a <see cref="UInt24" /> to a span of bytes using the specified endianness.
         /// </summary>
-        /// <param name="value">The 24-bit value to write. Only the lower 24 bits are used.</param>
+        /// <param name="value">The <see cref="UInt24" /> value to write.</param>
         /// <param name="endian">The endianness to use.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void SetUInt24(int value, Endian endian)
+        public void SetUInt24(UInt24 value, Endian endian)
         {
             if (endian == Endian.Little)
             {
@@ -199,10 +197,10 @@ public static class ByteSpanExtensions
             }
             else
             {
-                Debug.Assert((value & ~0xFFFFFF) == 0, "Value exceeds 24 bits.");
-                bytes[0] = (byte)(value >> 16);
-                bytes[1] = (byte)(value >> 8);
-                bytes[2] = (byte)value;
+                uint v = value;
+                bytes[0] = (byte)(v >> 16);
+                bytes[1] = (byte)(v >> 8);
+                bytes[2] = (byte)v;
             }
         }
 

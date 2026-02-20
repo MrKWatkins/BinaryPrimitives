@@ -133,7 +133,7 @@ public sealed class ByteSpanExtensionsTests
     {
         Span<byte> bytes = [0x78, 0x56, 0x34];
 
-        bytes.GetUInt24().Should().Equal(0x345678);
+        ((int)bytes.GetUInt24()).Should().Equal(0x345678);
     }
 
 
@@ -142,8 +142,8 @@ public sealed class ByteSpanExtensionsTests
     {
         Span<byte> bytes = [0x78, 0x56, 0x34];
 
-        bytes.GetUInt24(Endian.Little).Should().Equal(0x345678);
-        bytes.GetUInt24(Endian.Big).Should().Equal(0x785634);
+        ((int)bytes.GetUInt24(Endian.Little)).Should().Equal(0x345678);
+        ((int)bytes.GetUInt24(Endian.Big)).Should().Equal(0x785634);
     }
 
 
@@ -152,10 +152,10 @@ public sealed class ByteSpanExtensionsTests
     {
         Span<byte> bytes = [0x00, 0x00, 0x00];
 
-        bytes.SetUInt24(0x123456);
+        bytes.SetUInt24((UInt24)0x123456);
         bytes.ToArray().Should().SequenceEqual(0x56, 0x34, 0x12);
 
-        bytes.SetUInt24(0x654321);
+        bytes.SetUInt24((UInt24)0x654321);
         bytes.ToArray().Should().SequenceEqual(0x21, 0x43, 0x65);
     }
 
@@ -165,10 +165,10 @@ public sealed class ByteSpanExtensionsTests
     {
         Span<byte> bytes = [0x00, 0x00, 0x00];
 
-        bytes.SetUInt24(0x123456, Endian.Little);
+        bytes.SetUInt24((UInt24)0x123456, Endian.Little);
         bytes.ToArray().Should().SequenceEqual(0x56, 0x34, 0x12);
 
-        bytes.SetUInt24(0x123456, Endian.Big);
+        bytes.SetUInt24((UInt24)0x123456, Endian.Big);
         bytes.ToArray().Should().SequenceEqual(0x12, 0x34, 0x56);
     }
 

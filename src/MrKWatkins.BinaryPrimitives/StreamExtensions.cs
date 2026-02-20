@@ -94,20 +94,20 @@ public static class StreamExtensions
         }
 
         /// <summary>
-        /// Reads an unsigned 24-bit integer from the stream, throwing <see cref="EndOfStreamException" /> if the end of the stream has been reached.
+        /// Reads a <see cref="UInt24" /> from the stream, throwing <see cref="EndOfStreamException" /> if the end of the stream has been reached.
         /// </summary>
         /// <param name="endian">The endianness to use.</param>
-        /// <returns>The 24-bit value stored in an <see cref="int" />.</returns>
+        /// <returns>The <see cref="UInt24" /> value read from the stream.</returns>
         /// <exception cref="EndOfStreamException">The end of the stream has been reached.</exception>
         [MustUseReturnValue]
-        public int ReadUInt24OrThrow(Endian endian = Endian.Little) => stream.ReadExactly(3).GetUInt24(0, endian);
+        public UInt24 ReadUInt24OrThrow(Endian endian = Endian.Little) => stream.ReadExactly(3).GetUInt24(0, endian);
 
         /// <summary>
-        /// Writes an unsigned 24-bit integer to the stream.
+        /// Writes a <see cref="UInt24" /> to the stream.
         /// </summary>
-        /// <param name="value">The 24-bit value to write. Only the lower 24 bits are used.</param>
+        /// <param name="value">The <see cref="UInt24" /> value to write.</param>
         /// <param name="endian">The endianness to use.</param>
-        public void WriteUInt24(int value, Endian endian = Endian.Little)
+        public void WriteUInt24(UInt24 value, Endian endian = Endian.Little)
         {
             Span<byte> bytes = stackalloc byte[3];
             bytes.SetUInt24(value, endian);
@@ -295,26 +295,26 @@ public static class StreamExtensions
         }
 
         /// <summary>
-        /// Reads an unsigned 24-bit integer from the stream asynchronously, throwing <see cref="EndOfStreamException" /> if the end of the stream has been reached.
+        /// Reads a <see cref="UInt24" /> from the stream asynchronously, throwing <see cref="EndOfStreamException" /> if the end of the stream has been reached.
         /// </summary>
         /// <param name="endian">The endianness to use.</param>
         /// <param name="cancellationToken">A cancellation token.</param>
-        /// <returns>The 24-bit value stored in an <see cref="int" />.</returns>
+        /// <returns>The <see cref="UInt24" /> value read from the stream.</returns>
         /// <exception cref="EndOfStreamException">The end of the stream has been reached.</exception>
         [MustUseReturnValue]
-        public async ValueTask<int> ReadUInt24OrThrowAsync(Endian endian = Endian.Little, CancellationToken cancellationToken = default)
+        public async ValueTask<UInt24> ReadUInt24OrThrowAsync(Endian endian = Endian.Little, CancellationToken cancellationToken = default)
         {
             var buffer = await stream.ReadExactlyAsync(3, cancellationToken).ConfigureAwait(false);
             return buffer.GetUInt24(0, endian);
         }
 
         /// <summary>
-        /// Writes an unsigned 24-bit integer to the stream asynchronously.
+        /// Writes a <see cref="UInt24" /> to the stream asynchronously.
         /// </summary>
-        /// <param name="value">The 24-bit value to write. Only the lower 24 bits are used.</param>
+        /// <param name="value">The <see cref="UInt24" /> value to write.</param>
         /// <param name="endian">The endianness to use.</param>
         /// <param name="cancellationToken">A cancellation token.</param>
-        public async ValueTask WriteUInt24Async(int value, Endian endian = Endian.Little, CancellationToken cancellationToken = default)
+        public async ValueTask WriteUInt24Async(UInt24 value, Endian endian = Endian.Little, CancellationToken cancellationToken = default)
         {
             var bytes = new byte[3];
             bytes.SetUInt24(0, value, endian);

@@ -64,7 +64,7 @@ public sealed class ByteReadOnlySpanExtensionsTests
     {
         ReadOnlySpan<byte> bytes = [0x78, 0x56, 0x34];
 
-        bytes.GetUInt24().Should().Equal(0x345678);
+        ((int)bytes.GetUInt24()).Should().Equal(0x345678);
     }
 
 
@@ -73,8 +73,8 @@ public sealed class ByteReadOnlySpanExtensionsTests
     {
         ReadOnlySpan<byte> bytes = [0x78, 0x56, 0x34];
 
-        bytes.GetUInt24(Endian.Little).Should().Equal(0x345678);
-        bytes.GetUInt24(Endian.Big).Should().Equal(0x785634);
+        ((int)bytes.GetUInt24(Endian.Little)).Should().Equal(0x345678);
+        ((int)bytes.GetUInt24(Endian.Big)).Should().Equal(0x785634);
     }
 
 
