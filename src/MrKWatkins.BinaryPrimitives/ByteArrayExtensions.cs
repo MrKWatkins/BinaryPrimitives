@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 
 namespace MrKWatkins.BinaryPrimitives;
@@ -178,6 +179,7 @@ public static class ByteArrayExtensions
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void SetUInt24(int index, int value)
         {
+            Debug.Assert((value & ~0xFFFFFF) == 0, "Value exceeds 24 bits.");
             value &= 0xFFFFFF;
             bytes[index] = (byte)value;
             bytes[index + 1] = (byte)(value >> 8);
@@ -200,6 +202,7 @@ public static class ByteArrayExtensions
             }
             else
             {
+                Debug.Assert((value & ~0xFFFFFF) == 0, "Value exceeds 24 bits.");
                 bytes[index] = (byte)(value >> 16);
                 bytes[index + 1] = (byte)(value >> 8);
                 bytes[index + 2] = (byte)value;

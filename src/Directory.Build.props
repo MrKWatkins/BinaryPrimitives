@@ -29,7 +29,8 @@
 
     <PropertyGroup Condition="$(MSBuildProjectName.EndsWith('Tests'))">
         <!-- Allow underscores in test method names. -->
-        <NoWarn>CA1707</NoWarn>
+        <!-- ConfigureAwait is not needed in test projects. -->
+        <NoWarn>CA1707;CA2007</NoWarn>
         <IsTestProject>true</IsTestProject>
         <EnableNUnitRunner>true</EnableNUnitRunner>
         <OutputType>Exe</OutputType>

@@ -1,4 +1,5 @@
 using System.Buffers;
+using System.Runtime.CompilerServices;
 
 namespace MrKWatkins.BinaryPrimitives;
 
@@ -21,6 +22,148 @@ public static class ReadOnlyMemoryExtensions
         var start = new WrapSegment<T>(memory);
         var end = start.Append(memory);
         return new ReadOnlySequence<T>(start, startIndex, end, end.Memory.Length);
+    }
+
+    /// <param name="bytes">The read-only memory of bytes.</param>
+    extension(ReadOnlyMemory<byte> bytes)
+    {
+        /// <summary>
+        /// Reads a little-endian <see cref="short" /> from read-only memory at the specified index.
+        /// </summary>
+        /// <param name="index">The zero-based index to read from.</param>
+        /// <returns>The <see cref="short" /> value.</returns>
+        [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public short GetInt16(int index) => bytes.Span[index..].GetInt16();
+
+        /// <summary>
+        /// Reads a <see cref="short" /> from read-only memory at the specified index using the specified endianness.
+        /// </summary>
+        /// <param name="index">The zero-based index to read from.</param>
+        /// <param name="endian">The endianness to use.</param>
+        /// <returns>The <see cref="short" /> value.</returns>
+        [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public short GetInt16(int index, Endian endian) => bytes.Span[index..].GetInt16(endian);
+
+
+        /// <summary>
+        /// Reads a little-endian <see cref="int" /> from read-only memory at the specified index.
+        /// </summary>
+        /// <param name="index">The zero-based index to read from.</param>
+        /// <returns>The <see cref="int" /> value.</returns>
+        [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int GetInt32(int index) => bytes.Span[index..].GetInt32();
+
+        /// <summary>
+        /// Reads an <see cref="int" /> from read-only memory at the specified index using the specified endianness.
+        /// </summary>
+        /// <param name="index">The zero-based index to read from.</param>
+        /// <param name="endian">The endianness to use.</param>
+        /// <returns>The <see cref="int" /> value.</returns>
+        [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int GetInt32(int index, Endian endian) => bytes.Span[index..].GetInt32(endian);
+
+
+        /// <summary>
+        /// Reads a little-endian <see cref="long" /> from read-only memory at the specified index.
+        /// </summary>
+        /// <param name="index">The zero-based index to read from.</param>
+        /// <returns>The <see cref="long" /> value.</returns>
+        [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public long GetInt64(int index) => bytes.Span[index..].GetInt64();
+
+        /// <summary>
+        /// Reads a <see cref="long" /> from read-only memory at the specified index using the specified endianness.
+        /// </summary>
+        /// <param name="index">The zero-based index to read from.</param>
+        /// <param name="endian">The endianness to use.</param>
+        /// <returns>The <see cref="long" /> value.</returns>
+        [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public long GetInt64(int index, Endian endian) => bytes.Span[index..].GetInt64(endian);
+
+
+        /// <summary>
+        /// Reads a little-endian unsigned 24-bit integer from read-only memory at the specified index.
+        /// </summary>
+        /// <param name="index">The zero-based index to read from.</param>
+        /// <returns>The 24-bit value stored in an <see cref="int" />.</returns>
+        [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int GetUInt24(int index) => bytes.Span[index..].GetUInt24();
+
+        /// <summary>
+        /// Reads an unsigned 24-bit integer from read-only memory at the specified index using the specified endianness.
+        /// </summary>
+        /// <param name="index">The zero-based index to read from.</param>
+        /// <param name="endian">The endianness to use.</param>
+        /// <returns>The 24-bit value stored in an <see cref="int" />.</returns>
+        [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public int GetUInt24(int index, Endian endian) => bytes.Span[index..].GetUInt24(endian);
+
+
+        /// <summary>
+        /// Reads a little-endian <see cref="uint" /> from read-only memory at the specified index.
+        /// </summary>
+        /// <param name="index">The zero-based index to read from.</param>
+        /// <returns>The <see cref="uint" /> value.</returns>
+        [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public uint GetUInt32(int index) => bytes.Span[index..].GetUInt32();
+
+        /// <summary>
+        /// Reads a <see cref="uint" /> from read-only memory at the specified index using the specified endianness.
+        /// </summary>
+        /// <param name="index">The zero-based index to read from.</param>
+        /// <param name="endian">The endianness to use.</param>
+        /// <returns>The <see cref="uint" /> value.</returns>
+        [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public uint GetUInt32(int index, Endian endian) => bytes.Span[index..].GetUInt32(endian);
+
+
+        /// <summary>
+        /// Reads a little-endian <see cref="ulong" /> from read-only memory at the specified index.
+        /// </summary>
+        /// <param name="index">The zero-based index to read from.</param>
+        /// <returns>The <see cref="ulong" /> value.</returns>
+        [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public ulong GetUInt64(int index) => bytes.Span[index..].GetUInt64();
+
+        /// <summary>
+        /// Reads a <see cref="ulong" /> from read-only memory at the specified index using the specified endianness.
+        /// </summary>
+        /// <param name="index">The zero-based index to read from.</param>
+        /// <param name="endian">The endianness to use.</param>
+        /// <returns>The <see cref="ulong" /> value.</returns>
+        [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public ulong GetUInt64(int index, Endian endian) => bytes.Span[index..].GetUInt64(endian);
+
+        /// <summary>
+        /// Reads a little-endian word from read-only memory at the specified index.
+        /// </summary>
+        /// <param name="index">The zero-based index to read from.</param>
+        /// <returns>The word value.</returns>
+        [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public ushort GetWord(int index) => bytes.Span[index..].GetWord();
+
+        /// <summary>
+        /// Reads a word from read-only memory at the specified index using the specified endianness.
+        /// </summary>
+        /// <param name="index">The zero-based index to read from.</param>
+        /// <param name="endian">The endianness to use.</param>
+        /// <returns>The word value.</returns>
+        [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public ushort GetWord(int index, Endian endian) => bytes.Span[index..].GetWord(endian);
     }
 
     private sealed class WrapSegment<T> : ReadOnlySequenceSegment<T>

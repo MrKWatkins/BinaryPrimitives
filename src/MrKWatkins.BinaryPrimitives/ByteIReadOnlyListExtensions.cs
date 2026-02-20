@@ -30,7 +30,7 @@ public static class ByteIReadOnlyListExtensions
         {
             if (bytes.Count > destination.Length)
             {
-                throw new ArgumentException("Value does not have enough space to copy {nameof(bytes)}.", nameof(destination));
+                throw new ArgumentException($"Value does not have enough space to copy {nameof(bytes)}.", nameof(destination));
             }
 
             ref var reference = ref MemoryMarshal.GetReference(destination);

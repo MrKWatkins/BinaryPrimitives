@@ -1,7 +1,5 @@
 using System.Numerics;
 using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-using System.Runtime.Intrinsics;
 
 namespace MrKWatkins.BinaryPrimitives;
 
@@ -121,7 +119,7 @@ public static class ByteExtensions
     /// Gets the value of the bit at the specified index.
     /// </summary>
     /// <param name="value">The byte value.</param>
-    /// <param name="index">The zero-based bit index.</param>
+    /// <param name="index">The zero-based bit index. Must be in the range 0 to 7.</param>
     /// <returns><see langword="true" /> if the bit is set; <see langword="false" /> otherwise.</returns>
     [Pure]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -161,13 +159,7 @@ public static class ByteExtensions
             throw new ArgumentOutOfRangeException(nameof(endInclusive), endInclusive, $"Value must be greater than or equal to {nameof(endInclusive)} ({startInclusive}).");
         }
 
-        byte mask = 0;
-        for (var f = startInclusive; f <= endInclusive; f++)
-        {
-            mask |= (byte)(1 << f);
-        }
-
-        return mask;
+        return (byte)((1 << (endInclusive + 1)) - (1 << startInclusive));
     }
 
 
@@ -306,28 +298,6 @@ public static class ByteExtensions
         {
             chars[0] = '0';
             chars[1] = 'b';
-
-            // Copy the value to 8 ushort positions in the vector. Using ushorts because chars are 16-bit values.
-            var vector = Vector128.Create((ushort)@byte);
-
-            // Isolate one bit in each position.
-            var masks = Vector128.Create((ushort)0b10000000, 0b01000000, 0b00100000, 0b00010000, 0b00001000, 0b00000100, 0b00000010, 0b00000001);
-            var isolatedBits = Vector128.BitwiseAnd(vector, masks);
-
-            // Now compare each position to its mask. This will give all ones if the original bit was a 1, and all zeroes if it was a 0.
-            var compared = Vector128.Equals(isolatedBits, masks);
-
-            // Shift everything right by 15. All ones will become just 1, and 0 will stay as 0.
-            var shifted = Vector128.ShiftRightLogical(compared, 15);
-
-            // Create a vector filled with ASCII 0s.
-            var zeroes = Vector128.Create((ushort)'0');
-
-            // Add our 1s or 0s from the ASCII 1s, giving us '0' for a 0 bit and '1' for a 1 bit.
-            var result = Vector128.Add(zeroes, shifted);
-
-            // Cast the chars to ushorts and copy the vector in.
-            var castedChars = MemoryMarshal.Cast<char, ushort>(chars[2..]);
-            result.CopyTo(castedChars);
+            BinaryStringHelper.WriteByteChars(chars[2..], @byte);
         });
 }

@@ -73,6 +73,15 @@ public sealed class PeekableStreamTests
         peekable.Position.Should().Equal(5);
     }
 
+    [TestCase(true)]
+    [TestCase(false)]
+    public void EndOfStream(bool endOfStream)
+    {
+        using var stream = new MemoryStream(endOfStream ? [] : [1]);
+        using var peekable = new PeekableStream(stream);
+        peekable.EndOfStream.Should().Equal(endOfStream);
+    }
+
     [Test]
     public void Seek()
     {
@@ -115,6 +124,16 @@ public sealed class PeekableStreamTests
         using var stream = new MemoryStream([1, 2, 3, 4, 5]);
         using var peekable = new PeekableStream(stream);
         peekable.CanRead.Should().BeTrue();
+    }
+
+    [Test]
+    public void CanRead_UnderlyingStreamClosed()
+    {
+        var inner = new MemoryStream([1, 2, 3, 4, 5]);
+        using var peekable = new PeekableStream(inner);
+        peekable.CanRead.Should().BeTrue();
+        inner.Close();
+        peekable.CanRead.Should().BeFalse();
     }
 
     [Test]
@@ -169,7 +188,7 @@ public sealed class PeekableStreamTests
         using var stream = new MemoryStream();
         using var peekable = new PeekableStream(stream);
 
-        peekable.Invoking(p => p.Flush()).Should().Throw<NotSupportedException>();
+        peekable.Invoking(p => p.Flush()).Should().NotThrow();
         peekable.Invoking(p => p.SetLength(1)).Should().Throw<NotSupportedException>();
         peekable.Invoking(p => p.Write([], 0, 0)).Should().Throw<NotSupportedException>();
     }
@@ -186,9 +205,9 @@ public sealed class PeekableStreamTests
         peekable.Invoking(p => p.Seek(0, SeekOrigin.Begin)).Should().Throw<ObjectDisposedException>();
         peekable.Invoking(p => p.Position).Should().Throw<ObjectDisposedException>();
         peekable.Invoking(p => p.Position = 0).Should().Throw<ObjectDisposedException>();
-        peekable.Invoking(p => p.CanRead).Should().Throw<ObjectDisposedException>();
-        peekable.Invoking(p => p.CanSeek).Should().Throw<ObjectDisposedException>();
-        peekable.Invoking(p => p.CanWrite).Should().Throw<ObjectDisposedException>();
+        peekable.CanRead.Should().BeFalse();
+        peekable.CanSeek.Should().BeFalse();
+        peekable.CanWrite.Should().BeFalse();
         peekable.Invoking(p => p.Length).Should().Throw<ObjectDisposedException>();
         peekable.Invoking(p => p.Flush()).Should().Throw<ObjectDisposedException>();
         peekable.Invoking(p => p.SetLength(1)).Should().Throw<ObjectDisposedException>();
