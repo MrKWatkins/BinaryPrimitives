@@ -26,7 +26,7 @@ public readonly struct UInt24 :
     {
         if (@checked && value > MaxValueUInt32)
         {
-            throw new OverflowException("Value was either too large or too small for a UInt24.");
+            throw new OverflowException($"The value {value} is outside the range of a UInt24 (0 to {MaxValueUInt32}).");
         }
 
         _value = value;
@@ -228,7 +228,7 @@ public readonly struct UInt24 :
         var result = left._value + right._value;
         if (result > MaxValueUInt32)
         {
-            throw new OverflowException("UInt24 addition overflowed.");
+            throw new OverflowException($"{left._value} + {right._value} = {result} which exceeds the maximum UInt24 value of {MaxValueUInt32}.");
         }
 
         return new UInt24(result);
@@ -246,7 +246,7 @@ public readonly struct UInt24 :
     {
         if (left._value < right._value)
         {
-            throw new OverflowException("UInt24 subtraction overflowed.");
+            throw new OverflowException($"{left._value} - {right._value} would result in a negative value which is outside the range of a UInt24.");
         }
 
         return new UInt24(left._value - right._value);
@@ -265,7 +265,7 @@ public readonly struct UInt24 :
         var result = (ulong)left._value * right._value;
         if (result > MaxValueUInt32)
         {
-            throw new OverflowException("UInt24 multiplication overflowed.");
+            throw new OverflowException($"{left._value} * {right._value} = {result} which exceeds the maximum UInt24 value of {MaxValueUInt32}.");
         }
 
         return new UInt24((uint)result);
@@ -297,7 +297,7 @@ public readonly struct UInt24 :
     {
         if (value._value >= MaxValueUInt32)
         {
-            throw new OverflowException("UInt24 increment overflowed.");
+            throw new OverflowException($"{value._value} + 1 = {value._value + 1} which exceeds the maximum UInt24 value of {MaxValueUInt32}.");
         }
 
         return new UInt24(value._value + 1u);
@@ -315,7 +315,7 @@ public readonly struct UInt24 :
     {
         if (value._value == 0u)
         {
-            throw new OverflowException("UInt24 decrement overflowed.");
+            throw new OverflowException("0 - 1 would result in a negative value which is outside the range of a UInt24.");
         }
 
         return new UInt24(value._value - 1u);
@@ -342,7 +342,7 @@ public readonly struct UInt24 :
     {
         if (value._value != 0u)
         {
-            throw new OverflowException("UInt24 negation overflowed.");
+            throw new OverflowException($"Negating {value._value} would result in a negative value which is outside the range of a UInt24.");
         }
 
         return Zero;
@@ -755,7 +755,7 @@ public readonly struct UInt24 :
             var v = (uint)(object)value;
             if (v > MaxValueUInt32)
             {
-                throw new OverflowException("Value was either too large or too small for a UInt24.");
+                throw new OverflowException($"The value {v} is outside the range of a UInt24 (0 to {MaxValueUInt32}).");
             }
 
             result = new UInt24(v);
@@ -767,7 +767,7 @@ public readonly struct UInt24 :
             var v = (ulong)(object)value;
             if (v > MaxValueUInt32)
             {
-                throw new OverflowException("Value was either too large or too small for a UInt24.");
+                throw new OverflowException($"The value {v} is outside the range of a UInt24 (0 to {MaxValueUInt32}).");
             }
 
             result = new UInt24((uint)v);
@@ -779,7 +779,7 @@ public readonly struct UInt24 :
             var v = (nuint)(object)value;
             if (v > MaxValueUInt32)
             {
-                throw new OverflowException("Value was either too large or too small for a UInt24.");
+                throw new OverflowException($"The value {v} is outside the range of a UInt24 (0 to {MaxValueUInt32}).");
             }
 
             result = new UInt24((uint)v);
@@ -1276,7 +1276,7 @@ public readonly struct UInt24 :
             var v = (ulong)(object)value;
             if (v > MaxValueUInt32)
             {
-                throw new OverflowException("Value was either too large or too small for a UInt24.");
+                throw new OverflowException($"The value {v} is outside the range of a UInt24 (0 to {MaxValueUInt32}).");
             }
 
             return new UInt24((uint)v);
