@@ -15,6 +15,14 @@ reading and writing multi-byte primitive values with configurable endianness.
 
 [Read more](reading-and-writing.md)
 
+## UInt24
+
+A 24-bit unsigned integer value type (`UInt24`) bridging the gap between `ushort` (16-bit) and
+`uint` (32-bit). Implements the full suite of .NET generic math interfaces and is returned by
+all `GetUInt24` read methods.
+
+[Read more](uint24.md)
+
 ## Bit Operations
 
 Extension methods on integer types (`byte`, `ushort`, `int`, `uint`, `long`, `ulong`) for

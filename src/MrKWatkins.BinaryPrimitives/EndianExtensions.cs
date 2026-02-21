@@ -11,22 +11,22 @@ public static class EndianExtensions
     extension(Endian endian)
     {
         /// <summary>
-        /// Composes an unsigned 24-bit integer from three bytes.
+        /// Composes a <see cref="UInt24" /> from three bytes.
         /// </summary>
         /// <param name="byte0">The first byte.</param>
         /// <param name="byte1">The second byte.</param>
         /// <param name="byte2">The third byte.</param>
-        /// <returns>The composed 24-bit value stored in an <see cref="int" />.</returns>
+        /// <returns>The composed <see cref="UInt24" /> value.</returns>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int ToUInt24(byte byte0, byte byte1, byte byte2)
+        public UInt24 ToUInt24(byte byte0, byte byte1, byte byte2)
         {
             if (endian == Endian.Little)
             {
-                return byte0 | byte1 << 8 | byte2 << 16;
+                return new UInt24((uint)(byte0 | byte1 << 8 | byte2 << 16));
             }
 
-            return byte2 | byte1 << 8 | byte0 << 16;
+            return new UInt24((uint)(byte2 | byte1 << 8 | byte0 << 16));
         }
 
         /// <summary>

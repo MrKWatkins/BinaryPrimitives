@@ -13,7 +13,7 @@ The following primitive types can be read and written:
 | ------------- | --------- | ---- |
 | `Int16`       | [`short`](https://learn.microsoft.com/en-us/dotnet/api/system.int16)   | 2 bytes |
 | `UInt16`      | [`ushort`](https://learn.microsoft.com/en-us/dotnet/api/system.uint16)  | 2 bytes |
-| `UInt24`      | [`int`](https://learn.microsoft.com/en-us/dotnet/api/system.int32)     | 3 bytes (value is stored in the low 24 bits) |
+| `UInt24`      | [`UInt24`](uint24.md)                                                  | 3 bytes |
 | `Int32`       | [`int`](https://learn.microsoft.com/en-us/dotnet/api/system.int32)     | 4 bytes |
 | `UInt32`      | [`uint`](https://learn.microsoft.com/en-us/dotnet/api/system.uint32)    | 4 bytes |
 | `Int64`       | [`long`](https://learn.microsoft.com/en-us/dotnet/api/system.int64)    | 8 bytes |

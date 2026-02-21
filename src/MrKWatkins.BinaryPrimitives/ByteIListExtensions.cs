@@ -200,49 +200,49 @@ public static class ByteIListExtensions
 
 
         /// <summary>
-        /// Reads a little-endian unsigned 24-bit integer from a list of bytes at the specified index.
+        /// Reads a little-endian <see cref="UInt24" /> from a list of bytes at the specified index.
         /// </summary>
         /// <param name="index">The zero-based index to read from.</param>
-        /// <returns>The 24-bit value stored in an <see cref="int" />.</returns>
+        /// <returns>The <see cref="UInt24" /> value.</returns>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int GetUInt24(int index) => bytes[index] | bytes[index + 1] << 8 | bytes[index + 2] << 16;
+        public UInt24 GetUInt24(int index) => new((uint)(bytes[index] | bytes[index + 1] << 8 | bytes[index + 2] << 16));
 
         /// <summary>
-        /// Reads an unsigned 24-bit integer from a list of bytes at the specified index using the specified endianness.
+        /// Reads a <see cref="UInt24" /> from a list of bytes at the specified index using the specified endianness.
         /// </summary>
         /// <param name="index">The zero-based index to read from.</param>
         /// <param name="endian">The endianness to use.</param>
-        /// <returns>The 24-bit value stored in an <see cref="int" />.</returns>
+        /// <returns>The <see cref="UInt24" /> value.</returns>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int GetUInt24(int index, Endian endian) =>
+        public UInt24 GetUInt24(int index, Endian endian) =>
             endian == Endian.Little
                 ? bytes.GetUInt24(index)
-                : bytes[index] << 16 | bytes[index + 1] << 8 | bytes[index + 2];
+                : new((uint)(bytes[index] << 16 | bytes[index + 1] << 8 | bytes[index + 2]));
 
         /// <summary>
-        /// Writes a little-endian unsigned 24-bit integer to a list of bytes at the specified index.
+        /// Writes a little-endian <see cref="UInt24" /> to a list of bytes at the specified index.
         /// </summary>
         /// <param name="index">The zero-based index to write to.</param>
-        /// <param name="value">The 24-bit value to write. Only the lower 24 bits are used.</param>
+        /// <param name="value">The <see cref="UInt24" /> value to write.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void SetUInt24(int index, int value)
+        public void SetUInt24(int index, UInt24 value)
         {
-            value &= 0xFFFFFF;
-            bytes[index] = (byte)value;
-            bytes[index + 1] = (byte)(value >> 8);
-            bytes[index + 2] = (byte)(value >> 16);
+            uint v = value;
+            bytes[index] = (byte)v;
+            bytes[index + 1] = (byte)(v >> 8);
+            bytes[index + 2] = (byte)(v >> 16);
         }
 
         /// <summary>
-        /// Writes an unsigned 24-bit integer to a list of bytes at the specified index using the specified endianness.
+        /// Writes a <see cref="UInt24" /> to a list of bytes at the specified index using the specified endianness.
         /// </summary>
         /// <param name="index">The zero-based index to write to.</param>
-        /// <param name="value">The 24-bit value to write. Only the lower 24 bits are used.</param>
+        /// <param name="value">The <see cref="UInt24" /> value to write.</param>
         /// <param name="endian">The endianness to use.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void SetUInt24(int index, int value, Endian endian)
+        public void SetUInt24(int index, UInt24 value, Endian endian)
         {
             if (endian == Endian.Little)
             {
@@ -250,9 +250,10 @@ public static class ByteIListExtensions
             }
             else
             {
-                bytes[index] = (byte)(value >> 16);
-                bytes[index + 1] = (byte)(value >> 8);
-                bytes[index + 2] = (byte)value;
+                uint v = value;
+                bytes[index] = (byte)(v >> 16);
+                bytes[index + 1] = (byte)(v >> 8);
+                bytes[index + 2] = (byte)v;
             }
         }
 

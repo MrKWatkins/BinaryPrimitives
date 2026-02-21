@@ -42,11 +42,11 @@ public static class ByteICollectionExtensions
         }
 
         /// <summary>
-        /// Adds an unsigned 24-bit integer to a byte collection.
+        /// Adds a <see cref="UInt24" /> to a byte collection.
         /// </summary>
-        /// <param name="value">The 24-bit value to add. Only the lower 24 bits are used.</param>
+        /// <param name="value">The <see cref="UInt24" /> value to add.</param>
         /// <param name="endian">The endianness to use.</param>
-        public void AddUInt24(int value, Endian endian = Endian.Little)
+        public void AddUInt24(UInt24 value, Endian endian = Endian.Little)
         {
             Span<byte> buffer = stackalloc byte[3];
             buffer.SetUInt24(value, endian);

@@ -76,24 +76,24 @@ public static class ByteReadOnlySpanExtensions
 
 
         /// <summary>
-        /// Reads a little-endian unsigned 24-bit integer from a read-only span of bytes.
+        /// Reads a little-endian <see cref="UInt24" /> from a read-only span of bytes.
         /// </summary>
-        /// <returns>The 24-bit value stored in an <see cref="int" />.</returns>
+        /// <returns>The <see cref="UInt24" /> value.</returns>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int GetUInt24() => bytes[0] | bytes[1] << 8 | bytes[2] << 16;
+        public UInt24 GetUInt24() => new((uint)(bytes[0] | bytes[1] << 8 | bytes[2] << 16));
 
         /// <summary>
-        /// Reads an unsigned 24-bit integer from a read-only span of bytes using the specified endianness.
+        /// Reads a <see cref="UInt24" /> from a read-only span of bytes using the specified endianness.
         /// </summary>
         /// <param name="endian">The endianness to use.</param>
-        /// <returns>The 24-bit value stored in an <see cref="int" />.</returns>
+        /// <returns>The <see cref="UInt24" /> value.</returns>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int GetUInt24(Endian endian) =>
+        public UInt24 GetUInt24(Endian endian) =>
             endian == Endian.Little
                 ? bytes.GetUInt24()
-                : bytes[0] << 16 | bytes[1] << 8 | bytes[2];
+                : new((uint)(bytes[0] << 16 | bytes[1] << 8 | bytes[2]));
 
 
         /// <summary>

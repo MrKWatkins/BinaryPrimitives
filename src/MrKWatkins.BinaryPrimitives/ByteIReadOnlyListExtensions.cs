@@ -128,28 +128,28 @@ public static class ByteIReadOnlyListExtensions
 
 
         /// <summary>
-        /// Reads a little-endian unsigned 24-bit integer from a read-only list of bytes at the specified index.
+        /// Reads a little-endian <see cref="UInt24" /> from a read-only list of bytes at the specified index.
         /// </summary>
         /// <param name="index">The zero-based index to read from.</param>
-        /// <returns>The 24-bit value stored in an <see cref="int" />.</returns>
+        /// <returns>The <see cref="UInt24" /> value.</returns>
         [Pure]
         [OverloadResolutionPriority(ReadOnlyPriority)]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int GetUInt24(int index) => bytes[index] | bytes[index + 1] << 8 | bytes[index + 2] << 16;
+        public UInt24 GetUInt24(int index) => new((uint)(bytes[index] | bytes[index + 1] << 8 | bytes[index + 2] << 16));
 
         /// <summary>
-        /// Reads an unsigned 24-bit integer from a read-only list of bytes at the specified index using the specified endianness.
+        /// Reads a <see cref="UInt24" /> from a read-only list of bytes at the specified index using the specified endianness.
         /// </summary>
         /// <param name="index">The zero-based index to read from.</param>
         /// <param name="endian">The endianness to use.</param>
-        /// <returns>The 24-bit value stored in an <see cref="int" />.</returns>
+        /// <returns>The <see cref="UInt24" /> value.</returns>
         [Pure]
         [OverloadResolutionPriority(ReadOnlyPriority)]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int GetUInt24(int index, Endian endian) =>
+        public UInt24 GetUInt24(int index, Endian endian) =>
             endian == Endian.Little
                 ? bytes.GetUInt24(index)
-                : bytes[index] << 16 | bytes[index + 1] << 8 | bytes[index + 2];
+                : new((uint)(bytes[index] << 16 | bytes[index + 1] << 8 | bytes[index + 2]));
 
 
         /// <summary>

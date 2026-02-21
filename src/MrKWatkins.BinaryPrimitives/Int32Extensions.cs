@@ -123,6 +123,6 @@ public static class Int32Extensions
             throw new ArgumentOutOfRangeException(nameof(endInclusive), endInclusive, $"Value must be greater than or equal to {nameof(endInclusive)} ({startInclusive}).");
         }
 
-        return (int)(((1L << endInclusive) << 1) - (1L << startInclusive));
+        return (int)((1L << endInclusive << 1) - (1L << startInclusive));
     }
 }
