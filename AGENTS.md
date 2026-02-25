@@ -64,3 +64,11 @@ tool and are not checked in** — do not create or edit them manually.
 ## Formatting Conventions
 
 - Ensure formatting is correct by running `dotnet format src/BinaryPrimitives.sln` after completing changes.
+
+## Documentation
+
+- Documentation is generated using MKDocs and is found in the `doc` folder.
+- Documentation in `doc/docs/API` is generated from the assembly using the sesharp tool from the root of the repository: `sesharp MrKWatkins.BinaryPrimitives/bin/Release/net10.0/MrKWatkins.BinaryPrimitives.dll doc/docs/API`
+- Documentation in the root of `doc/docs` is handwritten.
+- Handwritten documentation should link to the generated API documentation and Microsoft's API docs (https://learn.microsoft.com/en-us/dotnet/api/) for types, members, etc.
+- ReadMe.md gives a brief summary of the project, the reasons why and licence information. It is included in the NuGet package.
