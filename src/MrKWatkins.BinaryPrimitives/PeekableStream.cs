@@ -9,6 +9,7 @@ public sealed class PeekableStream : Stream
 
     private readonly Stream stream;
     private readonly bool leaveOpen;
+    private readonly byte[] asyncPeekBuffer = new byte[1];
     private int peeked = NotPeeked;
     private bool disposed;
 
@@ -46,6 +47,29 @@ public sealed class PeekableStream : Stream
     /// </summary>
     public bool EndOfStream => Peek() == -1;
 
+    /// <summary>
+    /// Asynchronously reads the next byte from the stream without consuming it. Subsequent calls to <see cref="PeekAsync" />
+    /// will return the same value until the byte is consumed by a read operation, or the position is changed.
+    /// </summary>
+    /// <param name="cancellationToken">An optional token to cancel the operation.</param>
+    /// <returns>A task yielding the next byte in the stream, or -1 if the end of the stream has been reached.</returns>
+    public async ValueTask<int> PeekAsync(CancellationToken cancellationToken = default)
+    {
+        VerifyNotDisposed();
+
+        var read = await ReadAsync(asyncPeekBuffer.AsMemory(0, 1), cancellationToken).ConfigureAwait(false);
+        peeked = read == 0 ? -1 : asyncPeekBuffer[0];
+        return peeked;
+    }
+
+    /// <summary>
+    /// Asynchronously determines whether the end of the stream has been reached.
+    /// </summary>
+    /// <param name="cancellationToken">An optional token to cancel the operation.</param>
+    /// <returns>A task yielding <c>true</c> if the end of the stream has been reached; <c>false</c> otherwise.</returns>
+    public async ValueTask<bool> EndOfStreamAsync(CancellationToken cancellationToken = default) =>
+        await PeekAsync(cancellationToken).ConfigureAwait(false) == -1;
+
     /// <inheritdoc />
     public override int Read(byte[] buffer, int offset, int count)
     {
@@ -69,6 +93,40 @@ public sealed class PeekableStream : Stream
         }
 
         return stream.Read(buffer, offset + 1, count - 1) + 1;
+    }
+
+    /// <inheritdoc />
+    public override Task<int> ReadAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken) =>
+        ReadAsync(buffer.AsMemory(offset, count), cancellationToken).AsTask();
+
+    /// <inheritdoc />
+    public override async ValueTask<int> ReadAsync(Memory<byte> buffer, CancellationToken cancellationToken = default)
+    {
+        VerifyNotDisposed();
+
+        if (buffer.Length == 0)
+        {
+            return 0;
+        }
+
+        switch (peeked)
+        {
+            case -1:
+                return 0;
+
+            case NotPeeked:
+                return await stream.ReadAsync(buffer, cancellationToken).ConfigureAwait(false);
+        }
+
+        buffer.Span[0] = (byte)peeked;
+        peeked = NotPeeked;
+
+        if (buffer.Length == 1)
+        {
+            return 1;
+        }
+
+        return await stream.ReadAsync(buffer[1..], cancellationToken).ConfigureAwait(false) + 1;
     }
 
     /// <inheritdoc />

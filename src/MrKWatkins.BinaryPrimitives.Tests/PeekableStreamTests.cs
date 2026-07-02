@@ -83,6 +83,100 @@ public sealed class PeekableStreamTests
     }
 
     [Test]
+    public async Task ReadAsync_NoPeek()
+    {
+        using var stream = new MemoryStream([1, 2, 3, 4, 5]);
+        using var peekable = new PeekableStream(stream);
+        peekable.Position.Should().Equal(0);
+
+        var buffer = new byte[4];
+        (await peekable.ReadAsync(buffer.AsMemory(1, 1))).Should().Equal(1);
+        buffer.Should().SequenceEqual(0, 1, 0, 0);
+        peekable.Position.Should().Equal(1);
+
+        (await peekable.ReadAsync(buffer.AsMemory(1, 2))).Should().Equal(2);
+        buffer.Should().SequenceEqual(0, 2, 3, 0);
+        peekable.Position.Should().Equal(3);
+
+        (await peekable.ReadAsync(buffer.AsMemory(1, 3))).Should().Equal(2);
+        buffer.Should().SequenceEqual(0, 4, 5, 0);
+        peekable.Position.Should().Equal(5);
+
+        (await peekable.ReadAsync(buffer.AsMemory(1, 1))).Should().Equal(0);
+        peekable.Position.Should().Equal(5);
+    }
+
+    [Test]
+    public async Task ReadAsync_WithPeek()
+    {
+        using var stream = new MemoryStream([1, 2, 3, 4, 5]);
+        using var peekable = new PeekableStream(stream);
+        peekable.Position.Should().Equal(0);
+
+        (await peekable.PeekAsync()).Should().Equal(1);
+        peekable.Position.Should().Equal(0);
+
+        var buffer = new byte[4];
+        (await peekable.ReadAsync(buffer.AsMemory(1, 1))).Should().Equal(1);
+        buffer.Should().SequenceEqual(0, 1, 0, 0);
+        peekable.Position.Should().Equal(1);
+
+        (await peekable.PeekAsync()).Should().Equal(2);
+        peekable.Position.Should().Equal(1);
+
+        // Peek again should return the same.
+        (await peekable.PeekAsync()).Should().Equal(2);
+        peekable.Position.Should().Equal(1);
+
+        (await peekable.ReadAsync(buffer.AsMemory(1, 2))).Should().Equal(2);
+        buffer.Should().SequenceEqual(0, 2, 3, 0);
+        peekable.Position.Should().Equal(3);
+
+        (await peekable.ReadAsync(buffer.AsMemory(1, 3))).Should().Equal(2);
+        buffer.Should().SequenceEqual(0, 4, 5, 0);
+        peekable.Position.Should().Equal(5);
+
+        (await peekable.PeekAsync()).Should().Equal(-1);
+        (await peekable.ReadAsync(buffer.AsMemory(1, 1))).Should().Equal(0);
+        peekable.Position.Should().Equal(5);
+    }
+
+    [Test]
+    public async Task ReadAsync_ZeroLengthWithPeek()
+    {
+        using var stream = new MemoryStream([1, 2]);
+        using var peekable = new PeekableStream(stream);
+
+        (await peekable.PeekAsync()).Should().Equal(1);
+        (await peekable.ReadAsync(Memory<byte>.Empty)).Should().Equal(0);
+
+        // The peeked byte is still available.
+        (await peekable.PeekAsync()).Should().Equal(1);
+    }
+
+    [Test]
+    public async Task ReadAsync_ByteArrayOverload()
+    {
+        using var stream = new MemoryStream([1, 2, 3]);
+        using var peekable = new PeekableStream(stream);
+
+        var buffer = new byte[3];
+#pragma warning disable CA1835 // Deliberately exercising the byte[] ReadAsync overload.
+        (await peekable.ReadAsync(buffer, 0, 3)).Should().Equal(3);
+#pragma warning restore CA1835
+        buffer.Should().SequenceEqual(1, 2, 3);
+    }
+
+    [TestCase(true)]
+    [TestCase(false)]
+    public async Task EndOfStreamAsync(bool endOfStream)
+    {
+        using var stream = new MemoryStream(endOfStream ? [] : [1]);
+        using var peekable = new PeekableStream(stream);
+        (await peekable.EndOfStreamAsync()).Should().Equal(endOfStream);
+    }
+
+    [Test]
     public void Seek()
     {
         using var stream = new MemoryStream([1, 2, 3, 4, 5]);
@@ -212,5 +306,20 @@ public sealed class PeekableStreamTests
         peekable.Invoking(p => p.Flush()).Should().Throw<ObjectDisposedException>();
         peekable.Invoking(p => p.SetLength(1)).Should().Throw<ObjectDisposedException>();
         peekable.Invoking(p => p.Write([], 0, 0)).Should().Throw<ObjectDisposedException>();
+    }
+
+    [Test]
+    public void AsyncMembersThrowIfDisposed()
+    {
+        using var stream = new MemoryStream();
+        var peekable = new PeekableStream(stream);
+        peekable.Dispose();
+
+        Assert.ThrowsAsync<ObjectDisposedException>(async () => _ = await peekable.PeekAsync());
+        Assert.ThrowsAsync<ObjectDisposedException>(async () => _ = await peekable.EndOfStreamAsync());
+        Assert.ThrowsAsync<ObjectDisposedException>(async () => _ = await peekable.ReadAsync(new byte[1].AsMemory()));
+#pragma warning disable CA1835 // Deliberately exercising the byte[] ReadAsync overload.
+        Assert.ThrowsAsync<ObjectDisposedException>(async () => _ = await peekable.ReadAsync(new byte[1], 0, 1));
+#pragma warning restore CA1835
     }
 }
