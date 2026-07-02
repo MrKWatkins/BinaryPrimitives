@@ -39,6 +39,11 @@ peek-without-consuming to any readable stream.
 
 [Read more](streams.md)
 
+## Use of AI
+
+My general rule is I'll write the interesting bits and use AI for the boring bits. I wrote the bulk of the code as part of my OakEmu project before
+forking it out into its own project. The main use of AI has been to generate the documentation and help with test coverage.
+
 ## Licencing
 
 Licensed under GPL v3.0.

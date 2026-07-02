@@ -12,7 +12,7 @@ Full documentation is available at [mrkwatkins.github.io/BinaryPrimitives](https
 
 ## Installation
 
-```
+```[index.md](doc/docs/index.md)
 dotnet add package MrKWatkins.BinaryPrimitives
 ```
 
@@ -83,7 +83,7 @@ IReadOnlyList<byte> bytes = LoadBytes();
 using var stream = new ReadOnlyListStream(bytes);
 ```
 
-`PeekableStream` wraps any readable `Stream` to add one-byte lookahead without consuming the
+`PeekableStream` wraps any readable `Stream` to add one-byte lookahead without consuming the[index.md](doc/docs/index.md)
 byte:
 
 ```csharp
@@ -93,6 +93,11 @@ if (stream.Peek() == 0xFF)
     stream.ReadByteOrThrow(); // consume it
 }
 ```
+
+## Use of AI
+
+My general rule is I'll write the interesting bits and use AI for the boring bits. I wrote the bulk of the code as part of my OakEmu project before
+forking it out into its own project. The main use of AI has been to generate the documentation and help with test coverage.
 
 ## Licencing
 
