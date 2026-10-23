@@ -10,18 +10,18 @@ Bit operations are available on the following types:
 
 | Type     | Bit Width | API Reference |
 | -------- | --------- | ------------- |
-| [`byte`](https://learn.microsoft.com/en-us/dotnet/api/system.byte)   | 8         | [`ByteExtensions`](API/MrKWatkins.BinaryPrimitives/ByteExtensions/index.md) |
-| [`ushort`](https://learn.microsoft.com/en-us/dotnet/api/system.uint16) | 16        | [`UInt16Extensions`](API/MrKWatkins.BinaryPrimitives/UInt16Extensions/index.md) |
-| [`int`](https://learn.microsoft.com/en-us/dotnet/api/system.int32)    | 32        | [`Int32Extensions`](API/MrKWatkins.BinaryPrimitives/Int32Extensions/index.md) |
-| [`uint`](https://learn.microsoft.com/en-us/dotnet/api/system.uint32)   | 32        | [`UInt32Extensions`](API/MrKWatkins.BinaryPrimitives/UInt32Extensions/index.md) |
-| [`long`](https://learn.microsoft.com/en-us/dotnet/api/system.int64)   | 64        | [`Int64Extensions`](API/MrKWatkins.BinaryPrimitives/Int64Extensions/index.md) |
-| [`ulong`](https://learn.microsoft.com/en-us/dotnet/api/system.uint64)  | 64        | [`UInt64Extensions`](API/MrKWatkins.BinaryPrimitives/UInt64Extensions/index.md) |
+| [`byte`](https://learn.microsoft.com/en-us/dotnet/api/system.byte)   | 8         | [`ByteExtensions`](api/MrKWatkins.BinaryPrimitives/ByteExtensions/index.md) |
+| [`ushort`](https://learn.microsoft.com/en-us/dotnet/api/system.uint16) | 16        | [`UInt16Extensions`](api/MrKWatkins.BinaryPrimitives/UInt16Extensions/index.md) |
+| [`int`](https://learn.microsoft.com/en-us/dotnet/api/system.int32)    | 32        | [`Int32Extensions`](api/MrKWatkins.BinaryPrimitives/Int32Extensions/index.md) |
+| [`uint`](https://learn.microsoft.com/en-us/dotnet/api/system.uint32)   | 32        | [`UInt32Extensions`](api/MrKWatkins.BinaryPrimitives/UInt32Extensions/index.md) |
+| [`long`](https://learn.microsoft.com/en-us/dotnet/api/system.int64)   | 64        | [`Int64Extensions`](api/MrKWatkins.BinaryPrimitives/Int64Extensions/index.md) |
+| [`ulong`](https://learn.microsoft.com/en-us/dotnet/api/system.uint64)  | 64        | [`UInt64Extensions`](api/MrKWatkins.BinaryPrimitives/UInt64Extensions/index.md) |
 
 ## Individual Bit Access
 
-[`GetBit(index)`](API/MrKWatkins.BinaryPrimitives/ByteExtensions/GetBit.md) returns `true` if the bit at the given zero-based index is set.
-[`SetBit(index)`](API/MrKWatkins.BinaryPrimitives/ByteExtensions/SetBit.md) returns a new value with that bit set.
-[`ResetBit(index)`](API/MrKWatkins.BinaryPrimitives/ByteExtensions/ResetBit.md) returns a new value with that bit cleared.
+[`GetBit(index)`](api/MrKWatkins.BinaryPrimitives/ByteExtensions/GetBit.md) returns `true` if the bit at the given zero-based index is set.
+[`SetBit(index)`](api/MrKWatkins.BinaryPrimitives/ByteExtensions/SetBit.md) returns a new value with that bit set.
+[`ResetBit(index)`](api/MrKWatkins.BinaryPrimitives/ByteExtensions/ResetBit.md) returns a new value with that bit cleared.
 
 Bits are numbered from 0 (least significant) to N-1 (most significant).
 
@@ -37,9 +37,9 @@ byte reset  = b.ResetBit(1); // 0b00001000
 
 ## Bit Ranges
 
-[`GetBits(startInclusive, endInclusive)`](API/MrKWatkins.BinaryPrimitives/ByteExtensions/GetBits.md) extracts a contiguous range of bits, shifting the
+[`GetBits(startInclusive, endInclusive)`](api/MrKWatkins.BinaryPrimitives/ByteExtensions/GetBits.md) extracts a contiguous range of bits, shifting the
 result right so that the start bit is at position 0. [`SetBits(value, startInclusive,
-endInclusive)`](API/MrKWatkins.BinaryPrimitives/ByteExtensions/SetBits.md) replaces a range of bits with the low bits of the supplied value.
+endInclusive)`](api/MrKWatkins.BinaryPrimitives/ByteExtensions/SetBits.md) replaces a range of bits with the low bits of the supplied value.
 
 Both methods validate that the range indices are within bounds and that `endInclusive` is not
 less than `startInclusive`.
@@ -56,9 +56,9 @@ byte updated = b.SetBits(0b1111, 2, 5); // sets bits 2..5 to 1111 -> 0b01111100
 
 Three convenience methods provide named access to commonly used bit positions:
 
-- [`LeftMostBit()`](API/MrKWatkins.BinaryPrimitives/ByteExtensions/LeftMostBit.md) returns the value of the most significant bit.
-- [`RightMostBit()`](API/MrKWatkins.BinaryPrimitives/ByteExtensions/RightMostBit.md) returns the value of the least significant bit (bit 0).
-- [`SignBit()`](API/MrKWatkins.BinaryPrimitives/ByteExtensions/SignBit.md) returns the value of the sign bit (same as `LeftMostBit()`).
+- [`LeftMostBit()`](api/MrKWatkins.BinaryPrimitives/ByteExtensions/LeftMostBit.md) returns the value of the most significant bit.
+- [`RightMostBit()`](api/MrKWatkins.BinaryPrimitives/ByteExtensions/RightMostBit.md) returns the value of the least significant bit (bit 0).
+- [`SignBit()`](api/MrKWatkins.BinaryPrimitives/ByteExtensions/SignBit.md) returns the value of the sign bit (same as `LeftMostBit()`).
 
 ```csharp
 byte b = 0b10000001;
@@ -70,10 +70,10 @@ bool sign  = b.SignBit();       // true  (bit 7)
 
 ## Nibble Operations (byte only)
 
-[`HighNibble()`](API/MrKWatkins.BinaryPrimitives/ByteExtensions/HighNibble.md) returns bits 4-7 of a byte shifted down to bits 0-3.
-[`LowNibble()`](API/MrKWatkins.BinaryPrimitives/ByteExtensions/LowNibble.md) returns bits 0-3 of a byte.
-[`SetHighNibble(nibble)`](API/MrKWatkins.BinaryPrimitives/ByteExtensions/SetHighNibble.md) returns a new byte with the upper four bits replaced.
-[`SetLowNibble(nibble)`](API/MrKWatkins.BinaryPrimitives/ByteExtensions/SetLowNibble.md) returns a new byte with the lower four bits replaced.
+[`HighNibble()`](api/MrKWatkins.BinaryPrimitives/ByteExtensions/HighNibble.md) returns bits 4-7 of a byte shifted down to bits 0-3.
+[`LowNibble()`](api/MrKWatkins.BinaryPrimitives/ByteExtensions/LowNibble.md) returns bits 0-3 of a byte.
+[`SetHighNibble(nibble)`](api/MrKWatkins.BinaryPrimitives/ByteExtensions/SetHighNibble.md) returns a new byte with the upper four bits replaced.
+[`SetLowNibble(nibble)`](api/MrKWatkins.BinaryPrimitives/ByteExtensions/SetLowNibble.md) returns a new byte with the lower four bits replaced.
 
 ```csharp
 byte b = 0xAB;
@@ -86,7 +86,7 @@ byte updated = b.SetHighNibble(0x05); // 0x5B
 
 ## Copying Bits with a Mask (byte only)
 
-[`CopyBitsFrom(toCopyFrom, mask)`](API/MrKWatkins.BinaryPrimitives/ByteExtensions/CopyBitsFrom.md)
+[`CopyBitsFrom(toCopyFrom, mask)`](api/MrKWatkins.BinaryPrimitives/ByteExtensions/CopyBitsFrom.md)
 copies bits from one byte to another selectively. Bits where the mask is set are taken from
 `toCopyFrom`; bits where the mask is clear are taken from the receiver.
 
@@ -100,7 +100,7 @@ byte result = target.CopyBitsFrom(source, mask); // 0b11101010
 
 ## Parity (byte only)
 
-[`Parity()`](API/MrKWatkins.BinaryPrimitives/ByteExtensions/Parity.md) returns `true` if the
+[`Parity()`](api/MrKWatkins.BinaryPrimitives/ByteExtensions/Parity.md) returns `true` if the
 number of set bits in the byte is even (even parity).
 
 ```csharp
@@ -113,8 +113,8 @@ bool odd = c.Parity(); // false
 
 ## Byte Decomposition (ushort only)
 
-[`MostSignificantByte()`](API/MrKWatkins.BinaryPrimitives/UInt16Extensions/MostSignificantByte.md) returns the high byte, and [`LeastSignificantByte()`](API/MrKWatkins.BinaryPrimitives/UInt16Extensions/LeastSignificantByte.md) returns the low
-byte. [`ToBytes()`](API/MrKWatkins.BinaryPrimitives/UInt16Extensions/ToBytes.md) returns both as a `(byte Msb, byte Lsb)` tuple.
+[`MostSignificantByte()`](api/MrKWatkins.BinaryPrimitives/UInt16Extensions/MostSignificantByte.md) returns the high byte, and [`LeastSignificantByte()`](api/MrKWatkins.BinaryPrimitives/UInt16Extensions/LeastSignificantByte.md) returns the low
+byte. [`ToBytes()`](api/MrKWatkins.BinaryPrimitives/UInt16Extensions/ToBytes.md) returns both as a `(byte Msb, byte Lsb)` tuple.
 
 ```csharp
 ushort value = 0x1234;
@@ -127,7 +127,7 @@ byte lsb = value.LeastSignificantByte(); // 0x34
 
 ## Binary String Representation
 
-[`ToBinaryString()`](API/MrKWatkins.BinaryPrimitives/ByteExtensions/ToBinaryString.md) converts any supported integer value to a human-readable binary string
+[`ToBinaryString()`](api/MrKWatkins.BinaryPrimitives/ByteExtensions/ToBinaryString.md) converts any supported integer value to a human-readable binary string
 prefixed with `"0b"`.
 
 | Type     | Output length | Example                              |
@@ -147,7 +147,7 @@ int i = 90;
 string t = i.ToBinaryString(); // "0b00000000000000000000000001011010"
 ```
 
-[`BoolExtensions.ToBitChar()`](API/MrKWatkins.BinaryPrimitives/BoolExtensions/ToBitChar.md)
+[`BoolExtensions.ToBitChar()`](api/MrKWatkins.BinaryPrimitives/BoolExtensions/ToBitChar.md)
 converts a boolean to the character `'1'` for `true` or `'0'` for `false`. This is useful when
 building binary string representations character by character.
 
@@ -164,12 +164,12 @@ flags, such as Z80 or 6502 CPUs.
 
 ### Addition
 
-[`DidAdditionHalfCarry(left, right)`](API/MrKWatkins.BinaryPrimitives/ByteExtensions/DidAdditionHalfCarry.md) is called on the sum and returns `true` if the addition of
+[`DidAdditionHalfCarry(left, right)`](api/MrKWatkins.BinaryPrimitives/ByteExtensions/DidAdditionHalfCarry.md) is called on the sum and returns `true` if the addition of
 the low nibble (for `byte`) or low byte (for `ushort`) produced a carry into the next nibble or
 byte. On `byte`, this is a carry from bit 3 to bit 4. On `ushort`, it is a carry from bit 11 to
 bit 12.
 
-[`DidAdditionOverflow(left, right)`](API/MrKWatkins.BinaryPrimitives/ByteExtensions/DidAdditionOverflow.md) is called on the sum and returns `true` if a signed addition
+[`DidAdditionOverflow(left, right)`](api/MrKWatkins.BinaryPrimitives/ByteExtensions/DidAdditionOverflow.md) is called on the sum and returns `true` if a signed addition
 overflowed, meaning the result has the wrong sign relative to both operands.
 
 ```csharp
@@ -183,11 +183,11 @@ bool halfCarry = sum.DidAdditionHalfCarry(left, right); // depends on nibbles
 
 ### Subtraction
 
-[`DidSubtractionHalfBorrow(left, right)`](API/MrKWatkins.BinaryPrimitives/ByteExtensions/DidSubtractionHalfBorrow.md) is called on the difference and returns `true` if a
+[`DidSubtractionHalfBorrow(left, right)`](api/MrKWatkins.BinaryPrimitives/ByteExtensions/DidSubtractionHalfBorrow.md) is called on the difference and returns `true` if a
 borrow occurred from the upper nibble into the lower nibble (for `byte`), or from the upper byte
 into the lower byte (for `ushort`).
 
-[`DidSubtractionOverflow(left, right)`](API/MrKWatkins.BinaryPrimitives/ByteExtensions/DidSubtractionOverflow.md) is called on the difference and returns `true` if a signed
+[`DidSubtractionOverflow(left, right)`](api/MrKWatkins.BinaryPrimitives/ByteExtensions/DidSubtractionOverflow.md) is called on the difference and returns `true` if a signed
 subtraction overflowed.
 
 ```csharp

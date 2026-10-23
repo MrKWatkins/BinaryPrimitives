@@ -1,6 +1,6 @@
 # UInt24
 
-[`UInt24`](API/MrKWatkins.BinaryPrimitives/UInt24/index.md) is a 24-bit unsigned integer value type provided by the library. It fills the gap
+[`UInt24`](api/MrKWatkins.BinaryPrimitives/UInt24/index.md) is a 24-bit unsigned integer value type provided by the library. It fills the gap
 between [`ushort`](https://learn.microsoft.com/en-us/dotnet/api/system.uint16) (16-bit) and
 [`uint`](https://learn.microsoft.com/en-us/dotnet/api/system.uint32) (32-bit), and is the type
 returned by all `GetUInt24` methods and accepted by all `SetUInt24` methods.
@@ -132,7 +132,7 @@ if (UInt24.TryParse("16777216", CultureInfo.InvariantCulture, out var result))
 
 `UInt24` is used as the return type and parameter type for the 24-bit read/write extension
 methods on all supported byte container types. An optional
-[`Endian`](API/MrKWatkins.BinaryPrimitives/Endian/index.md) parameter (default
+[`Endian`](api/MrKWatkins.BinaryPrimitives/Endian/index.md) parameter (default
 `Endian.Little`) controls byte ordering.
 
 ```csharp

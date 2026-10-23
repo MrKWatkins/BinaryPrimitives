@@ -33,7 +33,7 @@ public sealed class PeekableStream : Stream
     /// Reads the next byte from the stream without consuming it. Subsequent calls to <see cref="Peek" /> will return
     /// the same value until the byte is consumed by a read operation, or the position is changed.
     /// </summary>
-    /// <returns>The next byte in the stream, or -1 if the end of the stream has been reached.</returns>
+    /// <returns>The next byte in the stream, or <c>-1</c> if the end of the stream has been reached.</returns>
     public int Peek()
     {
         VerifyNotDisposed();
@@ -52,7 +52,7 @@ public sealed class PeekableStream : Stream
     /// will return the same value until the byte is consumed by a read operation, or the position is changed.
     /// </summary>
     /// <param name="cancellationToken">An optional token to cancel the operation.</param>
-    /// <returns>A task yielding the next byte in the stream, or -1 if the end of the stream has been reached.</returns>
+    /// <returns>A task yielding the next byte in the stream, or <c>-1</c> if the end of the stream has been reached.</returns>
     public async ValueTask<int> PeekAsync(CancellationToken cancellationToken = default)
     {
         VerifyNotDisposed();

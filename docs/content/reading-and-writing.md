@@ -2,7 +2,7 @@
 
 The library provides extension methods for reading and writing multi-byte primitive values from a
 variety of C# byte container types. All methods use a consistent naming convention and support
-configurable byte ordering via the [`Endian`](API/MrKWatkins.BinaryPrimitives/Endian/index.md)
+configurable byte ordering via the [`Endian`](api/MrKWatkins.BinaryPrimitives/Endian/index.md)
 enum.
 
 ## Supported Types
@@ -36,8 +36,8 @@ int bigEndian    = bytes.GetInt32(0, Endian.Big); // 0x01020304
 
 ### byte[] and Span&lt;byte&gt;
 
-[`ByteArrayExtensions`](API/MrKWatkins.BinaryPrimitives/ByteArrayExtensions/index.md) and
-[`ByteSpanExtensions`](API/MrKWatkins.BinaryPrimitives/ByteSpanExtensions/index.md) support
+[`ByteArrayExtensions`](api/MrKWatkins.BinaryPrimitives/ByteArrayExtensions/index.md) and
+[`ByteSpanExtensions`](api/MrKWatkins.BinaryPrimitives/ByteSpanExtensions/index.md) support
 both reading (`Get*`) and writing (`Set*`). All methods take a zero-based index indicating
 where in the array or span to read from or write to.
 
@@ -53,7 +53,7 @@ ushort word  = data.GetUInt16(4, Endian.Big); // 1000
 
 ### ReadOnlySpan&lt;byte&gt;
 
-[`ByteReadOnlySpanExtensions`](API/MrKWatkins.BinaryPrimitives/ByteReadOnlySpanExtensions/index.md)
+[`ByteReadOnlySpanExtensions`](api/MrKWatkins.BinaryPrimitives/ByteReadOnlySpanExtensions/index.md)
 supports reading only. The index parameter specifies the start position.
 
 ```csharp
@@ -63,8 +63,8 @@ int value = span.GetInt32(0); // -1 (little-endian signed int32)
 
 ### IList&lt;byte&gt; and List&lt;byte&gt;
 
-[`ByteIListExtensions`](API/MrKWatkins.BinaryPrimitives/ByteIListExtensions/index.md) and
-[`ByteListExtensions`](API/MrKWatkins.BinaryPrimitives/ByteListExtensions/index.md) support
+[`ByteIListExtensions`](api/MrKWatkins.BinaryPrimitives/ByteIListExtensions/index.md) and
+[`ByteListExtensions`](api/MrKWatkins.BinaryPrimitives/ByteListExtensions/index.md) support
 both `Get*` and `Set*` methods. [`List<byte>`](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1) has optimised overloads that avoid virtual
 dispatch.
 
@@ -75,7 +75,7 @@ int value = list.GetInt32(0); // 10
 
 ### IReadOnlyList&lt;byte&gt;
 
-[`ByteIReadOnlyListExtensions`](API/MrKWatkins.BinaryPrimitives/ByteIReadOnlyListExtensions/index.md)
+[`ByteIReadOnlyListExtensions`](api/MrKWatkins.BinaryPrimitives/ByteIReadOnlyListExtensions/index.md)
 supports reading only. It also provides a `CopyTo` method for copying the entire list into a
 [`Span<byte>`](https://learn.microsoft.com/en-us/dotnet/api/system.span-1).
 
@@ -89,7 +89,7 @@ source.CopyTo(destination);
 
 ### ICollection&lt;byte&gt;
 
-[`ByteICollectionExtensions`](API/MrKWatkins.BinaryPrimitives/ByteICollectionExtensions/index.md)
+[`ByteICollectionExtensions`](api/MrKWatkins.BinaryPrimitives/ByteICollectionExtensions/index.md)
 provides `Add*` methods that append the bytes of a value to the collection in the specified byte
 order. These are useful for building up byte sequences.
 
@@ -102,7 +102,7 @@ buffer.AddInt32(-1);                  // appends 0xFF, 0xFF, 0xFF, 0xFF
 
 ### ReadOnlyMemory&lt;byte&gt;
 
-[`ReadOnlyMemoryExtensions`](API/MrKWatkins.BinaryPrimitives/ReadOnlyMemoryExtensions/index.md)
+[`ReadOnlyMemoryExtensions`](api/MrKWatkins.BinaryPrimitives/ReadOnlyMemoryExtensions/index.md)
 supports reading only, with the same `Get*` methods and index parameter as other read-only
 containers.
 
@@ -113,7 +113,7 @@ int value = memory.GetInt32(0); // 0x12345678
 
 ### Stream
 
-[`StreamExtensions`](API/MrKWatkins.BinaryPrimitives/StreamExtensions/index.md) provides
+[`StreamExtensions`](api/MrKWatkins.BinaryPrimitives/StreamExtensions/index.md) provides
 `Read*OrThrow` and `Write*` methods for sequential reading and writing. Read methods throw
 [`EndOfStreamException`](https://learn.microsoft.com/en-us/dotnet/api/system.io.endofstreamexception) if the stream ends before enough bytes are available. All methods have
 asynchronous counterparts suffixed with `Async`.
@@ -137,13 +137,13 @@ int value = await stream.ReadInt32OrThrowAsync();
 
 Additional helper methods are available for reading raw bytes:
 
-- [`ReadByteOrThrow()`](API/MrKWatkins.BinaryPrimitives/StreamExtensions/ReadByteOrThrow.md) reads a single byte or throws [`EndOfStreamException`](https://learn.microsoft.com/en-us/dotnet/api/system.io.endofstreamexception).
-- [`ReadExactly(length)`](API/MrKWatkins.BinaryPrimitives/StreamExtensions/ReadExactly.md) reads a specific number of bytes or throws [`EndOfStreamException`](https://learn.microsoft.com/en-us/dotnet/api/system.io.endofstreamexception).
-- [`ReadAllBytes()`](API/MrKWatkins.BinaryPrimitives/StreamExtensions/ReadAllBytes.md) reads all remaining bytes into a new array.
+- [`ReadByteOrThrow()`](api/MrKWatkins.BinaryPrimitives/StreamExtensions/ReadByteOrThrow.md) reads a single byte or throws [`EndOfStreamException`](https://learn.microsoft.com/en-us/dotnet/api/system.io.endofstreamexception).
+- [`ReadExactly(length)`](api/MrKWatkins.BinaryPrimitives/StreamExtensions/ReadExactly.md) reads a specific number of bytes or throws [`EndOfStreamException`](https://learn.microsoft.com/en-us/dotnet/api/system.io.endofstreamexception).
+- [`ReadAllBytes()`](api/MrKWatkins.BinaryPrimitives/StreamExtensions/ReadAllBytes.md) reads all remaining bytes into a new array.
 
 ## Composing Values from Individual Bytes
 
-[`EndianExtensions`](API/MrKWatkins.BinaryPrimitives/EndianExtensions/index.md) provides
+[`EndianExtensions`](api/MrKWatkins.BinaryPrimitives/EndianExtensions/index.md) provides
 methods for composing values from individual bytes when working byte-by-byte:
 
 ```csharp
@@ -152,9 +152,9 @@ ushort value = Endian.Little.ToUInt16(b0, b1); // 0x0201
 ushort big   = Endian.Big.ToUInt16(b0, b1);    // 0x0102
 ```
 
-[`UInt16Extensions`](API/MrKWatkins.BinaryPrimitives/UInt16Extensions/index.md) provides
+[`UInt16Extensions`](api/MrKWatkins.BinaryPrimitives/UInt16Extensions/index.md) provides
 `ToBytes()` for decomposing a `ushort` into its most and least significant bytes, and
-[`ByteByteTupleExtensions`](API/MrKWatkins.BinaryPrimitives/ByteByteTupleExtensions/index.md)
+[`ByteByteTupleExtensions`](api/MrKWatkins.BinaryPrimitives/ByteByteTupleExtensions/index.md)
 provides `ToUInt16()` for the reverse:
 
 ```csharp

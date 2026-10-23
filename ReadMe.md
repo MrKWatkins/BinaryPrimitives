@@ -12,7 +12,7 @@ Full documentation is available at [mrkwatkins.github.io/BinaryPrimitives](https
 
 ## Installation
 
-```[index.md](doc/docs/index.md)
+```bash
 dotnet add package MrKWatkins.BinaryPrimitives
 ```
 
@@ -83,7 +83,7 @@ IReadOnlyList<byte> bytes = LoadBytes();
 using var stream = new ReadOnlyListStream(bytes);
 ```
 
-`PeekableStream` wraps any readable `Stream` to add one-byte lookahead without consuming the[index.md](doc/docs/index.md)
+`PeekableStream` wraps any readable `Stream` to add one-byte lookahead without consuming the
 byte:
 
 ```csharp
@@ -102,3 +102,28 @@ forking it out into its own project. The main use of AI has been to generate the
 ## Licencing
 
 Licensed under GPL v3.0.
+
+## Building documentation
+
+Handwritten pages live in `docs/content`; `docs/site.json` controls navigation and API assembly inputs.
+The shared Docker image supplies VitePress, Vale and Sesharp. Generated API pages and site output stay outside the source documentation.
+
+Run `python3 docs/preview.py` with Docker and the .NET 10 SDK installed, or select **Preview documentation** in a JetBrains IDE.
+The preview is available at `http://localhost:5173/BinaryPrimitives/`. Restart after editing source pages.
+
+The short project workflows delegate builds and documentation validation to the shared `dotnet/project` composite action. API project paths are read from `docs/site.json`.
+Normal builds compile, test and validate the complete documentation. The **Release** workflow defaults to publishing both packages and docs. Leave the version blank to increment the latest stable tag’s minor version (for example, `1.7.0` → `1.8.0`), or supply an explicit version. It prepares packages and docs, then publishes the
+validated NuGet artifacts, creates the release and deploys the validated Pages artifact in the same job. NuGet's policy must allow `release.yml` for user
+`MrKWatkins`. The job remains in this repository to preserve its NuGet OIDC workflow identity. Configure **Settings → Pages → Source → GitHub Actions** before the first deployment.
+
+For a docs-only update, run **Release** with **publish-packages** off, **publish-docs** on and the version blank. This updates docs without publishing a package or creating a tag. It uses handwritten pages from the selected branch and API
+assemblies built from the highest stable release tag in a separate checkout. The header keeps that release's version. The optional `api-ref` input selects an explicit API
+source override for XML comment corrections; the workflow reports the chosen commits and warns that an override may differ from the published package.
+Turning **publish-docs** off skips deployment while package builds still validate docs. Turning both options off runs validation without publishing.
+Historical API builds disable NuGet auditing so an advisory in an old build dependency does not prevent rebuilding released documentation; normal builds retain auditing.
+
+Release and docs-only deployments share the same Pages concurrency group and reject artifacts for a version older than the latest release. Validated site artifacts
+are retained for 14 days. If deployment fails after NuGet publication, run **Release** with **publish-packages** off; no new package is needed.
+
+For the initial cutover, use `api-ref: main` when publishing docs for 1.7.0: its original XML comments fail the new Vale rules. This migration corrects those comments
+without changing the API implementation. Once a package release includes the corrections, omit the override to use its released source by default.

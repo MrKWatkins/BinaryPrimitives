@@ -94,7 +94,7 @@ public static class Int32Extensions
         public bool RightMostBit() => value.GetBit(0);
 
         /// <summary>
-        /// Converts an int to its binary string representation, e.g. <c>"0b00000000000000000000000001011010"</c>.
+        /// Converts an int to its binary string representation, for example, <c>"0b00000000000000000000000001011010"</c>.
         /// </summary>
         /// <returns>A 34-character string prefixed with <c>"0b"</c> followed by 32 binary digits.</returns>
         [Pure]

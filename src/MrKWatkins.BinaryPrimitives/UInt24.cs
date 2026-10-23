@@ -161,7 +161,12 @@ public readonly struct UInt24 :
     public static bool TryParse(string? s, IFormatProvider? provider, out UInt24 result) =>
         TryParse(s, NumberStyles.Integer, provider, out result);
 
-    /// <inheritdoc />
+    /// <summary>Attempts to parse an unsigned 24-bit integer.</summary>
+    /// <param name="s">The text to parse.</param>
+    /// <param name="style">The permitted number styles.</param>
+    /// <param name="provider">The format provider.</param>
+    /// <param name="result">The parsed value, or zero when parsing fails.</param>
+    /// <returns><c>true</c> if parsing succeeds; otherwise, <c>false</c>.</returns>
     public static bool TryParse(string? s, NumberStyles style, IFormatProvider? provider, out UInt24 result)
     {
         if (uint.TryParse(s, style, provider, out var value) && value <= MaxValueUInt32)
@@ -178,7 +183,12 @@ public readonly struct UInt24 :
     public static bool TryParse(ReadOnlySpan<char> s, IFormatProvider? provider, out UInt24 result) =>
         TryParse(s, NumberStyles.Integer, provider, out result);
 
-    /// <inheritdoc />
+    /// <summary>Attempts to parse an unsigned 24-bit integer.</summary>
+    /// <param name="s">The text to parse.</param>
+    /// <param name="style">The permitted number styles.</param>
+    /// <param name="provider">The format provider.</param>
+    /// <param name="result">The parsed value, or zero when parsing fails.</param>
+    /// <returns><c>true</c> if parsing succeeds; otherwise, <c>false</c>.</returns>
     public static bool TryParse(ReadOnlySpan<char> s, NumberStyles style, IFormatProvider? provider, out UInt24 result)
     {
         if (uint.TryParse(s, style, provider, out var value) && value <= MaxValueUInt32)

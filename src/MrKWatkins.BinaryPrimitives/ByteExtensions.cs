@@ -29,7 +29,7 @@ public static class ByteExtensions
 
 
     /// <summary>
-    /// Determines whether an addition produced a half carry, i.e. a carry from bit 3 to bit 4.
+    /// Determines whether an addition produced a half carry, that is, a carry from bit 3 to bit 4.
     /// </summary>
     /// <param name="sum">The result of the addition.</param>
     /// <param name="left">The left operand.</param>
@@ -82,7 +82,7 @@ public static class ByteExtensions
 
 
     /// <summary>
-    /// Determines whether a subtraction produced a half borrow, i.e. a borrow from bit 4 to bit 3.
+    /// Determines whether a subtraction produced a half borrow, that is, a borrow from bit 4 to bit 3.
     /// </summary>
     /// <param name="difference">The result of the subtraction.</param>
     /// <param name="left">The left operand.</param>
@@ -194,7 +194,7 @@ public static class ByteExtensions
 
 
     /// <summary>
-    /// Gets the parity of a byte, i.e. whether the number of set bits is even.
+    /// Gets the parity of a byte, that is, whether the number of set bits is even.
     /// </summary>
     /// <param name="value">The byte value.</param>
     /// <returns><see langword="true" /> if the number of set bits is even; <see langword="false" /> otherwise.</returns>
@@ -288,7 +288,7 @@ public static class ByteExtensions
 
 
     /// <summary>
-    /// Converts a byte to its binary string representation, e.g. <c>"0b01011010"</c>.
+    /// Converts a byte to its binary string representation, for example, <c>"0b01011010"</c>.
     /// </summary>
     /// <param name="value">The byte value.</param>
     /// <returns>A 10-character string prefixed with <c>"0b"</c> followed by 8 binary digits.</returns>

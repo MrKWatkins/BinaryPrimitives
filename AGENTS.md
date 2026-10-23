@@ -14,7 +14,7 @@ All commands run from the root directory:
 dotnet build src/BinaryPrimitives.sln # Build all projects.
 
 dotnet test --solution src/BinaryPrimitives.sln  # Run all tests.
-dotnet test --solution src/BinaryPrimitives.sln --configuration Release -- --coverage --coverage-output coverage.xml --coverage-output-format cobertura # Run all tests with code coverage.
+dotnet test --solution src/BinaryPrimitives.sln --configuration Release --coverage --coverage-output coverage.xml --coverage-output-format cobertura # Run all tests with code coverage.
 dotnet test --project src/MrKWatkins.BinaryPrimitives.Tests  # Run a single test project.
 dotnet test --project src/MrKWatkins.BinaryPrimitives.Tests --filter "FullyQualifiedName~ByteExtensionsTests"  # Run a single test class.
 dotnet test --project src/MrKWatkins.BinaryPrimitives.Tests --filter "FullyQualifiedName~GetBit"  # Run specific test methods.
@@ -60,8 +60,9 @@ Multi-byte read/write methods follow the pattern: read from container with optio
 
 ## Documentation
 
-- Documentation is generated using MKDocs and is found in the `doc` folder.
-- Documentation in `doc/docs/API` is generated from the assembly using the sesharp tool from the root of the repository: `sesharp src/MrKWatkins.BinaryPrimitives/bin/Release/net10.0/MrKWatkins.BinaryPrimitives.dll doc/docs/API --repository https://github.com/MrKWatkins/BinaryPrimitives`
-- Documentation in the root of `doc/docs` is handwritten.
-- Handwritten documentation should link to the generated API documentation and Microsoft's API docs (https://learn.microsoft.com/en-us/dotnet/api/) for types, members, etc.
+- Handwritten documentation is in `docs/content`; `docs/site.json` configures the shared VitePress/Sesharp toolchain.
+- API pages are generated from Release assemblies into temporary storage. Do not edit generated API Markdown.
+- Run `bash docs/preview.sh` to build the library and start the Docker preview at `http://localhost:5173/BinaryPrimitives/`.
+- The shared documentation build runs Vale and validates local page, asset and anchor links before publication.
+- Guide API links use lowercase `api/`; use inline code for identifiers and British spelling in prose.
 - ReadMe.md gives a brief summary of the project, the reasons why and licence information. It is included in the NuGet package.

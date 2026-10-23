@@ -11,7 +11,7 @@ public static class UInt16Extensions
     extension(ushort value)
     {
         /// <summary>
-        /// Determines whether an addition produced a half carry, i.e. a carry from bit 11 to bit 12.
+        /// Determines whether an addition produced a half carry, that is, a carry from bit 11 to bit 12.
         /// </summary>
         /// <param name="left">The left operand.</param>
         /// <param name="right">The right operand.</param>
@@ -40,7 +40,7 @@ public static class UInt16Extensions
         }
 
         /// <summary>
-        /// Determines whether a subtraction produced a half borrow, i.e. a borrow from bit 12 to bit 11.
+        /// Determines whether a subtraction produced a half borrow, that is, a borrow from bit 12 to bit 11.
         /// </summary>
         /// <param name="left">The left operand.</param>
         /// <param name="right">The right operand.</param>
@@ -136,7 +136,7 @@ public static class UInt16Extensions
         public bool SignBit() => (value & 0b10000000_00000000) != 0;
 
         /// <summary>
-        /// Converts a UInt16 to its binary string representation, e.g. <c>"0b0001001000110100"</c>.
+        /// Converts a UInt16 to its binary string representation, for example, <c>"0b0001001000110100"</c>.
         /// </summary>
         /// <returns>An 18-character string prefixed with <c>"0b"</c> followed by 16 binary digits.</returns>
         [Pure]

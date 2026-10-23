@@ -62,7 +62,7 @@ public static class UInt64Extensions
         public bool SignBit() => (value & 0x8000000000000000UL) != 0;
 
         /// <summary>
-        /// Converts a ulong to its binary string representation, e.g. <c>"0b0000000100000010000000110000010000000101000001100000011100001000"</c>.
+        /// Converts a ulong to its binary string representation, for example, <c>"0b0000000100000010000000110000010000000101000001100000011100001000"</c>.
         /// </summary>
         /// <returns>A 66-character string prefixed with <c>"0b"</c> followed by 64 binary digits.</returns>
         [Pure]

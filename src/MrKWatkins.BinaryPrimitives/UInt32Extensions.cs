@@ -62,7 +62,7 @@ public static class UInt32Extensions
         public bool SignBit() => (value & 0x80000000u) != 0;
 
         /// <summary>
-        /// Converts a uint to its binary string representation, e.g. <c>"0b00000001000000100000001100000100"</c>.
+        /// Converts a uint to its binary string representation, for example, <c>"0b00000001000000100000001100000100"</c>.
         /// </summary>
         /// <returns>A 34-character string prefixed with <c>"0b"</c> followed by 32 binary digits.</returns>
         [Pure]
