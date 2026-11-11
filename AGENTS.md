@@ -1,5 +1,7 @@
 # AGENTS.md
 
+- For C# changes, load and follow the `csharp-conventions` skill.
+
 This file provides guidance to AI agents when working with code in this repository.
 
 ## Project Overview
@@ -41,12 +43,12 @@ Multi-byte read/write methods follow the pattern: read from container with optio
 - `[Pure]` and `[MethodImpl(MethodImplOptions.AggressiveInlining)]` on performance-critical extension methods.
 - `Unsafe.ReadUnaligned`/`WriteUnaligned` for efficient byte-to-primitive conversions.
 - `OverloadResolutionPriority` attributes to handle IList vs IReadOnlyList vs concrete type overloads.
-- Global usings configured in Directory.Build.props: `System.Diagnostics.CodeAnalysis`, `System.Diagnostics.Contracts`, `PureAttribute`, `JetBrains.Annotations`.
+- MrKWatkins.CSharpConventions supplies global usings for `System.Diagnostics.CodeAnalysis`, `System.Diagnostics.Contracts`, `PureAttribute`, `JetBrains.Annotations`.
 - Warnings are errors; CA1707 (underscores in names) is suppressed in test projects only.
 
 ## Testing Conventions
 
-- NUnit 4 with `MrKWatkins.Assertions`. (`.Should().Equal()`, `.Should().Throw<>()`, `AssertThat.Invoking()`)
+- NUnit with `MrKWatkins.Assertions`. (`.Should().Equal()`, `.Should().Throw<>()`, `AssertThat.Invoking()`)
 - Global usings for `MrKWatkins.Assertions` and `NUnit.Framework` in test projects.
 - One test class per implementation class; test methods use `[TestCase]` for parameterized tests.
 - Test names should match the method they're testing.
@@ -56,7 +58,9 @@ Multi-byte read/write methods follow the pattern: read from container with optio
 
 ## Formatting Conventions
 
-- Ensure formatting is correct by running `dotnet format src/BinaryPrimitives.sln` after completing changes.
+- Hard wrap Markdown and C# at 180 characters.
+- Verify whitespace with `dotnet format whitespace src/BinaryPrimitives.sln --no-restore --verify-no-changes`.
+- Compiler rules come from MrKWatkins.CSharpConventions. Release builds enforce the full application rules.
 
 ## Documentation
 

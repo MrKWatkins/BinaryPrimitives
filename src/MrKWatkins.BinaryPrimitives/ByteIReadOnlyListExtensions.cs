@@ -41,7 +41,6 @@ public static class ByteIReadOnlyListExtensions
             }
         }
 
-
         /// <summary>
         /// Reads a little-endian <see cref="short" /> from a read-only list of bytes at the specified index.
         /// </summary>
@@ -50,7 +49,7 @@ public static class ByteIReadOnlyListExtensions
         [Pure]
         [OverloadResolutionPriority(ReadOnlyPriority)]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public short GetInt16(int index) => (short)(bytes[index] | bytes[index + 1] << 8);
+        public short GetInt16(int index) => (short)(bytes[index] | (bytes[index + 1] << 8));
 
         /// <summary>
         /// Reads a <see cref="short" /> from a read-only list of bytes at the specified index using the specified endianness.
@@ -64,8 +63,7 @@ public static class ByteIReadOnlyListExtensions
         public short GetInt16(int index, Endian endian) =>
             endian == Endian.Little
                 ? bytes.GetInt16(index)
-                : (short)(bytes[index + 1] | bytes[index] << 8);
-
+                : (short)(bytes[index + 1] | (bytes[index] << 8));
 
         /// <summary>
         /// Reads a little-endian <see cref="int" /> from a read-only list of bytes at the specified index.
@@ -75,7 +73,7 @@ public static class ByteIReadOnlyListExtensions
         [Pure]
         [OverloadResolutionPriority(ReadOnlyPriority)]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int GetInt32(int index) => bytes[index] | bytes[index + 1] << 8 | bytes[index + 2] << 16 | bytes[index + 3] << 24;
+        public int GetInt32(int index) => bytes[index] | (bytes[index + 1] << 8) | (bytes[index + 2] << 16) | (bytes[index + 3] << 24);
 
         /// <summary>
         /// Reads an <see cref="int" /> from a read-only list of bytes at the specified index using the specified endianness.
@@ -89,12 +87,9 @@ public static class ByteIReadOnlyListExtensions
         public int GetInt32(int index, Endian endian) =>
             endian == Endian.Little
                 ? bytes.GetInt32(index)
-                : bytes[index + 3] | bytes[index + 2] << 8 | bytes[index + 1] << 16 | bytes[index] << 24;
+                : bytes[index + 3] | (bytes[index + 2] << 8) | (bytes[index + 1] << 16) | (bytes[index] << 24);
 
 #pragma warning disable CS0675 // Bitwise-or operator used on a sign-extended operand
-
-
-
 
         /// <summary>
         /// Reads a little-endian <see cref="long" /> from a read-only list of bytes at the specified index.
@@ -105,8 +100,8 @@ public static class ByteIReadOnlyListExtensions
         [OverloadResolutionPriority(ReadOnlyPriority)]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public long GetInt64(int index) =>
-            bytes[index] | bytes[index + 1] << 8 | bytes[index + 2] << 16 | bytes[index + 3] << 24 |
-            (long)bytes[index + 4] << 32 | (long)bytes[index + 5] << 40 | (long)bytes[index + 6] << 48 | (long)bytes[index + 7] << 56;
+            bytes[index] | (bytes[index + 1] << 8) | (bytes[index + 2] << 16) | (bytes[index + 3] << 24) |
+            ((long)bytes[index + 4] << 32) | ((long)bytes[index + 5] << 40) | ((long)bytes[index + 6] << 48) | ((long)bytes[index + 7] << 56);
 
         /// <summary>
         /// Reads a <see cref="long" /> from a read-only list of bytes at the specified index using the specified endianness.
@@ -120,12 +115,10 @@ public static class ByteIReadOnlyListExtensions
         public long GetInt64(int index, Endian endian) =>
             endian == Endian.Little
                 ? bytes.GetInt64(index)
-                : bytes[index + 7] | bytes[index + 6] << 8 | bytes[index + 5] << 16 | bytes[index + 4] << 24 |
-                  (long)bytes[index + 3] << 32 | (long)bytes[index + 2] << 40 | (long)bytes[index + 1] << 48 | (long)bytes[index] << 56;
-
+                : bytes[index + 7] | (bytes[index + 6] << 8) | (bytes[index + 5] << 16) | (bytes[index + 4] << 24) |
+                  ((long)bytes[index + 3] << 32) | ((long)bytes[index + 2] << 40) | ((long)bytes[index + 1] << 48) | ((long)bytes[index] << 56);
 
 #pragma warning restore CS0675
-
 
         /// <summary>
         /// Reads a little-endian <see cref="UInt24" /> from a read-only list of bytes at the specified index.
@@ -135,7 +128,7 @@ public static class ByteIReadOnlyListExtensions
         [Pure]
         [OverloadResolutionPriority(ReadOnlyPriority)]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public UInt24 GetUInt24(int index) => new((uint)(bytes[index] | bytes[index + 1] << 8 | bytes[index + 2] << 16));
+        public UInt24 GetUInt24(int index) => new((uint)(bytes[index] | (bytes[index + 1] << 8) | (bytes[index + 2] << 16)));
 
         /// <summary>
         /// Reads a <see cref="UInt24" /> from a read-only list of bytes at the specified index using the specified endianness.
@@ -149,8 +142,7 @@ public static class ByteIReadOnlyListExtensions
         public UInt24 GetUInt24(int index, Endian endian) =>
             endian == Endian.Little
                 ? bytes.GetUInt24(index)
-                : new((uint)(bytes[index] << 16 | bytes[index + 1] << 8 | bytes[index + 2]));
-
+                : new((uint)((bytes[index] << 16) | (bytes[index + 1] << 8) | bytes[index + 2]));
 
         /// <summary>
         /// Reads a little-endian <see cref="uint" /> from a read-only list of bytes at the specified index.
@@ -160,7 +152,7 @@ public static class ByteIReadOnlyListExtensions
         [Pure]
         [OverloadResolutionPriority(ReadOnlyPriority)]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public uint GetUInt32(int index) => (uint)(bytes[index] | bytes[index + 1] << 8 | bytes[index + 2] << 16 | bytes[index + 3] << 24);
+        public uint GetUInt32(int index) => (uint)(bytes[index] | (bytes[index + 1] << 8) | (bytes[index + 2] << 16) | (bytes[index + 3] << 24));
 
         /// <summary>
         /// Reads a <see cref="uint" /> from a read-only list of bytes at the specified index using the specified endianness.
@@ -174,11 +166,9 @@ public static class ByteIReadOnlyListExtensions
         public uint GetUInt32(int index, Endian endian) =>
             endian == Endian.Little
                 ? bytes.GetUInt32(index)
-                : (uint)(bytes[index + 3] | bytes[index + 2] << 8 | bytes[index + 1] << 16 | bytes[index] << 24);
+                : (uint)(bytes[index + 3] | (bytes[index + 2] << 8) | (bytes[index + 1] << 16) | (bytes[index] << 24));
 
 #pragma warning disable CS0675 // Bitwise-or operator used on a sign-extended operand
-
-
 
         /// <summary>
         /// Reads a little-endian <see cref="ulong" /> from a read-only list of bytes at the specified index.
@@ -189,8 +179,8 @@ public static class ByteIReadOnlyListExtensions
         [OverloadResolutionPriority(ReadOnlyPriority)]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public ulong GetUInt64(int index) =>
-            bytes[index] | (ulong)bytes[index + 1] << 8 | (ulong)bytes[index + 2] << 16 | (ulong)bytes[index + 3] << 24 |
-            (ulong)bytes[index + 4] << 32 | (ulong)bytes[index + 5] << 40 | (ulong)bytes[index + 6] << 48 | (ulong)bytes[index + 7] << 56;
+            bytes[index] | ((ulong)bytes[index + 1] << 8) | ((ulong)bytes[index + 2] << 16) | ((ulong)bytes[index + 3] << 24) |
+            ((ulong)bytes[index + 4] << 32) | ((ulong)bytes[index + 5] << 40) | ((ulong)bytes[index + 6] << 48) | ((ulong)bytes[index + 7] << 56);
 
         /// <summary>
         /// Reads a <see cref="ulong" /> from a read-only list of bytes at the specified index using the specified endianness.
@@ -204,12 +194,10 @@ public static class ByteIReadOnlyListExtensions
         public ulong GetUInt64(int index, Endian endian) =>
             endian == Endian.Little
                 ? bytes.GetUInt64(index)
-                : bytes[index + 7] | (ulong)bytes[index + 6] << 8 | (ulong)bytes[index + 5] << 16 | (ulong)bytes[index + 4] << 24 |
-                  (ulong)bytes[index + 3] << 32 | (ulong)bytes[index + 2] << 40 | (ulong)bytes[index + 1] << 48 | (ulong)bytes[index] << 56;
-
+                : bytes[index + 7] | ((ulong)bytes[index + 6] << 8) | ((ulong)bytes[index + 5] << 16) | ((ulong)bytes[index + 4] << 24) |
+                  ((ulong)bytes[index + 3] << 32) | ((ulong)bytes[index + 2] << 40) | ((ulong)bytes[index + 1] << 48) | ((ulong)bytes[index] << 56);
 
 #pragma warning restore CS0675
-
 
         /// <summary>
         /// Reads a little-endian <see cref="ushort" /> from a read-only list of bytes at the specified index.
@@ -219,7 +207,7 @@ public static class ByteIReadOnlyListExtensions
         [Pure]
         [OverloadResolutionPriority(ReadOnlyPriority)]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ushort GetUInt16(int index) => (ushort)(bytes[index] | bytes[index + 1] << 8);
+        public ushort GetUInt16(int index) => (ushort)(bytes[index] | (bytes[index + 1] << 8));
 
         /// <summary>
         /// Reads a <see cref="ushort" /> from a read-only list of bytes at the specified index using the specified endianness.
@@ -233,6 +221,6 @@ public static class ByteIReadOnlyListExtensions
         public ushort GetUInt16(int index, Endian endian) =>
             endian == Endian.Little
                 ? bytes.GetUInt16(index)
-                : (ushort)(bytes[index + 1] | bytes[index] << 8);
+                : (ushort)(bytes[index + 1] | (bytes[index] << 8));
     }
 }

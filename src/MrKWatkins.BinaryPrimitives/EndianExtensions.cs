@@ -19,15 +19,9 @@ public static class EndianExtensions
         /// <returns>The composed <see cref="UInt24" /> value.</returns>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public UInt24 ToUInt24(byte byte0, byte byte1, byte byte2)
-        {
-            if (endian == Endian.Little)
-            {
-                return new UInt24((uint)(byte0 | byte1 << 8 | byte2 << 16));
-            }
-
-            return new UInt24((uint)(byte2 | byte1 << 8 | byte0 << 16));
-        }
+        public UInt24 ToUInt24(byte byte0, byte byte1, byte byte2) => endian == Endian.Little
+                ? new UInt24((uint)(byte0 | (byte1 << 8) | (byte2 << 16)))
+                : new UInt24((uint)(byte2 | (byte1 << 8) | (byte0 << 16)));
 
         /// <summary>
         /// Composes a <see cref="ushort" /> (UInt16) from two bytes.
@@ -39,7 +33,7 @@ public static class EndianExtensions
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public ushort ToUInt16(byte byte0, byte byte1) =>
             endian == Endian.Little
-                ? (ushort)(byte0 | byte1 << 8)
-                : (ushort)(byte1 | byte0 << 8);
+                ? (ushort)(byte0 | (byte1 << 8))
+                : (ushort)(byte1 | (byte0 << 8));
     }
 }

@@ -9,19 +9,16 @@ public sealed class UInt32ExtensionsTests
     [TestCase(0x80000000u, 31, true)]
     public void GetBit(uint value, int index, bool expected) => value.GetBit(index).Should().Equal(expected);
 
-
     [TestCase(0x00000000u, false)]
     [TestCase(0x7FFFFFFFu, false)]
     [TestCase(0x80000000u, true)]
     [TestCase(0xFFFFFFFFu, true)]
     public void LeftMostBit(uint value, bool expected) => value.LeftMostBit().Should().Equal(expected);
 
-
     [TestCase(0b00000011u, 0, 0b00000010u)]
     [TestCase(0b00000011u, 1, 0b00000001u)]
     [TestCase(0x80000000u, 31, 0x00000000u)]
     public void ResetBit(uint value, int index, uint expected) => value.ResetBit(index).Should().Equal(expected);
-
 
     [TestCase(0x00000000u, false)]
     [TestCase(0x00000001u, true)]
@@ -29,19 +26,16 @@ public sealed class UInt32ExtensionsTests
     [TestCase(0x80000001u, true)]
     public void RightMostBit(uint value, bool expected) => value.RightMostBit().Should().Equal(expected);
 
-
     [TestCase(0x00000000u, 0, 0x00000001u)]
     [TestCase(0x00000001u, 0, 0x00000001u)]
     [TestCase(0x00000000u, 31, 0x80000000u)]
     public void SetBit(uint value, int index, uint expected) => value.SetBit(index).Should().Equal(expected);
-
 
     [TestCase(0x00000000u, false)]
     [TestCase(0x7FFFFFFFu, false)]
     [TestCase(0x80000000u, true)]
     [TestCase(0xFFFFFFFFu, true)]
     public void SignBit(uint value, bool expected) => value.SignBit().Should().Equal(expected);
-
 
     [TestCase(0x00000000u, "0b00000000000000000000000000000000")]
     [TestCase(0x01020304u, "0b00000001000000100000001100000100")]

@@ -37,7 +37,6 @@ public static class ByteListExtensions
         public short GetInt16(int index, Endian endian) =>
             CollectionsMarshal.AsSpan(bytes)[index..].GetInt16(endian);
 
-
         /// <summary>
         /// Reads a little-endian <see cref="int" /> from a <see cref="List{T}" /> of bytes at the specified index.
         /// </summary>
@@ -60,7 +59,6 @@ public static class ByteListExtensions
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public int GetInt32(int index, Endian endian) =>
             CollectionsMarshal.AsSpan(bytes)[index..].GetInt32(endian);
-
 
         /// <summary>
         /// Reads a little-endian <see cref="long" /> from a <see cref="List{T}" /> of bytes at the specified index.
@@ -85,7 +83,6 @@ public static class ByteListExtensions
         public long GetInt64(int index, Endian endian) =>
             CollectionsMarshal.AsSpan(bytes)[index..].GetInt64(endian);
 
-
         /// <summary>
         /// Reads a little-endian <see cref="UInt24" /> from a <see cref="List{T}" /> of bytes at the specified index.
         /// </summary>
@@ -109,7 +106,6 @@ public static class ByteListExtensions
         public UInt24 GetUInt24(int index, Endian endian) =>
             CollectionsMarshal.AsSpan(bytes)[index..].GetUInt24(endian);
 
-
         /// <summary>
         /// Reads a little-endian <see cref="uint" /> from a <see cref="List{T}" /> of bytes at the specified index.
         /// </summary>
@@ -132,7 +128,6 @@ public static class ByteListExtensions
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public uint GetUInt32(int index, Endian endian) =>
             CollectionsMarshal.AsSpan(bytes)[index..].GetUInt32(endian);
-
 
         /// <summary>
         /// Reads a little-endian <see cref="ulong" /> from a <see cref="List{T}" /> of bytes at the specified index.
@@ -180,7 +175,6 @@ public static class ByteListExtensions
         public ushort GetUInt16(int index, Endian endian) =>
             CollectionsMarshal.AsSpan(bytes)[index..].GetUInt16(endian);
 
-
         /// <summary>
         /// Writes a little-endian <see cref="short" /> to a <see cref="List{T}" /> of bytes at the specified index.
         /// </summary>
@@ -201,7 +195,6 @@ public static class ByteListExtensions
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void SetInt16(int index, short value, Endian endian) =>
             CollectionsMarshal.AsSpan(bytes)[index..].SetInt16(value, endian);
-
 
         /// <summary>
         /// Writes a little-endian <see cref="int" /> to a <see cref="List{T}" /> of bytes at the specified index.
@@ -224,7 +217,6 @@ public static class ByteListExtensions
         public void SetInt32(int index, int value, Endian endian) =>
             CollectionsMarshal.AsSpan(bytes)[index..].SetInt32(value, endian);
 
-
         /// <summary>
         /// Writes a little-endian <see cref="long" /> to a <see cref="List{T}" /> of bytes at the specified index.
         /// </summary>
@@ -245,7 +237,6 @@ public static class ByteListExtensions
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void SetInt64(int index, long value, Endian endian) =>
             CollectionsMarshal.AsSpan(bytes)[index..].SetInt64(value, endian);
-
 
         /// <summary>
         /// Writes a little-endian <see cref="UInt24" /> to a <see cref="List{T}" /> of bytes at the specified index.
@@ -268,7 +259,6 @@ public static class ByteListExtensions
         public void SetUInt24(int index, UInt24 value, Endian endian) =>
             CollectionsMarshal.AsSpan(bytes)[index..].SetUInt24(value, endian);
 
-
         /// <summary>
         /// Writes a little-endian <see cref="uint" /> to a <see cref="List{T}" /> of bytes at the specified index.
         /// </summary>
@@ -289,7 +279,6 @@ public static class ByteListExtensions
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void SetUInt32(int index, uint value, Endian endian) =>
             CollectionsMarshal.AsSpan(bytes)[index..].SetUInt32(value, endian);
-
 
         /// <summary>
         /// Writes a little-endian <see cref="ulong" /> to a <see cref="List{T}" /> of bytes at the specified index.

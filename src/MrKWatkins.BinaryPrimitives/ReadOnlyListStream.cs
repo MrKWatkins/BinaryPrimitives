@@ -94,7 +94,7 @@ public sealed class ReadOnlyListStream(IReadOnlyList<byte> list) : Stream
     }
 
     /// <inheritdoc />
-    public override void Flush() { VerifyNotDisposed(); }
+    public override void Flush() => VerifyNotDisposed();
 
     /// <inheritdoc />
     public override void SetLength(long value) => ThrowNotWriteable();

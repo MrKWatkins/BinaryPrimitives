@@ -77,12 +77,9 @@ public readonly struct UInt24 :
             return 1;
         }
 
-        if (obj is UInt24 other)
-        {
-            return CompareTo(other);
-        }
-
-        throw new ArgumentException($"Object must be of type {nameof(UInt24)}.", nameof(obj));
+        return obj is UInt24 other
+            ? CompareTo(other)
+            : throw new ArgumentException($"Object must be of type {nameof(UInt24)}.", nameof(obj));
     }
 
     /// <inheritdoc />
@@ -229,12 +226,9 @@ public readonly struct UInt24 :
     public static UInt24 operator checked +(UInt24 left, UInt24 right)
     {
         var result = left.value + right.value;
-        if (result > MaxValueUInt32)
-        {
-            throw new OverflowException($"{left.value} + {right.value} = {result} which exceeds the maximum UInt24 value of {MaxValueUInt32}.");
-        }
-
-        return new UInt24(result);
+        return result <= MaxValueUInt32
+            ? new UInt24(result)
+            : throw new OverflowException($"{left.value} + {right.value} = {result} which exceeds the maximum UInt24 value of {MaxValueUInt32}.");
     }
 
     /// <inheritdoc />
@@ -245,15 +239,9 @@ public readonly struct UInt24 :
     /// <inheritdoc />
     [Pure]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static UInt24 operator checked -(UInt24 left, UInt24 right)
-    {
-        if (left.value < right.value)
-        {
-            throw new OverflowException($"{left.value} - {right.value} would result in a negative value which is outside the range of a UInt24.");
-        }
-
-        return new UInt24(left.value - right.value);
-    }
+    public static UInt24 operator checked -(UInt24 left, UInt24 right) => left.value >= right.value
+            ? new UInt24(left.value - right.value)
+            : throw new OverflowException($"{left.value} - {right.value} would result in a negative value which is outside the range of a UInt24.");
 
     /// <inheritdoc />
     [Pure]
@@ -266,12 +254,9 @@ public readonly struct UInt24 :
     public static UInt24 operator checked *(UInt24 left, UInt24 right)
     {
         var result = (ulong)left.value * right.value;
-        if (result > MaxValueUInt32)
-        {
-            throw new OverflowException($"{left.value} * {right.value} = {result} which exceeds the maximum UInt24 value of {MaxValueUInt32}.");
-        }
-
-        return new UInt24((uint)result);
+        return result <= MaxValueUInt32
+            ? new UInt24((uint)result)
+            : throw new OverflowException($"{left.value} * {right.value} = {result} which exceeds the maximum UInt24 value of {MaxValueUInt32}.");
     }
 
     /// <inheritdoc />
@@ -297,15 +282,9 @@ public readonly struct UInt24 :
     /// <inheritdoc />
     [Pure]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static UInt24 operator checked ++(UInt24 value)
-    {
-        if (value.value >= MaxValueUInt32)
-        {
-            throw new OverflowException($"{value.value} + 1 = {value.value + 1} which exceeds the maximum UInt24 value of {MaxValueUInt32}.");
-        }
-
-        return new UInt24(value.value + 1u);
-    }
+    public static UInt24 operator checked ++(UInt24 value) => value.value < MaxValueUInt32
+            ? new UInt24(value.value + 1u)
+            : throw new OverflowException($"{value.value} + 1 = {value.value + 1} which exceeds the maximum UInt24 value of {MaxValueUInt32}.");
 
     /// <inheritdoc />
     [Pure]
@@ -315,15 +294,9 @@ public readonly struct UInt24 :
     /// <inheritdoc />
     [Pure]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static UInt24 operator checked --(UInt24 value)
-    {
-        if (value.value == 0u)
-        {
-            throw new OverflowException("0 - 1 would result in a negative value which is outside the range of a UInt24.");
-        }
-
-        return new UInt24(value.value - 1u);
-    }
+    public static UInt24 operator checked --(UInt24 value) => value.value != 0u
+            ? new UInt24(value.value - 1u)
+            : throw new OverflowException("0 - 1 would result in a negative value which is outside the range of a UInt24.");
 
     /// <inheritdoc />
     [Pure]
@@ -338,15 +311,9 @@ public readonly struct UInt24 :
     /// <inheritdoc />
     [Pure]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static UInt24 operator checked -(UInt24 value)
-    {
-        if (value.value != 0u)
-        {
-            throw new OverflowException($"Negating {value.value} would result in a negative value which is outside the range of a UInt24.");
-        }
-
-        return Zero;
-    }
+    public static UInt24 operator checked -(UInt24 value) => value.value == 0u
+            ? Zero
+            : throw new OverflowException($"Negating {value.value} would result in a negative value which is outside the range of a UInt24.");
 
     /// <inheritdoc />
     [Pure]
@@ -1014,11 +981,9 @@ public readonly struct UInt24 :
     /// <inheritdoc />
     [Pure]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public int GetShortestBitLength()
-    {
+    public int GetShortestBitLength() =>
         // Delegate to the uint value's calculation.
-        return 32 - int.LeadingZeroCount((int)value);
-    }
+        32 - int.LeadingZeroCount((int)value);
 
     /// <inheritdoc />
     [Pure]
@@ -1046,7 +1011,7 @@ public readonly struct UInt24 :
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static UInt24 RotateLeft(UInt24 value, int rotateAmount)
     {
-        rotateAmount = (rotateAmount % 24 + 24) % 24;
+        rotateAmount = ((rotateAmount % 24) + 24) % 24;
         return new(((value.value << rotateAmount) | (value.value >> (24 - rotateAmount))) & MaxValueUInt32);
     }
 
@@ -1055,7 +1020,7 @@ public readonly struct UInt24 :
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static UInt24 RotateRight(UInt24 value, int rotateAmount)
     {
-        rotateAmount = (rotateAmount % 24 + 24) % 24;
+        rotateAmount = ((rotateAmount % 24) + 24) % 24;
         return new(((value.value >> rotateAmount) | (value.value << (24 - rotateAmount))) & MaxValueUInt32);
     }
 
@@ -1122,15 +1087,15 @@ public readonly struct UInt24 :
             }
 
             var offset = source.Length - 3;
-            result = (uint)source[offset] << 16 | (uint)source[offset + 1] << 8 | source[offset + 2];
+            result = ((uint)source[offset] << 16) | ((uint)source[offset + 1] << 8) | source[offset + 2];
         }
         else if (source.Length == 3)
         {
-            result = (uint)source[0] << 16 | (uint)source[1] << 8 | source[2];
+            result = ((uint)source[0] << 16) | ((uint)source[1] << 8) | source[2];
         }
         else if (source.Length == 2)
         {
-            result = (uint)source[0] << 8 | source[1];
+            result = ((uint)source[0] << 8) | source[1];
         }
         else
         {
@@ -1171,15 +1136,15 @@ public readonly struct UInt24 :
                 }
             }
 
-            result = source[0] | (uint)source[1] << 8 | (uint)source[2] << 16;
+            result = source[0] | ((uint)source[1] << 8) | ((uint)source[2] << 16);
         }
         else if (source.Length == 3)
         {
-            result = source[0] | (uint)source[1] << 8 | (uint)source[2] << 16;
+            result = source[0] | ((uint)source[1] << 8) | ((uint)source[2] << 16);
         }
         else if (source.Length == 2)
         {
-            result = source[0] | (uint)source[1] << 8;
+            result = source[0] | ((uint)source[1] << 8);
         }
         else
         {
@@ -1214,12 +1179,9 @@ public readonly struct UInt24 :
         if (typeof(TOther) == typeof(ulong))
         {
             var v = (ulong)(object)value;
-            if (v > MaxValueUInt32)
-            {
-                throw new OverflowException($"The value {v} is outside the range of a UInt24 (0 to {MaxValueUInt32}).");
-            }
-
-            return new UInt24((uint)v);
+            return v <= MaxValueUInt32
+                ? new UInt24((uint)v)
+                : throw new OverflowException($"The value {v} is outside the range of a UInt24 (0 to {MaxValueUInt32}).");
         }
 
         if (typeof(TOther) == typeof(sbyte))

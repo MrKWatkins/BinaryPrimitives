@@ -27,7 +27,6 @@ public static class ByteExtensions
         return (byte)(inputWithoutBits | bits);
     }
 
-
     /// <summary>
     /// Determines whether an addition produced a half carry, that is, a carry from bit 3 to bit 4.
     /// </summary>
@@ -37,8 +36,7 @@ public static class ByteExtensions
     /// <returns><see langword="true" /> if the addition produced a half carry; <see langword="false" /> otherwise.</returns>
     [Pure]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static bool DidAdditionHalfCarry(this byte sum, byte left, byte right)
-    {
+    public static bool DidAdditionHalfCarry(this byte sum, byte left, byte right) =>
         // Half carry means the addition of the low nibbles will overflow four bits. We cannot just detect a
         // 1 at the 5th bit because there might be a 0/1 combination in there already that would give 1. If there
         // was a 0/0 combination then it would give 0, and if it was 1/1 then it would also give 0. (And a 1 would
@@ -51,9 +49,7 @@ public static class ByteExtensions
         //
         // Therefore we need to check if bit 5 of left and right is different, and then if the answer to that is
         // different from bit 5 of the result.
-        return ((left ^ right ^ sum) & 0b00010000) != 0;
-    }
-
+        ((left ^ right ^ sum) & 0b00010000) != 0;
 
     /// <summary>
     /// Determines whether a signed addition overflowed by examining the sum and its operands.
@@ -64,8 +60,7 @@ public static class ByteExtensions
     /// <returns><see langword="true" /> if the addition overflowed; <see langword="false" /> otherwise.</returns>
     [Pure]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static bool DidAdditionOverflow(this byte sum, byte left, byte right)
-    {
+    public static bool DidAdditionOverflow(this byte sum, byte left, byte right) =>
         // Hacker's Delight, second edition, page 28.
         // We have an overflow if and only if the following are both true:
         // 1. left and right have the same sign bit. If one is positive and the other is negative then an overflow is not possible.
@@ -77,9 +72,7 @@ public static class ByteExtensions
         // same. Then do the same with sign-of(result) ^ sign-of(right) and combine both results with an AND. If we had a sign swap
         // compared to both inputs sign-of(left) == sign-of(right) and we must have overflowed. We get our sign-off operator by masking
         // with just the sign bit, which we can do once at the end.
-        return ((sum ^ left) & (sum ^ right) & 0b10000000) != 0;
-    }
-
+        ((sum ^ left) & (sum ^ right) & 0b10000000) != 0;
 
     /// <summary>
     /// Determines whether a subtraction produced a half borrow, that is, a borrow from bit 4 to bit 3.
@@ -90,12 +83,9 @@ public static class ByteExtensions
     /// <returns><see langword="true" /> if the subtraction produced a half borrow; <see langword="false" /> otherwise.</returns>
     [Pure]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static bool DidSubtractionHalfBorrow(this byte difference, byte left, byte right)
-    {
+    public static bool DidSubtractionHalfBorrow(this byte difference, byte left, byte right) =>
         // The same formula for addition will work here too.
-        return ((left ^ right ^ difference) & 0b00010000) != 0;
-    }
-
+        ((left ^ right ^ difference) & 0b00010000) != 0;
 
     /// <summary>
     /// Determines whether a signed subtraction overflowed by examining the difference and its operands.
@@ -106,14 +96,12 @@ public static class ByteExtensions
     /// <returns><see langword="true" /> if the subtraction overflowed; <see langword="false" /> otherwise.</returns>
     [Pure]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static bool DidSubtractionOverflow(this byte difference, byte left, byte right)
-    {
+    public static bool DidSubtractionOverflow(this byte difference, byte left, byte right) =>
         // Similar to DidAdditionOverflow, however this time we have an overflow if and only if the following are true:
         // 1. left and right have opposite signs.
         // 2. The sign of the difference is opposite to left. (Or equivalently the same as right)
         // Again this still works even if the difference includes a 0 or 1 carry!
-        return ((left ^ right) & (difference ^ left) & 0b10000000) != 0;
-    }
+        ((left ^ right) & (difference ^ left) & 0b10000000) != 0;
 
     /// <summary>
     /// Gets the value of the bit at the specified index.
@@ -124,7 +112,6 @@ public static class ByteExtensions
     [Pure]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool GetBit(this byte value, int index) => (value & (1 << index)) != 0;
-
 
     /// <summary>
     /// Gets a range of bits from a byte, shifted down to the least significant position.
@@ -141,7 +128,6 @@ public static class ByteExtensions
 
         return (byte)(extractedBits >> startInclusive);
     }
-
 
     [Pure]
     private static byte GetBitRangeMask(int startInclusive, int endInclusive)
@@ -162,7 +148,6 @@ public static class ByteExtensions
         return (byte)((1 << (endInclusive + 1)) - (1 << startInclusive));
     }
 
-
     /// <summary>
     /// Gets the high nibble (bits 4-7) of a byte, shifted down to the least significant position.
     /// </summary>
@@ -171,7 +156,6 @@ public static class ByteExtensions
     [Pure]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static byte HighNibble(this byte value) => (byte)((value & 0b11110000) >> 4);
-
 
     /// <summary>
     /// Gets the left-most bit (bit 7) of a byte.
@@ -182,7 +166,6 @@ public static class ByteExtensions
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool LeftMostBit(this byte value) => value.GetBit(7);
 
-
     /// <summary>
     /// Gets the low nibble (bits 0-3) of a byte.
     /// </summary>
@@ -192,7 +175,6 @@ public static class ByteExtensions
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static byte LowNibble(this byte value) => (byte)(value & 0b00001111);
 
-
     /// <summary>
     /// Gets the parity of a byte, that is, whether the number of set bits is even.
     /// </summary>
@@ -201,7 +183,6 @@ public static class ByteExtensions
     [Pure]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool Parity(this byte value) => (BitOperations.PopCount(value) & 1) == 0;
-
 
     /// <summary>
     /// Returns a new byte with the bit at the specified index cleared.
@@ -213,7 +194,6 @@ public static class ByteExtensions
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static byte ResetBit(this byte value, int index) => (byte)(value & ~(1 << index));
 
-
     /// <summary>
     /// Gets the right-most bit (bit 0) of a byte.
     /// </summary>
@@ -222,7 +202,6 @@ public static class ByteExtensions
     [Pure]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool RightMostBit(this byte value) => value.GetBit(0);
-
 
     /// <summary>
     /// Returns a new byte with the bit at the specified index set.
@@ -233,7 +212,6 @@ public static class ByteExtensions
     [Pure]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static byte SetBit(this byte value, int index) => (byte)(value | (1 << index));
-
 
     /// <summary>
     /// Sets a range of bits in a byte to the specified value.
@@ -254,7 +232,6 @@ public static class ByteExtensions
         return (byte)(bitsToPreserve | bitsToSetInPosition);
     }
 
-
     /// <summary>
     /// Returns a new byte with the high nibble (bits 4-7) set to the specified value.
     /// </summary>
@@ -264,7 +241,6 @@ public static class ByteExtensions
     [Pure]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static byte SetHighNibble(this byte value, byte nibble) => (byte)((value & 0b00001111) | (nibble << 4));
-
 
     /// <summary>
     /// Returns a new byte with the low nibble (bits 0-3) set to the specified value.
@@ -276,7 +252,6 @@ public static class ByteExtensions
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static byte SetLowNibble(this byte value, byte nibble) => (byte)((value & 0b11110000) | (nibble & 0b00001111));
 
-
     /// <summary>
     /// Gets the sign bit (bit 7) of a byte.
     /// </summary>
@@ -285,7 +260,6 @@ public static class ByteExtensions
     [Pure]
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool SignBit(this byte value) => value.GetBit(7);
-
 
     /// <summary>
     /// Converts a byte to its binary string representation, for example, <c>"0b01011010"</c>.

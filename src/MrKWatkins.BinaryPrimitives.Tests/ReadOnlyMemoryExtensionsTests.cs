@@ -40,7 +40,6 @@ public sealed class ReadOnlyMemoryExtensionsTests
         reader.TryRead(out _).Should().BeFalse();
     }
 
-
     [Test]
     public void GetInt16_ReadOnlyMemory()
     {
@@ -57,7 +56,6 @@ public sealed class ReadOnlyMemoryExtensionsTests
         bytes.GetInt16(1, Endian.Little).Should().Equal(0x0302);
         bytes.GetInt16(1, Endian.Big).Should().Equal(0x0203);
     }
-
 
     [Test]
     public void GetInt32_ReadOnlyMemory()
@@ -76,7 +74,6 @@ public sealed class ReadOnlyMemoryExtensionsTests
         bytes.GetInt32(2, Endian.Big).Should().Equal(0x03040506);
     }
 
-
     [Test]
     public void GetInt64_ReadOnlyMemory()
     {
@@ -93,7 +90,6 @@ public sealed class ReadOnlyMemoryExtensionsTests
         bytes.GetInt64(1, Endian.Little).Should().Equal(0x0908070605040302L);
         bytes.GetInt64(2, Endian.Big).Should().Equal(0x030405060708090AL);
     }
-
 
     [Test]
     public void GetUInt24_ReadOnlyMemory()
@@ -115,7 +111,6 @@ public sealed class ReadOnlyMemoryExtensionsTests
         ((int)bytes.GetUInt24(1, Endian.Big)).Should().Equal(0x563412);
     }
 
-
     [Test]
     public void GetUInt32_ReadOnlyMemory()
     {
@@ -133,7 +128,6 @@ public sealed class ReadOnlyMemoryExtensionsTests
         bytes.GetUInt32(2, Endian.Big).Should().Equal(0x03040506U);
     }
 
-
     [Test]
     public void GetUInt64_ReadOnlyMemory()
     {
@@ -150,7 +144,6 @@ public sealed class ReadOnlyMemoryExtensionsTests
         bytes.GetUInt64(1, Endian.Little).Should().Equal(0x0908070605040302UL);
         bytes.GetUInt64(2, Endian.Big).Should().Equal(0x030405060708090AUL);
     }
-
 
     [Test]
     public void GetUInt16_ReadOnlyMemory()

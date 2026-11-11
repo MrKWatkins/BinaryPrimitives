@@ -7,7 +7,6 @@ public sealed class EndianExtensionsTests
     public void ToUInt24(Endian endian, byte byte0, byte byte1, byte byte2, int expected) =>
         ((int)endian.ToUInt24(byte0, byte1, byte2)).Should().Equal(expected);
 
-
     [Test]
     public void ToUInt16()
     {

@@ -86,7 +86,7 @@ public sealed class PeekableStreamTests
     public async Task ReadAsync_NoPeek()
     {
         using var stream = new MemoryStream([1, 2, 3, 4, 5]);
-        using var peekable = new PeekableStream(stream);
+        await using var peekable = new PeekableStream(stream);
         peekable.Position.Should().Equal(0);
 
         var buffer = new byte[4];
@@ -110,7 +110,7 @@ public sealed class PeekableStreamTests
     public async Task ReadAsync_WithPeek()
     {
         using var stream = new MemoryStream([1, 2, 3, 4, 5]);
-        using var peekable = new PeekableStream(stream);
+        await using var peekable = new PeekableStream(stream);
         peekable.Position.Should().Equal(0);
 
         (await peekable.PeekAsync()).Should().Equal(1);
@@ -145,7 +145,7 @@ public sealed class PeekableStreamTests
     public async Task ReadAsync_ZeroLengthWithPeek()
     {
         using var stream = new MemoryStream([1, 2]);
-        using var peekable = new PeekableStream(stream);
+        await using var peekable = new PeekableStream(stream);
 
         (await peekable.PeekAsync()).Should().Equal(1);
         (await peekable.ReadAsync(Memory<byte>.Empty)).Should().Equal(0);
@@ -158,7 +158,7 @@ public sealed class PeekableStreamTests
     public async Task ReadAsync_ByteArrayOverload()
     {
         using var stream = new MemoryStream([1, 2, 3]);
-        using var peekable = new PeekableStream(stream);
+        await using var peekable = new PeekableStream(stream);
 
         var buffer = new byte[3];
 #pragma warning disable CA1835 // Deliberately exercising the byte[] ReadAsync overload.
@@ -172,7 +172,7 @@ public sealed class PeekableStreamTests
     public async Task EndOfStreamAsync(bool endOfStream)
     {
         using var stream = new MemoryStream(endOfStream ? [] : [1]);
-        using var peekable = new PeekableStream(stream);
+        await using var peekable = new PeekableStream(stream);
         (await peekable.EndOfStreamAsync()).Should().Equal(endOfStream);
     }
 

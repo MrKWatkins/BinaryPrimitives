@@ -57,7 +57,6 @@ public static class ByteSpanExtensions
             }
         }
 
-
         /// <summary>
         /// Reads a little-endian <see cref="int" /> from a span of bytes.
         /// </summary>
@@ -102,7 +101,6 @@ public static class ByteSpanExtensions
                 System.Buffers.Binary.BinaryPrimitives.WriteInt32BigEndian(bytes, value);
             }
         }
-
 
         /// <summary>
         /// Reads a little-endian <see cref="long" /> from a span of bytes.
@@ -149,14 +147,13 @@ public static class ByteSpanExtensions
             }
         }
 
-
         /// <summary>
         /// Reads a little-endian <see cref="UInt24" /> from a span of bytes.
         /// </summary>
         /// <returns>The <see cref="UInt24" /> value.</returns>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public UInt24 GetUInt24() => new((uint)(bytes[0] | bytes[1] << 8 | bytes[2] << 16));
+        public UInt24 GetUInt24() => new((uint)(bytes[0] | (bytes[1] << 8) | (bytes[2] << 16)));
 
         /// <summary>
         /// Reads a <see cref="UInt24" /> from a span of bytes using the specified endianness.
@@ -168,7 +165,7 @@ public static class ByteSpanExtensions
         public UInt24 GetUInt24(Endian endian) =>
             endian == Endian.Little
                 ? bytes.GetUInt24()
-                : new((uint)(bytes[0] << 16 | bytes[1] << 8 | bytes[2]));
+                : new((uint)((bytes[0] << 16) | (bytes[1] << 8) | bytes[2]));
 
         /// <summary>
         /// Writes a little-endian <see cref="UInt24" /> to a span of bytes.
@@ -203,7 +200,6 @@ public static class ByteSpanExtensions
                 bytes[2] = (byte)v;
             }
         }
-
 
         /// <summary>
         /// Reads a little-endian <see cref="uint" /> from a span of bytes.
@@ -249,7 +245,6 @@ public static class ByteSpanExtensions
                 System.Buffers.Binary.BinaryPrimitives.WriteUInt32BigEndian(bytes, value);
             }
         }
-
 
         /// <summary>
         /// Reads a little-endian <see cref="ulong" /> from a span of bytes.

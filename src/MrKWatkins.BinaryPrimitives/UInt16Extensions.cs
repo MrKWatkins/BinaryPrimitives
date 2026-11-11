@@ -18,12 +18,10 @@ public static class UInt16Extensions
         /// <returns><see langword="true" /> if the addition produced a half carry; <see langword="false" /> otherwise.</returns>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public bool DidAdditionHalfCarry(ushort left, ushort right)
-        {
+        public bool DidAdditionHalfCarry(ushort left, ushort right) =>
             // See ByteExtensions.DidAdditionHalfCarry for an explanation. Half-carry for words is
             // the half carry in the high byte, i.e. bit 13.
-            return ((left ^ right ^ value) & 0b00010000_00000000) != 0;
-        }
+            ((left ^ right ^ value) & 0b00010000_00000000) != 0;
 
         /// <summary>
         /// Determines whether a signed addition overflowed by examining the sum and its operands.
@@ -33,11 +31,9 @@ public static class UInt16Extensions
         /// <returns><see langword="true" /> if the addition overflowed; <see langword="false" /> otherwise.</returns>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public bool DidAdditionOverflow(ushort left, ushort right)
-        {
+        public bool DidAdditionOverflow(ushort left, ushort right) =>
             // See ByteExtensions.DidAdditionOverflow for an explanation.
-            return ((value ^ left) & (value ^ right) & 0b10000000_00000000) != 0;
-        }
+            ((value ^ left) & (value ^ right) & 0b10000000_00000000) != 0;
 
         /// <summary>
         /// Determines whether a subtraction produced a half borrow, that is, a borrow from bit 12 to bit 11.
@@ -47,12 +43,10 @@ public static class UInt16Extensions
         /// <returns><see langword="true" /> if the subtraction produced a half borrow; <see langword="false" /> otherwise.</returns>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public bool DidSubtractionHalfBorrow(ushort left, ushort right)
-        {
+        public bool DidSubtractionHalfBorrow(ushort left, ushort right) =>
             // See ByteExtensions.DidSubtractionHalfBorrow for an explanation. Half-borrow for words is
             // the half carry in the high byte, i.e. bit 13.
-            return ((left ^ right ^ value) & 0b00010000_00000000) != 0;
-        }
+            ((left ^ right ^ value) & 0b00010000_00000000) != 0;
 
         /// <summary>
         /// Determines whether a signed subtraction overflowed by examining the difference and its operands.
@@ -62,11 +56,9 @@ public static class UInt16Extensions
         /// <returns><see langword="true" /> if the subtraction overflowed; <see langword="false" /> otherwise.</returns>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public bool DidSubtractionOverflow(ushort left, ushort right)
-        {
+        public bool DidSubtractionOverflow(ushort left, ushort right) =>
             // See ByteExtensions.DidSubtractionOverflow for an explanation.
-            return ((left ^ right) & (value ^ left) & 0b10000000_00000000) != 0;
-        }
+            ((left ^ right) & (value ^ left) & 0b10000000_00000000) != 0;
 
         /// <summary>
         /// Gets the value of the bit at the specified index.

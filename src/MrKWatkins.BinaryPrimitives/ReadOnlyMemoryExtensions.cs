@@ -46,7 +46,6 @@ public static class ReadOnlyMemoryExtensions
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public short GetInt16(int index, Endian endian) => bytes.Span[index..].GetInt16(endian);
 
-
         /// <summary>
         /// Reads a little-endian <see cref="int" /> from read-only memory at the specified index.
         /// </summary>
@@ -65,7 +64,6 @@ public static class ReadOnlyMemoryExtensions
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public int GetInt32(int index, Endian endian) => bytes.Span[index..].GetInt32(endian);
-
 
         /// <summary>
         /// Reads a little-endian <see cref="long" /> from read-only memory at the specified index.
@@ -86,7 +84,6 @@ public static class ReadOnlyMemoryExtensions
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public long GetInt64(int index, Endian endian) => bytes.Span[index..].GetInt64(endian);
 
-
         /// <summary>
         /// Reads a little-endian <see cref="UInt24" /> from read-only memory at the specified index.
         /// </summary>
@@ -106,7 +103,6 @@ public static class ReadOnlyMemoryExtensions
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public UInt24 GetUInt24(int index, Endian endian) => bytes.Span[index..].GetUInt24(endian);
 
-
         /// <summary>
         /// Reads a little-endian <see cref="uint" /> from read-only memory at the specified index.
         /// </summary>
@@ -125,7 +121,6 @@ public static class ReadOnlyMemoryExtensions
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public uint GetUInt32(int index, Endian endian) => bytes.Span[index..].GetUInt32(endian);
-
 
         /// <summary>
         /// Reads a little-endian <see cref="ulong" /> from read-only memory at the specified index.
@@ -168,10 +163,7 @@ public static class ReadOnlyMemoryExtensions
 
     private sealed class WrapSegment<T> : ReadOnlySequenceSegment<T>
     {
-        public WrapSegment(ReadOnlyMemory<T> memory)
-        {
-            Memory = memory;
-        }
+        public WrapSegment(ReadOnlyMemory<T> memory) => Memory = memory;
 
         [MustUseReturnValue]
         public WrapSegment<T> Append(ReadOnlyMemory<T> memory)

@@ -51,8 +51,7 @@ public sealed class StreamExtensionsTests
     public void ReadByteOrThrow_EndOfStream()
     {
         using var stream = new MemoryStream();
-        AssertThat.Invoking(() => stream.ReadByteOrThrow())
-            .Should().Throw<EndOfStreamException>();
+        AssertThat.Invoking(stream.ReadByteOrThrow).Should().Throw<EndOfStreamException>();
     }
 
     [Test]
@@ -243,7 +242,6 @@ public sealed class StreamExtensionsTests
         bytes.WriteUInt64(0x1234567890ABCDEF, Endian.Big);
         bytes.ToArray().Should().SequenceEqual(0x01, 0xEF, 0xCD, 0xAB, 0x90, 0x78, 0x56, 0x34, 0x12, 0x12, 0x34, 0x56, 0x78, 0x90, 0xAB, 0xCD, 0xEF);
     }
-
 
     [Test]
     public async Task ReadAllBytesAsync()

@@ -43,12 +43,9 @@ public static class StreamExtensions
         public byte ReadByteOrThrow()
         {
             var @byte = stream.ReadByte();
-            if (@byte == -1)
-            {
-                throw new EndOfStreamException();
-            }
-
-            return (byte)@byte;
+            return @byte != -1
+                ? (byte)@byte
+                : throw new EndOfStreamException();
         }
 
         /// <summary>

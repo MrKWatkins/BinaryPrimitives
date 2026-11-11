@@ -10,7 +10,6 @@ public sealed class ByteReadOnlySpanExtensionsTests
         bytes.GetInt16().Should().Equal(0x0201);
     }
 
-
     [Test]
     public void GetInt16_ReadOnlySpan_Endian()
     {
@@ -20,7 +19,6 @@ public sealed class ByteReadOnlySpanExtensionsTests
         bytes.GetInt16(Endian.Big).Should().Equal(0x0102);
     }
 
-
     [Test]
     public void GetInt32_ReadOnlySpan()
     {
@@ -28,7 +26,6 @@ public sealed class ByteReadOnlySpanExtensionsTests
 
         bytes.GetInt32().Should().Equal(0x04030201);
     }
-
 
     [Test]
     public void GetInt32_ReadOnlySpan_Endian()
@@ -39,7 +36,6 @@ public sealed class ByteReadOnlySpanExtensionsTests
         bytes.GetInt32(Endian.Big).Should().Equal(0x01020304);
     }
 
-
     [Test]
     public void GetInt64_ReadOnlySpan()
     {
@@ -47,7 +43,6 @@ public sealed class ByteReadOnlySpanExtensionsTests
 
         bytes.GetInt64().Should().Equal(0x0807060504030201L);
     }
-
 
     [Test]
     public void GetInt64_ReadOnlySpan_Endian()
@@ -58,7 +53,6 @@ public sealed class ByteReadOnlySpanExtensionsTests
         bytes.GetInt64(Endian.Big).Should().Equal(0x0102030405060708L);
     }
 
-
     [Test]
     public void GetUInt24_ReadOnlySpan()
     {
@@ -66,7 +60,6 @@ public sealed class ByteReadOnlySpanExtensionsTests
 
         ((int)bytes.GetUInt24()).Should().Equal(0x345678);
     }
-
 
     [Test]
     public void GetUInt24_ReadOnlySpan_Endian()
@@ -77,7 +70,6 @@ public sealed class ByteReadOnlySpanExtensionsTests
         ((int)bytes.GetUInt24(Endian.Big)).Should().Equal(0x785634);
     }
 
-
     [Test]
     public void GetUInt32_ReadOnlySpan()
     {
@@ -85,7 +77,6 @@ public sealed class ByteReadOnlySpanExtensionsTests
 
         bytes.GetUInt32().Should().Equal(0x04030201U);
     }
-
 
     [Test]
     public void GetUInt32_ReadOnlySpan_Endian()
@@ -96,7 +87,6 @@ public sealed class ByteReadOnlySpanExtensionsTests
         bytes.GetUInt32(Endian.Big).Should().Equal(0x01020304U);
     }
 
-
     [Test]
     public void GetUInt64_ReadOnlySpan()
     {
@@ -104,7 +94,6 @@ public sealed class ByteReadOnlySpanExtensionsTests
 
         bytes.GetUInt64().Should().Equal(0x0807060504030201UL);
     }
-
 
     [Test]
     public void GetUInt64_ReadOnlySpan_Endian()
@@ -115,7 +104,6 @@ public sealed class ByteReadOnlySpanExtensionsTests
         bytes.GetUInt64(Endian.Big).Should().Equal(0x0102030405060708UL);
     }
 
-
     [Test]
     public void GetUInt16_ReadOnlySpan()
     {
@@ -123,7 +111,6 @@ public sealed class ByteReadOnlySpanExtensionsTests
 
         bytes.GetUInt16().Should().Equal(0x0201);
     }
-
 
     [Test]
     public void GetUInt16_ReadOnlySpan_Endian()

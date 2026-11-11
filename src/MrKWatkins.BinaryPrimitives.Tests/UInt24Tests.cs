@@ -674,7 +674,7 @@ public sealed class UInt24Tests
     [TestCase(127)]
     public void ExplicitFromSByte(int value)
     {
-        UInt24 result = (UInt24)(sbyte)value;
+        var result = (UInt24)(sbyte)value;
         ((int)result).Should().Equal(value);
     }
 
@@ -682,7 +682,7 @@ public sealed class UInt24Tests
     [TestCase(32767)]
     public void ExplicitFromInt16(int value)
     {
-        UInt24 result = (UInt24)(short)value;
+        var result = (UInt24)(short)value;
         ((int)result).Should().Equal(value);
     }
 
@@ -690,7 +690,7 @@ public sealed class UInt24Tests
     [TestCase(16777215u)]
     public void ExplicitFromUInt32(uint value)
     {
-        UInt24 result = (UInt24)value;
+        var result = (UInt24)value;
         ((uint)result).Should().Equal(value);
     }
 
@@ -698,7 +698,7 @@ public sealed class UInt24Tests
     [TestCase(16777215L)]
     public void ExplicitFromInt64(long value)
     {
-        UInt24 result = (UInt24)value;
+        var result = (UInt24)value;
         ((long)result).Should().Equal(value);
     }
 
@@ -706,7 +706,7 @@ public sealed class UInt24Tests
     [TestCase(16777215UL)]
     public void ExplicitFromUInt64(ulong value)
     {
-        UInt24 result = (UInt24)value;
+        var result = (UInt24)value;
         ((ulong)result).Should().Equal(value);
     }
 
@@ -718,7 +718,7 @@ public sealed class UInt24Tests
     [TestCase(16777215)]
     public void ExplicitFromNInt(int value)
     {
-        UInt24 result = (UInt24)(nint)value;
+        var result = (UInt24)(nint)value;
         ((int)result).Should().Equal(value);
     }
 
@@ -734,7 +734,7 @@ public sealed class UInt24Tests
     [TestCase(16777215u)]
     public void ExplicitFromNUInt(uint value)
     {
-        UInt24 result = (UInt24)(nuint)value;
+        var result = (UInt24)(nuint)value;
         ((uint)result).Should().Equal(value);
     }
 
@@ -745,7 +745,7 @@ public sealed class UInt24Tests
     [Test]
     public void ExplicitFromHalf()
     {
-        UInt24 result = (UInt24)Half.One;
+        var result = (UInt24)Half.One;
         ((int)result).Should().Equal(1);
     }
 
@@ -756,7 +756,7 @@ public sealed class UInt24Tests
     [Test]
     public void ExplicitFromSingle()
     {
-        UInt24 result = (UInt24)5.0f;
+        var result = (UInt24)5.0f;
         ((int)result).Should().Equal(5);
     }
 
@@ -767,7 +767,7 @@ public sealed class UInt24Tests
     [Test]
     public void ExplicitFromDouble()
     {
-        UInt24 result = (UInt24)5.0;
+        var result = (UInt24)5.0;
         ((int)result).Should().Equal(5);
     }
 
@@ -778,7 +778,7 @@ public sealed class UInt24Tests
     [Test]
     public void ExplicitFromDecimal()
     {
-        UInt24 result = (UInt24)5m;
+        var result = (UInt24)5m;
         ((int)result).Should().Equal(5);
     }
 
@@ -840,7 +840,7 @@ public sealed class UInt24Tests
     {
         var value = (UInt24)12345;
         Span<char> buffer = stackalloc char[10];
-        value.TryFormat(buffer, out var charsWritten, ReadOnlySpan<char>.Empty, CultureInfo.InvariantCulture).Should().Equal(true);
+        value.TryFormat(buffer, out var charsWritten, [], CultureInfo.InvariantCulture).Should().Equal(true);
         charsWritten.Should().Equal(5);
         new string(buffer[..charsWritten]).Should().Equal("12345");
     }
@@ -850,7 +850,7 @@ public sealed class UInt24Tests
     {
         var value = (UInt24)12345;
         Span<char> buffer = stackalloc char[2];
-        value.TryFormat(buffer, out var charsWritten, ReadOnlySpan<char>.Empty, CultureInfo.InvariantCulture).Should().Equal(false);
+        value.TryFormat(buffer, out var charsWritten, [], CultureInfo.InvariantCulture).Should().Equal(false);
         charsWritten.Should().Equal(0);
     }
 
@@ -859,7 +859,7 @@ public sealed class UInt24Tests
     {
         var value = (UInt24)12345;
         Span<byte> buffer = stackalloc byte[10];
-        value.TryFormat(buffer, out var bytesWritten, ReadOnlySpan<char>.Empty, CultureInfo.InvariantCulture).Should().Equal(true);
+        value.TryFormat(buffer, out var bytesWritten, [], CultureInfo.InvariantCulture).Should().Equal(true);
         bytesWritten.Should().Equal(5);
         System.Text.Encoding.UTF8.GetString(buffer[..bytesWritten]).Should().Equal("12345");
     }
@@ -869,7 +869,7 @@ public sealed class UInt24Tests
     {
         var value = (UInt24)12345;
         Span<byte> buffer = stackalloc byte[2];
-        value.TryFormat(buffer, out var bytesWritten, ReadOnlySpan<char>.Empty, CultureInfo.InvariantCulture).Should().Equal(false);
+        value.TryFormat(buffer, out var bytesWritten, [], CultureInfo.InvariantCulture).Should().Equal(false);
         bytesWritten.Should().Equal(0);
     }
 
@@ -1271,13 +1271,13 @@ public sealed class UInt24Tests
     [Test]
     public void TryConvertFromChecked_NUInt()
     {
-        TryConvertFromChecked<nuint>((nuint)100, out var result).Should().Equal(true);
+        TryConvertFromChecked<nuint>(100, out var result).Should().Equal(true);
         ((int)result).Should().Equal(100);
     }
 
     [Test]
     public void TryConvertFromChecked_NUInt_Overflow() =>
-        AssertThat.Invoking(() => TryConvertFromChecked<nuint>((nuint)0x1000000, out _)).Should().Throw<OverflowException>();
+        AssertThat.Invoking(() => TryConvertFromChecked<nuint>(0x1000000, out _)).Should().Throw<OverflowException>();
 
     [Test]
     public void TryConvertFromChecked_Unsupported() =>
@@ -1314,14 +1314,14 @@ public sealed class UInt24Tests
     [Test]
     public void TryConvertFromSaturating_NUInt()
     {
-        TryConvertFromSaturating<nuint>((nuint)100, out var result).Should().Equal(true);
+        TryConvertFromSaturating<nuint>(100, out var result).Should().Equal(true);
         ((int)result).Should().Equal(100);
     }
 
     [Test]
     public void TryConvertFromSaturating_NUInt_Saturates()
     {
-        TryConvertFromSaturating<nuint>((nuint)0x1000000, out var result).Should().Equal(true);
+        TryConvertFromSaturating<nuint>(0x1000000, out var result).Should().Equal(true);
         result.Should().Equal(UInt24.MaxValue);
     }
 
@@ -1360,14 +1360,14 @@ public sealed class UInt24Tests
     [Test]
     public void TryConvertFromTruncating_NUInt()
     {
-        TryConvertFromTruncating<nuint>((nuint)0x123456, out var result).Should().Equal(true);
+        TryConvertFromTruncating<nuint>(0x123456, out var result).Should().Equal(true);
         ((int)result).Should().Equal(0x123456);
     }
 
     [Test]
     public void TryConvertFromTruncating_NUInt_Truncates()
     {
-        TryConvertFromTruncating<nuint>((nuint)0x01234567, out var result).Should().Equal(true);
+        TryConvertFromTruncating<nuint>(0x01234567, out var result).Should().Equal(true);
         ((int)result).Should().Equal(0x234567);
     }
 

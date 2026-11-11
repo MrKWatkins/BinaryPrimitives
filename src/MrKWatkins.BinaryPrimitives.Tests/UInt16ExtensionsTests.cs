@@ -29,7 +29,6 @@ public sealed class UInt16ExtensionsTests
         sum.DidAdditionHalfCarry(leftWord, rightWord).Should().Equal(expected);
     }
 
-
     [TestCase(0, 0, false)]
     [TestCase(32767, 0, false)]
     [TestCase(-32768, 32767, false)]
@@ -44,7 +43,6 @@ public sealed class UInt16ExtensionsTests
         var sum = (ushort)(leftWord + rightWord);
         sum.DidAdditionOverflow(leftWord, rightWord).Should().Equal(expected);
     }
-
 
     [TestCase(0b0000_0000_0000_0000, 0b0000_0000_0000_0000, false)]
     [TestCase(0b0000_1000_0000_0000, 0b0000_0000_0000_0000, false)]
@@ -73,7 +71,6 @@ public sealed class UInt16ExtensionsTests
         difference.DidSubtractionHalfBorrow(leftWord, rightWord).Should().Equal(expected);
     }
 
-
     [TestCase(0, 0, false)]
     [TestCase(32767, 0, false)]
     [TestCase(-32768, 32767, true)]
@@ -89,7 +86,6 @@ public sealed class UInt16ExtensionsTests
         sum.DidSubtractionOverflow(leftWord, rightWord).Should().Equal(expected);
     }
 
-
     [TestCase(0b00000000_00000000, 0, false)]
     [TestCase(0b00000000_00000001, 0, true)]
     [TestCase(0b00000000_00000010, 0, false)]
@@ -99,10 +95,8 @@ public sealed class UInt16ExtensionsTests
     [TestCase(0b10000001_00000000, 15, true)]
     public void GetBit(int word, int index, bool expected) => ((ushort)word).GetBit(index).Should().Equal(expected);
 
-
     [Test]
     public void LeastSignificantByte() => ((ushort)0x1234).LeastSignificantByte().Should().Equal(0x34);
-
 
     [TestCase(0b00000000_00000000, false)]
     [TestCase(0b00000000_10000000, false)]
@@ -110,16 +104,13 @@ public sealed class UInt16ExtensionsTests
     [TestCase(0b11111111_11111111, true)]
     public void LeftMostBit(int word, bool expected) => ((ushort)word).LeftMostBit().Should().Equal(expected);
 
-
     [Test]
     public void MostSignificantByte() => ((ushort)0x1234).MostSignificantByte().Should().Equal(0x12);
-
 
     [TestCase(0b00000000_00000011, 0, 0b00000000_00000010)]
     [TestCase(0b00000000_00000011, 1, 0b00000000_00000001)]
     [TestCase(0b10000000_00000000, 15, 0b00000000_00000000)]
     public void ResetBit(int word, int index, int expected) => ((ushort)word).ResetBit(index).Should().Equal((ushort)expected);
-
 
     [TestCase(0b00000000_00000000, false)]
     [TestCase(0b00000000_00000001, true)]
@@ -127,12 +118,10 @@ public sealed class UInt16ExtensionsTests
     [TestCase(0b10000000_00000001, true)]
     public void RightMostBit(int word, bool expected) => ((ushort)word).RightMostBit().Should().Equal(expected);
 
-
     [TestCase(0b00000000_00000000, 0, 0b00000000_00000001)]
     [TestCase(0b00000000_00000001, 0, 0b00000000_00000001)]
     [TestCase(0b00000000_00000000, 15, 0b10000000_00000000)]
     public void SetBit(int word, int index, int expected) => ((ushort)word).SetBit(index).Should().Equal((ushort)expected);
-
 
     [TestCase(0b00000000_00000000, false)]
     [TestCase(0b00000000_10000000, false)]
@@ -144,13 +133,11 @@ public sealed class UInt16ExtensionsTests
     [TestCase(0b11111111_11111111, true)]
     public void SignBit(int word, bool expected) => ((ushort)word).SignBit().Should().Equal(expected);
 
-
     [TestCase(0x0000, "0b0000000000000000")]
     [TestCase(0x1234, "0b0001001000110100")]
     [TestCase(0xFFFF, "0b1111111111111111")]
     [TestCase(0xFF00, "0b1111111100000000")]
     public void ToBinaryString(int word, string expected) => ((ushort)word).ToBinaryString().Should().Equal(expected);
-
 
     [Test]
     public void ToBytes() => ((ushort)0x1234).ToBytes().Should().Equal((0x12, 0x34));

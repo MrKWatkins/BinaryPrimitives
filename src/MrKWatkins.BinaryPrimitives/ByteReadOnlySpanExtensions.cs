@@ -32,7 +32,6 @@ public static class ByteReadOnlySpanExtensions
                 ? bytes.GetInt16()
                 : System.Buffers.Binary.BinaryPrimitives.ReadInt16BigEndian(bytes);
 
-
         /// <summary>
         /// Reads a little-endian <see cref="int" /> from a read-only span of bytes.
         /// </summary>
@@ -52,7 +51,6 @@ public static class ByteReadOnlySpanExtensions
             endian == Endian.Little
                 ? bytes.GetInt32()
                 : System.Buffers.Binary.BinaryPrimitives.ReadInt32BigEndian(bytes);
-
 
         /// <summary>
         /// Reads a little-endian <see cref="long" /> from a read-only span of bytes.
@@ -74,14 +72,13 @@ public static class ByteReadOnlySpanExtensions
                 ? bytes.GetInt64()
                 : System.Buffers.Binary.BinaryPrimitives.ReadInt64BigEndian(bytes);
 
-
         /// <summary>
         /// Reads a little-endian <see cref="UInt24" /> from a read-only span of bytes.
         /// </summary>
         /// <returns>The <see cref="UInt24" /> value.</returns>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public UInt24 GetUInt24() => new((uint)(bytes[0] | bytes[1] << 8 | bytes[2] << 16));
+        public UInt24 GetUInt24() => new((uint)(bytes[0] | (bytes[1] << 8) | (bytes[2] << 16)));
 
         /// <summary>
         /// Reads a <see cref="UInt24" /> from a read-only span of bytes using the specified endianness.
@@ -93,8 +90,7 @@ public static class ByteReadOnlySpanExtensions
         public UInt24 GetUInt24(Endian endian) =>
             endian == Endian.Little
                 ? bytes.GetUInt24()
-                : new((uint)(bytes[0] << 16 | bytes[1] << 8 | bytes[2]));
-
+                : new((uint)((bytes[0] << 16) | (bytes[1] << 8) | bytes[2]));
 
         /// <summary>
         /// Reads a little-endian <see cref="uint" /> from a read-only span of bytes.
@@ -115,7 +111,6 @@ public static class ByteReadOnlySpanExtensions
             endian == Endian.Little
                 ? bytes.GetUInt32()
                 : System.Buffers.Binary.BinaryPrimitives.ReadUInt32BigEndian(bytes);
-
 
         /// <summary>
         /// Reads a little-endian <see cref="ulong" /> from a read-only span of bytes.

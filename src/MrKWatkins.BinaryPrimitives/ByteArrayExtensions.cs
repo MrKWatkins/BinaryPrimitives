@@ -56,7 +56,6 @@ public static class ByteArrayExtensions
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void SetInt16(int index, short value, Endian endian) => bytes.AsSpan(index).SetInt16(value, endian);
 
-
         /// <summary>
         /// Reads a little-endian <see cref="int" /> from a byte array at the specified index.
         /// </summary>
@@ -99,7 +98,6 @@ public static class ByteArrayExtensions
         [OverloadResolutionPriority(ConcreteTypePriority)]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void SetInt32(int index, int value, Endian endian) => bytes.AsSpan(index).SetInt32(value, endian);
-
 
         /// <summary>
         /// Reads a little-endian <see cref="long" /> from a byte array at the specified index.
@@ -144,7 +142,6 @@ public static class ByteArrayExtensions
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void SetInt64(int index, long value, Endian endian) => bytes.AsSpan(index).SetInt64(value, endian);
 
-
         /// <summary>
         /// Reads a little-endian <see cref="UInt24" /> from a byte array at the specified index.
         /// </summary>
@@ -153,7 +150,7 @@ public static class ByteArrayExtensions
         [Pure]
         [OverloadResolutionPriority(ConcreteTypePriority)]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public UInt24 GetUInt24(int index) => new((uint)(Unsafe.ReadUnaligned<ushort>(ref bytes[index]) | bytes[index + 2] << 16));
+        public UInt24 GetUInt24(int index) => new((uint)(Unsafe.ReadUnaligned<ushort>(ref bytes[index]) | (bytes[index + 2] << 16)));
 
         /// <summary>
         /// Reads a <see cref="UInt24" /> from a byte array at the specified index using the specified endianness.
@@ -167,7 +164,7 @@ public static class ByteArrayExtensions
         public UInt24 GetUInt24(int index, Endian endian) =>
             endian == Endian.Little
                 ? bytes.GetUInt24(index)
-                : new((uint)(bytes[index] << 16 | bytes[index + 1] << 8 | bytes[index + 2]));
+                : new((uint)((bytes[index] << 16) | (bytes[index + 1] << 8) | bytes[index + 2]));
 
         /// <summary>
         /// Writes a little-endian <see cref="UInt24" /> to a byte array at the specified index.
@@ -206,7 +203,6 @@ public static class ByteArrayExtensions
                 bytes[index + 2] = (byte)v;
             }
         }
-
 
         /// <summary>
         /// Reads a little-endian <see cref="uint" /> from a byte array at the specified index.
@@ -250,7 +246,6 @@ public static class ByteArrayExtensions
         [OverloadResolutionPriority(ConcreteTypePriority)]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void SetUInt32(int index, uint value, Endian endian) => bytes.AsSpan(index).SetUInt32(value, endian);
-
 
         /// <summary>
         /// Reads a little-endian <see cref="ulong" /> from a byte array at the specified index.
@@ -317,7 +312,7 @@ public static class ByteArrayExtensions
         public ushort GetUInt16(int index, Endian endian) =>
             endian == Endian.Little
                 ? bytes.GetUInt16(index)
-                : (ushort)(bytes[index + 1] | bytes[index] << 8);
+                : (ushort)(bytes[index + 1] | (bytes[index] << 8));
 
         /// <summary>
         /// Writes a little-endian <see cref="ushort" /> to a byte array at the specified index.

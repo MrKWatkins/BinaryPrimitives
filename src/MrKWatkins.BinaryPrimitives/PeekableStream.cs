@@ -87,12 +87,9 @@ public sealed class PeekableStream : Stream
         buffer[offset] = (byte)peeked;
         peeked = NotPeeked;
 
-        if (count == 1)
-        {
-            return 1;
-        }
-
-        return stream.Read(buffer, offset + 1, count - 1) + 1;
+        return count == 1
+            ? 1
+            : stream.Read(buffer, offset + 1, count - 1) + 1;
     }
 
     /// <inheritdoc />
@@ -121,12 +118,9 @@ public sealed class PeekableStream : Stream
         buffer.Span[0] = (byte)peeked;
         peeked = NotPeeked;
 
-        if (buffer.Length == 1)
-        {
-            return 1;
-        }
-
-        return await stream.ReadAsync(buffer[1..], cancellationToken).ConfigureAwait(false) + 1;
+        return buffer.Length == 1
+            ? 1
+            : await stream.ReadAsync(buffer[1..], cancellationToken).ConfigureAwait(false) + 1;
     }
 
     /// <inheritdoc />
@@ -144,11 +138,9 @@ public sealed class PeekableStream : Stream
         get
         {
             VerifyNotDisposed();
-            if (peeked >= 0)
-            {
-                return stream.Position - 1;
-            }
-            return stream.Position;
+            return peeked >= 0
+                ? stream.Position - 1
+                : stream.Position;
         }
         set
         {
@@ -178,7 +170,7 @@ public sealed class PeekableStream : Stream
     }
 
     /// <inheritdoc />
-    public override void Flush() { VerifyNotDisposed(); }
+    public override void Flush() => VerifyNotDisposed();
 
     /// <inheritdoc />
     public override void SetLength(long value) => ThrowNotWriteable();

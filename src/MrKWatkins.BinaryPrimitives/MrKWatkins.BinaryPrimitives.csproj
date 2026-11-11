@@ -1,5 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
+        <IsPackable>true</IsPackable>
         <Description>Extension methods to read and write bytes as primitive types.</Description>
     </PropertyGroup>
 </Project>

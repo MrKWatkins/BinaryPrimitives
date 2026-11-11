@@ -10,7 +10,6 @@ public sealed class ByteIReadOnlyListExtensionsTests
         bytes.GetInt16(1).Should().Equal(0x0302);
     }
 
-
     [Test]
     public void GetInt16_IReadOnlyList_Endian()
     {
@@ -20,7 +19,6 @@ public sealed class ByteIReadOnlyListExtensionsTests
         bytes.GetInt16(1, Endian.Big).Should().Equal(0x0203);
     }
 
-
     [Test]
     public void GetInt32_IReadOnlyList()
     {
@@ -28,7 +26,6 @@ public sealed class ByteIReadOnlyListExtensionsTests
 
         bytes.GetInt32(1).Should().Equal(0x05040302);
     }
-
 
     [Test]
     public void GetInt32_IReadOnlyList_Endian()
@@ -39,7 +36,6 @@ public sealed class ByteIReadOnlyListExtensionsTests
         bytes.GetInt32(2, Endian.Big).Should().Equal(0x03040506);
     }
 
-
     [Test]
     public void GetInt64_IReadOnlyList()
     {
@@ -47,7 +43,6 @@ public sealed class ByteIReadOnlyListExtensionsTests
 
         bytes.GetInt64(1).Should().Equal(0x0908070605040302L);
     }
-
 
     [Test]
     public void GetInt64_IReadOnlyList_Endian()
@@ -58,7 +53,6 @@ public sealed class ByteIReadOnlyListExtensionsTests
         bytes.GetInt64(2, Endian.Big).Should().Equal(0x030405060708090AL);
     }
 
-
     [Test]
     public void GetUInt24_IReadOnlyList()
     {
@@ -67,7 +61,6 @@ public sealed class ByteIReadOnlyListExtensionsTests
         ((int)bytes.GetUInt24(0)).Should().Equal(0x345678);
         ((int)bytes.GetUInt24(1)).Should().Equal(0x123456);
     }
-
 
     [Test]
     public void GetUInt24_IReadOnlyList_Endian()
@@ -80,7 +73,6 @@ public sealed class ByteIReadOnlyListExtensionsTests
         ((int)bytes.GetUInt24(1, Endian.Big)).Should().Equal(0x563412);
     }
 
-
     [Test]
     public void GetUInt32_IReadOnlyList()
     {
@@ -88,7 +80,6 @@ public sealed class ByteIReadOnlyListExtensionsTests
 
         bytes.GetUInt32(1).Should().Equal(0x05040302U);
     }
-
 
     [Test]
     public void GetUInt32_IReadOnlyList_Endian()
@@ -99,7 +90,6 @@ public sealed class ByteIReadOnlyListExtensionsTests
         bytes.GetUInt32(2, Endian.Big).Should().Equal(0x03040506U);
     }
 
-
     [Test]
     public void GetUInt64_IReadOnlyList()
     {
@@ -107,7 +97,6 @@ public sealed class ByteIReadOnlyListExtensionsTests
 
         bytes.GetUInt64(1).Should().Equal(0x0908070605040302UL);
     }
-
 
     [Test]
     public void GetUInt64_IReadOnlyList_Endian()
@@ -118,7 +107,6 @@ public sealed class ByteIReadOnlyListExtensionsTests
         bytes.GetUInt64(2, Endian.Big).Should().Equal(0x030405060708090AUL);
     }
 
-
     [Test]
     public void GetUInt16_IReadOnlyList()
     {
@@ -126,7 +114,6 @@ public sealed class ByteIReadOnlyListExtensionsTests
 
         bytes.GetUInt16(1).Should().Equal(0x0302);
     }
-
 
     [Test]
     public void GetUInt16_IReadOnlyList_Endian()
@@ -137,7 +124,6 @@ public sealed class ByteIReadOnlyListExtensionsTests
         bytes.GetUInt16(2, Endian.Big).Should().Equal(0x0304);
     }
 
-
     [Test]
     public void CopyTo_Span()
     {
@@ -147,7 +133,6 @@ public sealed class ByteIReadOnlyListExtensionsTests
         destination.Should().SequenceEqual(1, 2, 3, 4, 5, 0, 0, 0, 0, 0);
     }
 
-
     [Test]
     public void CopyTo_Span_NotEnoughSpace()
     {
@@ -155,7 +140,6 @@ public sealed class ByteIReadOnlyListExtensionsTests
         var destination = new byte[1];
         source.Invoking(s => s.CopyTo(destination)).Should().Throw<ArgumentException>();
     }
-
 
     [Test]
     public void CopyTo_Span_Int()
@@ -165,7 +149,6 @@ public sealed class ByteIReadOnlyListExtensionsTests
         source.CopyTo(destination, 3);
         destination.Should().SequenceEqual(0, 0, 0, 1, 2, 3, 4, 5, 0, 0);
     }
-
 
     [Test]
     public void CopyTo_Span_NotEnoughSpace_Int()
